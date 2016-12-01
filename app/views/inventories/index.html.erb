@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+	<div class="container">
+		<h1 class="bg-info" align="center">재고 리스트</h1>
+	</div>
+	
+	<div class="container">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+      				<th>재고 품명</th>
+      				<th colspan="1"></th>
+    			</tr>
+			</thead>
+			<tbody>
+				<% @inventories.each do |inventory| %>
+      				<tr>
+        				<td><%= inventory.iname %></td>
+        				<td align="right"><button type="button"  class="btn btn-info"><%= link_to '보기', inventory %></button>
+        					  <button type="button" class="btn btn-success"><%= link_to '수정', edit_inventory_path(inventory) %></button>
+        					  <button type="button" class="btn btn-warning"><%= link_to '삭제', inventory, method: :delete, data: { confirm: 'Are you sure?' } %></button></td>
+      				</tr>
+    			<% end %>				
+			</tbody>
+		</table>
+	</div>
+<br>
+
+<%= link_to 'New Inventory', new_inventory_path %>

@@ -11,5 +11,8 @@ module Inventorysystem
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    # 시작 = DB 저장 시간 설정 ' default : 서울 '
+    
+    # DB 저장 시간 설정 ' default : 서울 ' = 끝
   end
 end
