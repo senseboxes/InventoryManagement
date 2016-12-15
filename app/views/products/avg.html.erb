@@ -1,14 +1,10 @@
 <p id="notice"><%= notice %></p>
-<p id="notice"><%= flash[:msg] %></p>
-
-
 
 <div class="container">
 	<h1 class="bg-info" align="center"><%= @inventory.iname %></h1>
 </div>
 
 <h2>정보 입력</h2>
-<p>정보 입력 시 반드시 <strong style="color: red">입고나 출고 중량</strong> 중에 한 가지는 입력하셔야 합니다.</p>
 <div class="container">
 	<%= render "products/form" %>
 </div>
@@ -18,7 +14,6 @@
 	<table class="table table-hover">
   		<thead>
   			<tr>
-  				<th>생산품ID</th>
 		  		<th>생산 품명</th>
 		  		<th>입고 중량</th>
 		  		<th>출고 중량</th>
@@ -29,10 +24,28 @@
 		  		<th></th>
 	  		</tr>
   		</thead>
-  		<tbody>
-		  <%= render "products/product" %>
-		</tbody>
+		<%= render @inventory.products %>
   </table>
 </div>
-<%= link_to 'Edit', edit_inventory_path(@inventory) %> |
-<%= link_to 'Back', inventories_path %>
+
+
+
+
+<tr>
+	  		<td><%= @lastdata.id %></td>
+	  		<td><%= @lastdata.pname %></td>
+	  		<td><%= @lastdata.puchase_kg %></td>
+	  		<td><%= @lastdata.release_kg %></td>
+	  		<td><%= @lastdata.stock_kg %></td>
+	  		<td><%= @lastdata.predict %></td>
+	  		<td><%= @lastdata.month_avg %></td>
+	  		<td><%= @lastdata.memo %></td>
+	  		
+	  		
+	  		<td><%= @sum %></td>
+	  		
+	  		<p>==============</p>
+	  		
+	  		
+</tr>
+
