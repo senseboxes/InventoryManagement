@@ -1,5 +1,6 @@
-<% @products.reverse.each do |product| %>
+<% @products.each do |product| %>
         <tr>
+        	<td><%= product.created_at %></td>
   			<td><%= product.id %></td>
 	  		<td><%= product.pname %></td>
 	  		<td><%= product.puchase_kg %></td>
@@ -10,5 +11,4 @@
 	  		<td><%= product.memo %></td>
 	  		<td><button type="button" class="btn btn-warning"><%= link_to 'Destroy Product', [product.inventory, product], :confirm => 'Are you sure?',:method => :delete %></button></td>
   		</tr>
-
 <% end %>

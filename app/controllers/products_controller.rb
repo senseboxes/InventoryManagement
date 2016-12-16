@@ -1,5 +1,22 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: []
+  # EditBox에서 입고, 출고, 재고를 입력받아 사용상에 문제가 없는지 체크한다. 
+  # 계산상에 문제가 없다면 true를 리턴한다.
+  def check_inout(puchase_kg, release_kg, stock_kg)
+    isTrue = false
+  
+    if( puchase_kg == 0 && release_kg == 0)                                 #입고와 출고를 모두 입력하지 않은 경우
+        flash[:msg] = '입고와 출고중 한가지는 입력하셔야 합니다.'
+    elsif(puchase_kg < 0 || release_kg < 0)                                     #입고와 출고를 음수나 0을 넣은 경우
+          flash[:msg] = '숫자만 넣어주세요.'
+    elsif(puchase_kg - release_kg + stock_kg < 0)                             #입고와 출고의 계산값이 재고보다 클 경우
+          flash[:msg] = '재고가 음수입니다.'
+    else
+      isTrue = true
+    end
+             
+    return isTrue
+  end
 
 # ' Create Product ' 시 ↓↓↓↓↓
   def create
@@ -9,6 +26,7 @@ class ProductsController < ApplicationController
     @lastdata = @inventory.products.last 
     @recentdata = @inventory.products.new(pro_params)
     
+    # 입고나 출고가 nil일 경우 0으로 초기화 한다.
     if( @recentdata[:puchase_kg] == nil)
       @recentdata[:puchase_kg] = 0
     end
@@ -16,33 +34,25 @@ class ProductsController < ApplicationController
       @recentdata[:release_kg] = 0
     end
     
-    if ( cnt == 0)
-      if( @recentdata[:puchase_kg] == 0 && @recentdata[:release_kg] == 0)
-        flash[:msg] = '입고와 출고중 한가지는 입력하셔야 합니다.'
+    if ( cnt == 0)  #재고리스트가 비어있는 경우
+      @recentdata[:stock_kg] = 0        #인자로 넘어갈 값이 nil일 경우 계산에 문제가 생길 수 있으므로 초기화한다.
+      if(!check_inout(@recentdata[:puchase_kg], @recentdata[:release_kg], @recentdata[:stock_kg]))
+        isTrue = false
       else
          if( @recentdata[:puchase_kg] > 0)
-           if(@recentdata[:release_kg] == 0)
-            @recentdata[:stock_kg] = @recentdata[:puchase_kg]
-            isTrue = true
+           if(@recentdata[:release_kg] == 0)                            #입고만 입력하고 출고는 입력하지 않은경우 재고에 입고값을 넣어준다.
+              @recentdata[:stock_kg] = @recentdata[:puchase_kg]
+              isTrue = true
+            elsif(@recentdata[:release_kg] > 0)                         #입고와 출고 모두 입력한 경우 
+              @recentdata[:stock_kg] = @recentdata[:puchase_kg] - @recentdata[:release_kg]
+              isTrue = true
             end
-         else 
-          if(@recentdata[:release_kg] > 0)
-            flash[:msg] = '재고가 없습니다.'
-          elsif(@recentdata[:puchase_kg] < 0 || @recentdata[:release_kg] < 0)
-            flash[:msg] = '숫자만 넣어주세요.'
-          elsif(@recentdata[:puchase_kg] - @recentdata[:release_kg] < 0)
-            flash[:msg] = '재고가 음수입니다.'
-          end
-         end  
+        end 
        end
   
-    else
-      if( @recentdata[:puchase_kg] == 0 && @recentdata[:release_kg] == 0)
-        flash[:msg] = '입고와 출고중 한가지는 입력하셔야 합니다.'
-      elsif(@recentdata[:puchase_kg] < 0 || @recentdata[:release_kg] < 0)
-            flash[:msg] = '숫자만 넣어주세요.'
-      elsif(@recentdata[:puchase_kg] - @recentdata[:release_kg] + @lastdata[:stock_kg] < 0)
-            flash[:msg] = '재고가 음수입니다.' 
+    else            #재고리스트가 한개라도 존재하는 경우
+      if(!check_inout(@recentdata[:puchase_kg], @recentdata[:release_kg], @lastdata[:stock_kg]))
+        isTrue = false
       else
         @recentdata[:stock_kg] = @lastdata[:stock_kg] + @recentdata[:puchase_kg] - @recentdata[:release_kg]  
         isTrue = true

@@ -16,12 +16,13 @@
       				<tr>
         				<td><%= inventory.iname %></td>
         				<td align="right"><button type="button"  class="btn btn-info"><%= link_to '보기', inventory %></button>
-        					  <button type="button" class="btn btn-success"><%= link_to '수정', edit_inventory_path(inventory) %></button>
+        		 			  <button type="button" class="btn btn-success"><%= link_to '수정', edit_inventory_path(inventory) %></button>
         					  <button type="button" class="btn btn-warning"><%= link_to '삭제', inventory, method: :delete, data: { confirm: 'Are you sure?' } %></button></td>
       				</tr>
-    			<% end %>				
+    			<% end %>
 			</tbody>
 		</table>
+		<%= will_paginate @inventories %>
 	</div>
 <br>
 

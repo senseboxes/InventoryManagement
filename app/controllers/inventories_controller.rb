@@ -4,15 +4,15 @@ class InventoriesController < ApplicationController
   # GET /inventories
   # GET /inventories.json
   def index
-    @inventories = Inventory.all
-#    @inventories = Inventory.order("id DESC")     # 역정렬
+    @inventories = Inventory.paginate(:page => params[:page])
+#    @inventories = Inventory.order("id DESC")    or @inventories = Inventory.reverse # 역정렬
   end
 
   # GET /inventories/1
   # GET /inventories/1.json
   def show
     @inventory = Inventory.find(params[:id])
-    @products = @inventory.products.all
+    @products = @inventory.products.paginate(:page => params[:page]).order("id DESC")
   end
 
   # GET /inventories/new
