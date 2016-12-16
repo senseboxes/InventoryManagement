@@ -10,12 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161130063038) do
+ActiveRecord::Schema.define(version: 20161216050725) do
 
   create_table "inventories", force: :cascade do |t|
     t.string   "iname"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "month_averages", force: :cascade do |t|
+    t.integer  "january"
+    t.integer  "february"
+    t.integer  "march"
+    t.integer  "april"
+    t.integer  "may"
+    t.integer  "june"
+    t.integer  "july"
+    t.integer  "august"
+    t.integer  "september"
+    t.integer  "october"
+    t.integer  "november"
+    t.integer  "december"
+    t.integer  "year_index"
+    t.integer  "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_month_averages_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|
