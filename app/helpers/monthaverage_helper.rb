@@ -1,0 +1,2 @@
+module MonthaverageHelper
+end

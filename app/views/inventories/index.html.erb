@@ -7,6 +7,7 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
+					<th>ID</th>
       				<th>재고 품명</th>
       				<th colspan="1"></th>
     			</tr>
@@ -14,6 +15,7 @@
 			<tbody>
 				<% @inventories.each do |inventory| %>
       				<tr>
+      					<td><%= inventory.id %></td>
         				<td><%= inventory.iname %></td>
         				<td align="right"><button type="button"  class="btn btn-info"><%= link_to '보기', inventory %></button>
         		 			  <button type="button" class="btn btn-success"><%= link_to '수정', edit_inventory_path(inventory) %></button>
