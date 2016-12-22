@@ -1,6 +1,8 @@
 class InventoriesController < ApplicationController
   before_action :set_inventory, only: [:show, :edit, :update, :destroy]
+  require 'time'
 
+  # Public 메소드 시작 ↓↓↓
   # GET /inventories
   # GET /inventories.json
   def index
@@ -13,6 +15,7 @@ class InventoriesController < ApplicationController
   def show
     @inventory = Inventory.find(params[:id])
     @products = @inventory.products.paginate(:page => params[:page]).order("id DESC")
+    
   end
 
   # GET /inventories/new
@@ -28,6 +31,8 @@ class InventoriesController < ApplicationController
   # POST /inventories.json
   def create
     @inventory = Inventory.new(inventory_params)
+    
+
 
     respond_to do |format|
       if @inventory.save
@@ -63,8 +68,9 @@ class InventoriesController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  private
+  # Public 메소드 끝 ↑↑↑
+  private # 보조 메소드 & 필터 시작  ↓↓↓
+  
     # Use callbacks to share common setup or constraints between actions.
     def set_inventory
       @inventory = Inventory.find(params[:id])
@@ -72,6 +78,8 @@ class InventoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def inventory_params
-      params.require(:inventory).permit(:iname)
+      params.require(:inventory).permit(:iname, :created_at)
     end
+    
+    # 보조 & 필터 메소드 끝 ↑↑↑
 end

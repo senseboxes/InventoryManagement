@@ -1,21 +1,210 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  pname: MyString
-  puchase_kg: 1
-  release_kg: 1
-  stock_kg: 1
-  predict: 1
-  month_avg: 1
+1:
+  pname: aa-a
+  puchase_kg: 1000
+  release_kg: 200
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
   memo: MyString
-  inventory: one
+  inventory: 1
+  created_at: 2015-01-01 AM 01:00
 
-two:
-  pname: MyString
-  puchase_kg: 1
-  release_kg: 1
-  stock_kg: 1
-  predict: 1
-  month_avg: 1
+2:
+  pname: bb-b
+  puchase_kg: 1000
+  release_kg: 200
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
   memo: MyString
-  inventory: two
+  inventory: 1
+  created_at: 2015-01-11 AM 03:00
+  
+3:
+  pname: cc-c
+  puchase_kg: 1000
+  release_kg: 200
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
+  memo: MyString
+  inventory: 1
+  created_at: 2015-01-21 PM 05:00
+  
+4:
+  pname: dd-d
+  puchase_kg: 1000
+  release_kg: 200
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
+  memo: MyString
+  inventory: 1
+  created_at: 2015-01-29 AM 01:00
+  
+5:
+  pname: bb
+  puchase_kg: 2000
+  release_kg: 100
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
+  memo: MyString
+  inventory: 1
+  created_at: 2015-02-01 AM 01:00
+  
+6:
+  pname: bb
+  puchase_kg: 2000
+  release_kg: 100
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
+  memo: MyString
+  inventory: 1
+  created_at: 2015-02-11 AM 01:00
+  
+7:
+  pname: bb
+  puchase_kg: 2000
+  release_kg: 100
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
+  memo: MyString
+  inventory: 1
+  created_at: 2015-02-21 AM 01:00
+  
+8:
+  pname: bb
+  puchase_kg: 2000
+  release_kg: 100
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
+  memo: MyString
+  inventory: 1
+  created_at: 2015-02-29 AM 01:00
+  
+9:
+  pname: bb
+  puchase_kg: 5000
+  release_kg: 200
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
+  memo: MyString
+  inventory: 1
+  created_at: 2015-03-01 AM 01:00
+  
+10:
+  pname: bb
+  puchase_kg: 100
+  release_kg: 200
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
+  memo: MyString
+  inventory: 1
+  created_at: 2015-03-04 AM 01:00
+  
+11:
+  pname: bb
+  puchase_kg: 10000
+  release_kg: 200
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
+  memo: MyString
+  inventory: 1
+  created_at: 2015-04-01 AM 01:00
+    
+12:
+  pname: bb
+  puchase_kg: 500
+  release_kg: 200
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
+  memo: MyString
+  inventory: 1
+  created_at: 2015-05-01 AM 01:00
+    
+13:
+  pname: bb
+  puchase_kg: 500
+  release_kg: 200
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
+  memo: MyString
+  inventory: 1
+  created_at: 2015-06-01 AM 01:00
+    
+14:
+  pname: bb
+  puchase_kg: 500
+  release_kg: 200
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
+  memo: MyString
+  inventory: 1
+  created_at: 2015-07-01 AM 01:00
+    
+15:
+  pname: bb
+  puchase_kg: 500
+  release_kg: 200
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
+  memo: MyString
+  inventory: 1
+  created_at: 2015-08-01 AM 01:00
+    
+16:
+  pname: bb
+  puchase_kg: 500
+  release_kg: 200
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
+  memo: MyString
+  inventory: 1
+  created_at: 2015-09-01 AM 01:00
+    
+17:
+  pname: bb
+  puchase_kg: 500
+  release_kg: 200
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
+  memo: MyString
+  inventory: 1
+  created_at: 2015-10-01 AM 01:00
+    
+12:
+  pname: bb
+  puchase_kg: 550
+  release_kg: 200
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
+  memo: MyString
+  inventory: 1
+  created_at: 2015-11-01 AM 01:00
+    
+12:
+  pname: bb
+  puchase_kg: 5500
+  release_kg: 200
+  stock_kg: 0
+  predict: 0
+  month_avg: 0
+  memo: MyString
+  inventory: 1
+  created_at: 2015-12-01 AM 01:00

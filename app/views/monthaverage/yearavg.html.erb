@@ -1,7 +1,10 @@
 <p id="notice"><%= notice %></p>
+
 	<div class="container">
 		<h1 class="bg-info" align="center">연 평균 사용량 통계</h1>
 	</div>
+	
+	
 	
 	<div class="container">
 		<table class="table table-hover">
@@ -25,24 +28,25 @@
     			</tr>
 			</thead>
 			<tbody>
-				<% @inventories.each do |inventory| %>
+				<% @monthaverages.each do |m| %>
       				<tr>
-        				<td><%= inventory.iname %></td>
-    			<% end %>
-    			
-    			<% @monthavg.each do |key, value| %>
-    			
- <!--   			DB에서 저장 값을 불러온다
-    			(2016년 시작)
-    			@inventory.iname의 :january
-    			@inventory.iname의 :february
-    			@inventory.iname의 ...
-    			@inventory.iname의 ...
-    			@inventory.iname의 :december
-    			(2016년 끝) -->
-    			  <td><%= value %></td>
-    			<% end %>
-      				</tr>    			
+      					<td><%= m.inven_name %></td>
+      					<td><%= m.january %></td>
+      					<td><%= m.february %></td>
+      					<td><%= m.march %></td>
+      					<td><%= m.april %></td>
+      					<td><%= m.may %></td>
+      					<td><%= m.june %></td>
+      					<td><%= m.july %></td>
+      					<td><%= m.august %></td>
+      					<td><%= m.september %></td>
+      					<td><%= m.october %></td>
+      					<td><%= m.november %></td>
+      					<td><%= m.december %></td>
+
+      				</tr>
+      				<% end %>
+
 			</tbody>
 		</table>
 	</div>

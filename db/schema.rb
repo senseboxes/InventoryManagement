@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161216050725) do
+ActiveRecord::Schema.define(version: 20161221043249) do
 
   create_table "inventories", force: :cascade do |t|
     t.string   "iname"
@@ -18,7 +18,8 @@ ActiveRecord::Schema.define(version: 20161216050725) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "month_averages", force: :cascade do |t|
+  create_table "monthaverages", force: :cascade do |t|
+    t.string   "inven_name"
     t.integer  "january"
     t.integer  "february"
     t.integer  "march"
@@ -31,11 +32,24 @@ ActiveRecord::Schema.define(version: 20161216050725) do
     t.integer  "october"
     t.integer  "november"
     t.integer  "december"
-    t.integer  "year_index"
-    t.integer  "product_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_month_averages_on_product_id"
+    t.integer  "january_c"
+    t.integer  "february_c"
+    t.integer  "march_c"
+    t.integer  "april_c"
+    t.integer  "may_c"
+    t.integer  "june_c"
+    t.integer  "july_c"
+    t.integer  "august_c"
+    t.integer  "september_c"
+    t.integer  "october_c"
+    t.integer  "november_c"
+    t.integer  "december_c"
+    t.integer  "y_index"
+    t.integer  "m_index"
+    t.integer  "inventory_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["inventory_id"], name: "index_monthaverages_on_inventory_id"
   end
 
   create_table "products", force: :cascade do |t|
