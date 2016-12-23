@@ -17,4 +17,6 @@ Rails.application.routes.draw do
   get 'monthaverage/yearavg'
   get 'monthaverage/monthavg'
   get 'monthaverage/dailyavg'
+  
+  
 end

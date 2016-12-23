@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: []
-  require 'time'
+  require 'monthaverage.rb'
+  
   # EditBox에서 입고, 출고, 재고를 입력받아 사용상에 문제가 없는지 체크한다. 
   # 계산상에 문제가 없다면 true를 리턴한다.
   def check_inout(puchase_kg, release_kg, stock_kg)
@@ -33,30 +34,6 @@ class ProductsController < ApplicationController
   def make_monthavg()
     @monthaverages[:inventory_id] = @inventory[:id]
     @monthaverages[:inven_name] = @inventory[:iname]
-    @monthaverages[:january] = 0
-    @monthaverages[:february] = 0
-    @monthaverages[:march] = 0
-    @monthaverages[:april] = 0
-    @monthaverages[:may] = 0
-    @monthaverages[:june] = 0
-    @monthaverages[:july] = 0
-    @monthaverages[:august] = 0
-    @monthaverages[:september] = 0
-    @monthaverages[:october] = 0
-    @monthaverages[:november] = 0
-    @monthaverages[:december] =  0
-    @monthaverages[:january_c] = 0
-    @monthaverages[:february_c] = 0
-    @monthaverages[:march_c] = 0
-    @monthaverages[:april_c] = 0
-    @monthaverages[:may_c] = 0
-    @monthaverages[:june_c] = 0
-    @monthaverages[:july_c] = 0
-    @monthaverages[:august_c] = 0
-    @monthaverages[:september_c] = 0
-    @monthaverages[:october_c] = 0
-    @monthaverages[:november_c] = 0
-    @monthaverages[:december_c] =  0
     @monthaverages.save(:validate => false)  #  (:validate => false)는 검증을 예외처리
     return true
   end 
@@ -68,7 +45,7 @@ class ProductsController < ApplicationController
     @monthaverages = Monthaverage.find_by(inventory_id: recent_proparams[:inventory_id], y_index: time.year ) # inventor_id = 1이면서 현재 연 필드 불러오기
     #fine_by 검색에 실패했을 경우
     if ( @monthaverages == nil )
-      @monthaverages = Monthaverage.new(monthavg_params)               #@monthaverages 만들고
+      @monthaverages = Monthaverage.new()               #@monthaverages 만들고
       make_monthavg()                                                                   # 초기화 하고
       @monthaverages[:inventory_id] = recent_proparams[:inventory_id]     # ID 셋팅하고
       @monthaverages[:y_index] = time.year                                        # 년도 셋팅한다.
@@ -77,7 +54,7 @@ class ProductsController < ApplicationController
     case time.month
     when 1
       @monthaverages[:january] += recent_proparams[:release_kg]
-      @monthaverages[:january_c] += 1          
+      @monthaverages[:january_c] += 1
     when 2
       @monthaverages[:february] += recent_proparams[:release_kg]
       @monthaverages[:february_c] += 1
@@ -114,6 +91,15 @@ class ProductsController < ApplicationController
     end
     @monthaverages.save
 
+  end
+  
+  def avg_year
+    
+  end
+  
+  def sum_year
+    
+    
   end
 
 # ' Create Product ' 시 ↓↓↓↓↓
@@ -183,5 +169,5 @@ class ProductsController < ApplicationController
   def pro_params
     params.require(:product).permit(:pname, :puchase_kg, :release_kg, :stock_kg, :predict, :month_avg, :memo, :created_at)
   end
-
+  
 end
