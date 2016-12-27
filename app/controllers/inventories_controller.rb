@@ -1,6 +1,5 @@
 class InventoriesController < ApplicationController
   before_action :set_inventory, only: [:show, :edit, :update, :destroy]
-  require 'time'
 
   # Public 메소드 시작 ↓↓↓
   # GET /inventories

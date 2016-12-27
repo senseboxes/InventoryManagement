@@ -1,7 +1,5 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: []
-  require 'monthaverage.rb'
-  
   # EditBox에서 입고, 출고, 재고를 입력받아 사용상에 문제가 없는지 체크한다. 
   # 계산상에 문제가 없다면 true를 리턴한다.
   def check_inout(puchase_kg, release_kg, stock_kg)
@@ -29,77 +27,6 @@ class ProductsController < ApplicationController
           return puchase_kg - release_kg
         end
       end
-  end
-  
-  def make_monthavg()
-    @monthaverages[:inventory_id] = @inventory[:id]
-    @monthaverages[:inven_name] = @inventory[:iname]
-    @monthaverages.save(:validate => false)  #  (:validate => false)는 검증을 예외처리
-    return true
-  end 
-
-  # 새로운 함수 호출
-  # 월 합산o, 월 사용 카운트[월에 몇번을 생산했는지 카운트 기록], 월평균 사용량o, 회당 평균 사용량, 년합산o
-  def sum_monthavg(recent_proparams)  #recent_proparams = @recentdata
-    time = Time.new
-    @monthaverages = Monthaverage.find_by(inventory_id: recent_proparams[:inventory_id], y_index: time.year ) # inventor_id = 1이면서 현재 연 필드 불러오기
-    #fine_by 검색에 실패했을 경우
-    if ( @monthaverages == nil )
-      @monthaverages = Monthaverage.new()               #@monthaverages 만들고
-      make_monthavg()                                                                   # 초기화 하고
-      @monthaverages[:inventory_id] = recent_proparams[:inventory_id]     # ID 셋팅하고
-      @monthaverages[:y_index] = time.year                                        # 년도 셋팅한다.
-    end
-    
-    case time.month
-    when 1
-      @monthaverages[:january] += recent_proparams[:release_kg]
-      @monthaverages[:january_c] += 1
-    when 2
-      @monthaverages[:february] += recent_proparams[:release_kg]
-      @monthaverages[:february_c] += 1
-    when 3
-      @monthaverages[:march] += recent_proparams[:release_kg]
-      @monthaverages[:march_c] += 1
-    when 4
-      @monthaverages[:april] += recent_proparams[:release_kg]
-      @monthaverages[:april_c] += 1
-    when 5
-      @monthaverages[:may] += recent_proparams[:release_kg]
-      @monthaverages[:may_c] += 1
-    when 6
-      @monthaverages[:june] += recent_proparams[:release_kg]
-      @monthaverages[:june_c] += 1
-    when 7
-      @monthaverages[:july] += recent_proparams[:release_kg]
-      @monthaverages[:july_c] += 1
-    when 8
-      @monthaverages[:august] += recent_proparams[:release_kg]
-      @monthaverages[:august_c] += 1
-    when 9
-      @monthaverages[:september] += recent_proparams[:release_kg]
-      @monthaverages[:september_c] += 1
-    when 10
-      @monthaverages[:october] += recent_proparams[:release_kg]
-      @monthaverages[:october_c] += 1
-    when 11
-      @monthaverages[:november] += recent_proparams[:release_kg]
-      @monthaverages[:november_c] += 1
-    when 12
-      @monthaverages[:december] += recent_proparams[:release_kg]
-      @monthaverages[:december_c] += 1
-    end
-    @monthaverages.save
-
-  end
-  
-  def avg_year
-    
-  end
-  
-  def sum_year
-    
-    
   end
 
 # ' Create Product ' 시 ↓↓↓↓↓
@@ -142,9 +69,10 @@ class ProductsController < ApplicationController
       pro_params = @recentdata
       respond_to do |format|
       if isTrue == true && pro_params.save
-        sum_monthavg(@recentdata)
-        format.html { redirect_to inventory_path(@inventory), notice: '성공적으로 저장되었습니다.' }
-        
+        @MonthaverageController = MonthaverageController.new
+        @MonthaverageController.set_usertime(@recentdata[:created_at])
+        @MonthaverageController.sum_monthavg(params, @recentdata)
+        format.html { redirect_to inventory_path(@inventory), notice: '성공적으로 저장되었습니다.' }        
       else
         format.html { redirect_to inventory_path(@inventory), notice: '저장에 실패했습니다.' }
       end

@@ -1,24 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-	<div class="row">
-		<div class="col-sm-2">
-			<div class="nav-side-menu">
-				<div class="brand">연도 선택</div>
-					<i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
-						<div class="menu-list">
-							<ul id="menu-content" class="menu-content collapse out">
-								<li><a href="#">2013</a></li>
-								<li><a href="#">2014</a></li>
-								<li><a href="#">2015</a></li>
-								<li><a href="#">2016</a></li>
-								<li><a href="#">2017</a></li>
-								<li><a href="#">2018</a></li>
-								<li><a href="#">2019</a></li>
-							</ul>
-						</div>
-			</div>
-		</div>
-	</div>
+<div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+  	<% @yeardroplist.each do |d| %>
+    <li><a href="#"><%= d.created_at.strftime( '%Y' ) %></a></li>
+    <% end %>
+  </ul>
+</div>
         
         <div class="col-sm-12">
         	<h1 class="bg-info" align="center">연 평균 사용량 통계</h1>
@@ -26,6 +16,7 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
+					<th>연도</th>
       				<th>재고 품명</th>
       				<th>1월</th>
       				<th>2월</th>
@@ -46,6 +37,7 @@
 			<tbody>
 				<% @monthaverages.each do |m| %>
       			<tr>
+      				<td><%= m.y_index %></td>
   					<td><%= m.inven_name %></td>
   					<td><%= m.january %></td>
   					<td><%= m.february %></td>
