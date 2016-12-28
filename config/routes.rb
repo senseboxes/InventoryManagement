@@ -14,9 +14,8 @@ Rails.application.routes.draw do
 #  match ':controller(/:action(/:id))', via: [ :get, :post, :patch ]
 # get 'inventories/:inventory_id/products/:product_id/avg' => 'products#avg'
   get 'inventories/:inventory_id/products' => 'inventories#show'
-  get 'monthaverage/yearavg'
-  get 'monthaverage/monthavg'
-  get 'monthaverage/dailyavg'
+  get "monthaverage/:category" => 'monthaverage#years_category'
+
   
   
 end

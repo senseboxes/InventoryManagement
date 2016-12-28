@@ -14,13 +14,14 @@ end
   def sum_monthavg(pro_params, recent_proparams)  #recent_proparams = @recentdata
     
      @inventory = Inventory.find(pro_params[:inventory_id])
-      @lastdata = @inventory.products.last
+     @lastdata = @inventory.products.last
       
 #    time = recent_proparams[:created_at]
-    @monthaverages = Monthaverage.find_by(inventory_id: recent_proparams[:inventory_id], y_index: @@user_time.year ) # inventor_id = 1이면서 현재 연 필드 불러오기
+     @monthaverages = Monthaverage.find_by(inventory_id: recent_proparams[:inventory_id], y_index: @@user_time.year ) # inventor_id = 1이면서 현재 연 필드 불러오기
     #fine_by 검색에 실패했을 경우
     if ( @monthaverages == nil )
-      @monthaverages = Monthaverage.new()
+      @monthaverages = Monthaverage.new
+      @monthaverages.init_value
       
       @monthaverages[:inventory_id] = @inventory[:id]
       @monthaverages[:inven_name] = @inventory[:iname]
@@ -79,21 +80,30 @@ end
     @monthaverages = month_avg_sum
     @monthaverages.save
   end
-    
-  def yearavg # 처음 연 평균 페이지를 monthaverage 리스트가 뜬다.
-    check_year = Time.new
-    @invenyear = Inventory.all
-    @invenyear[:created_at]
-    @yeardroplist = Inventory.select(check_year.year).distinct
+  
+  def listsall
     @monthaverages = Monthaverage.all
   end
+    
+  def yearavg # 처음 연 평균 페이지를 monthaverage 리스트가 뜬다.
+    
+  end
   
-  def select_yearavg
-    # 연도를 선택하면 그에 맞는 연도의 avg 리스트가 뜬다.
+  def years_category # 연도를 선택하면 해당 연도의 사용량 통계만 볼 수 있다.
+    case params[:category]
+    when "2015"
+      @category = "2015"
+    when "2016"
+      @category = "2016"
+    when "2017"
+      @category = "2017"
+    end
+    @monthaverages = Monthaverage.where(y_index: @category)
   end
 
-  def monthavg
-    
+  def monthavg # 가장 최근 연도의 사용량 통계만 표시 예) 지금이 2016년이면 2016년의 자료만 출력 .... 17년이면 17년의 자료만 출력
+    now_year = Time.new    
+    @yeardroplist = Monthaverage.where(y_index: now_year.year)
   end
 
   def dailyavg
