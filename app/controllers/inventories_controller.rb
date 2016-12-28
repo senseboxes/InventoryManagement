@@ -60,8 +60,11 @@ class InventoriesController < ApplicationController
 
   # DELETE /inventories/1
   # DELETE /inventories/1.json
+  
   def destroy
     @inventory.destroy
+    @MonthaverageController = MonthaverageController.new
+    @MonthaverageController.month_destroy(@inventory[:id])
     respond_to do |format|
       format.html { redirect_to inventories_url, notice: 'Inventory was successfully destroyed.' }
       format.json { head :no_content }

@@ -80,14 +80,14 @@ end
     @monthaverages = month_avg_sum
     @monthaverages.save
   end
-  
-  def listsall
-    @monthaverages = Monthaverage.all
-  end
-    
+      
   def yearavg # 처음 연 평균 페이지를 monthaverage 리스트가 뜬다.
     
   end
+  
+  def dailyavg
+      
+  end    
   
   def years_category # 연도를 선택하면 해당 연도의 사용량 통계만 볼 수 있다.
     case params[:category]
@@ -105,15 +105,20 @@ end
     now_year = Time.new    
     @yeardroplist = Monthaverage.where(y_index: now_year.year)
   end
-
-  def dailyavg
-      
-  end    
+  
+  def month_destroy(inventory_id)
+    @monthaverages = Monthaverage.find_by(inventory_id: inventory_id)
+    begin
+      @monthaverages = Monthaverage.find(@monthaverages[:id])
+      @monthaverages.destroy
+      @monthaverages = Monthaverage.find_by(inventory_id: inventory_id)
+    end while @monthaverages != nil
+  end
    
-    def month_params
-      params.require(:monthaverage).permit(:inven_name, :january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december,
-               :january_c, :february_c, :march_c, :april_c, :may_c, :june_c, :july_c, :august_c, :september_c, :october_c, :november_c, :decemver_c, :y_sum, :y_avg, :m_avg, :y_index, :m_index)
-    end
+  def month_params
+    params.require(:monthaverage).permit(:inven_name, :inventory_id, :january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december,
+             :january_c, :february_c, :march_c, :april_c, :may_c, :june_c, :july_c, :august_c, :september_c, :october_c, :november_c, :decemver_c, :y_sum, :y_avg, :m_avg, :y_index, :m_index)
+  end
     
     
   
