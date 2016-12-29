@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   get 'monthaverage/monthavg'
 
   get 'monthaverage/dailyavg'
+  
+  get 'iteminfo/iteminfo_write'
+  post 'iteminfo/write_complete'
+  get 'iteminfo/setting_page' => 'iteminfo#setting_page'
 
   resources :inventories do
     resources :products do
@@ -15,6 +19,7 @@ Rails.application.routes.draw do
 # get 'inventories/:inventory_id/products/:product_id/avg' => 'products#avg'
   get 'inventories/:inventory_id/products' => 'inventories#show'
   get "monthaverage/:category" => 'monthaverage#years_category'
+  
 
   
   

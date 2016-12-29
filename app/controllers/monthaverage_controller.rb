@@ -70,7 +70,6 @@ end
       @monthaverages[:december] += recent_proparams[:release_kg]
       @monthaverages[:december_c] += 1
     end
-    @monthaverages.save
     avg_sum_year(@monthaverages)
   end
   
@@ -80,14 +79,6 @@ end
     @monthaverages = month_avg_sum
     @monthaverages.save
   end
-      
-  def yearavg # 처음 연 평균 페이지를 monthaverage 리스트가 뜬다.
-    
-  end
-  
-  def dailyavg
-      
-  end    
   
   def years_category # 연도를 선택하면 해당 연도의 사용량 통계만 볼 수 있다.
     case params[:category]
@@ -106,14 +97,90 @@ end
     @yeardroplist = Monthaverage.where(y_index: now_year.year)
   end
   
-  def month_destroy(inventory_id)
+  def month_destroy(inventory_id, month)
     @monthaverages = Monthaverage.find_by(inventory_id: inventory_id)
-    begin
-      @monthaverages = Monthaverage.find(@monthaverages[:id])
-      @monthaverages.destroy
-      @monthaverages = Monthaverage.find_by(inventory_id: inventory_id)
-    end while @monthaverages != nil
+    
+    if(month != 0)
+      @monthaverages = Monthaverage.find_by(m_index: month)
+      if(@monthaverages != nil)
+          @monthaverages.destroy
+      end
+    else
+      while @monthaverages != nil
+        @monthaverages = Monthaverage.find(@monthaverages[:id])
+        if(@monthaverages != nil)
+          @monthaverages.destroy
+          @monthaverages = Monthaverage.find_by(inventory_id: inventory_id)
+        end
+      end
+    end
   end
+  
+  def count_zero_destroy(year_avg)
+    
+  end
+  
+  def month_minus(pro_info)
+    pro_invenID = pro_info[:inventory_id]
+    pro_year = pro_info[:created_at].year
+    pro_month = pro_info[:created_at].month
+    
+    @monthaverages = Monthaverage.find_by(inventory_id: pro_invenID, y_index: pro_year)
+
+    case pro_month
+    when 1
+      @monthaverages[:january] -= pro_info[:release_kg]
+      @monthaverages[:january_c] -= 1
+    when 2
+      @monthaverages[:february] -= pro_info[:release_kg]
+      @monthaverages[:february_c] -= 1
+    when 3
+      @monthaverages[:march] -= pro_info[:release_kg]
+      @monthaverages[:march_c] -= 1
+    when 4
+      @monthaverages[:april] -= pro_info[:release_kg]
+      @monthaverages[:april_c] -= 1
+    when 5
+      @monthaverages[:may] -= pro_info[:release_kg]
+      @monthaverages[:may_c] -= 1
+    when 6
+      @monthaverages[:june] -= pro_info[:release_kg]
+      @monthaverages[:june_c] -= 1
+    when 7
+      @monthaverages[:july] -= pro_info[:release_kg]
+      @monthaverages[:july_c] -= 1
+    when 8
+      @monthaverages[:august] -= pro_info[:release_kg]
+      @monthaverages[:august_c] -= 1
+    when 9
+      @monthaverages[:september] = pro_info[:release_kg]
+      @monthaverages[:september_c] -= 1
+    when 10
+      @monthaverages[:october] -= pro_info[:release_kg]
+      @monthaverages[:october_c] -= 1
+    when 11
+      @monthaverages[:november] -= pro_info[:release_kg]
+      @monthaverages[:november_c] -= 1
+    when 12
+      @monthaverages[:december] -= pro_info[:release_kg]
+      @monthaverages[:december_c] -= 1
+    end
+    avg_sum_year(@monthaverages)
+    
+    # 연 합계가 0일 경우 해당 리스트를 삭제한다
+    if @monthaverages[:y_sum].zero?
+      month_destroy(pro_info[:inventory_id], pro_month)
+    end
+#    count_zero_destroy(@monthaverages[:y_avg])
+  end
+  
+  def yearavg
+    
+  end
+  
+  def dailyavg
+      
+  end    
    
   def month_params
     params.require(:monthaverage).permit(:inven_name, :inventory_id, :january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december,

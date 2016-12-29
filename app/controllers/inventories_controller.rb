@@ -25,6 +25,10 @@ class InventoriesController < ApplicationController
   # GET /inventories/1/edit
   def edit
   end
+  
+  def setting_page
+     @inventories = Inventory.all
+  end
 
   # POST /inventories
   # POST /inventories.json
@@ -35,7 +39,7 @@ class InventoriesController < ApplicationController
 
     respond_to do |format|
       if @inventory.save
-        format.html { redirect_to @inventory, notice: 'Inventory was successfully created.' }
+        format.html { redirect_to '/setting_page', notice: 'Inventory was successfully created.' }
         format.json { render :show, status: :created, location: @inventory }
       else
         format.html { render :new }
@@ -64,7 +68,7 @@ class InventoriesController < ApplicationController
   def destroy
     @inventory.destroy
     @MonthaverageController = MonthaverageController.new
-    @MonthaverageController.month_destroy(@inventory[:id])
+    @MonthaverageController.month_destroy(@inventory[:id], 0)
     respond_to do |format|
       format.html { redirect_to inventories_url, notice: 'Inventory was successfully destroyed.' }
       format.json { head :no_content }

@@ -87,8 +87,9 @@ class ProductsController < ApplicationController
     @inventory = Inventory.find(params[:inventory_id])
     @product = @inventory.products.find(params[:id])
     @product.destroy
+    
     @MonthaverageController = MonthaverageController.new
-    @MonthaverageController.month_minus(@product[:id], @product[:release_kg])
+    @MonthaverageController.month_minus(@product)
     redirect_to inventory_path(@inventory)
   end
 

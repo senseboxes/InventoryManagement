@@ -10,10 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161221043249) do
+ActiveRecord::Schema.define(version: 20161229032249) do
+
+  create_table "categoryinfos", force: :cascade do |t|
+    t.string   "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "inventories", force: :cascade do |t|
     t.string   "iname"
+    t.integer  "iteminfo_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["iteminfo_id"], name: "index_inventories_on_iteminfo_id"
+  end
+
+  create_table "iteminfos", force: :cascade do |t|
+    t.integer  "inputID"
+    t.integer  "categoryID"
+    t.string   "name"
+    t.string   "reserve1_s"
+    t.string   "reserve2_s"
+    t.string   "reserve3_s"
+    t.string   "reserve4_s"
+    t.string   "reserve5_s"
+    t.integer  "reserve1_i"
+    t.integer  "reserve2_i"
+    t.integer  "reserve3_i"
+    t.integer  "reserve4_i"
+    t.integer  "reserve5_i"
+    t.boolean  "bool1"
+    t.boolean  "bool2"
+    t.text     "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -64,9 +93,11 @@ ActiveRecord::Schema.define(version: 20161221043249) do
     t.integer  "month_avg"
     t.string   "memo"
     t.integer  "inventory_id"
+    t.integer  "iteminfo_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["inventory_id"], name: "index_products_on_inventory_id"
+    t.index ["iteminfo_id"], name: "index_products_on_iteminfo_id"
   end
 
 end
