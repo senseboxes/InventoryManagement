@@ -2,5 +2,4 @@
 
 <%= render 'form', inventory: @inventory %>
 
-<%= link_to 'Show', @inventory %> |
-<%= link_to 'Back', inventories_path %>
+<button type="button" class="btn btn-default"><%= link_to '생산품보기', @inventory %></button> | <button type="button" class="btn btn-default"><%= link_to '뒤로가기', '/setting_page' %></button>

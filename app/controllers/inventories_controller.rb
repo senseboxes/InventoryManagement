@@ -9,8 +9,40 @@ class InventoriesController < ApplicationController
 #    @inventories = Inventory.order("id DESC")    or @inventories = Inventory.reverse # 역정렬
   end
   
+  def index_category
+    case params[:indexcategory]
+    when "재고상품1"
+      @indexcategory = "1"
+    when "재고상품2"
+      @indexcategory = "2"
+    when "재고상품3"
+      @indexcategory = "3"
+    end
+    @inventories = Inventory.where(category_id: @indexcategory)
+    @inventories = @inventories.paginate(:page => params[:page])
+  end
+  
   def setting_page
     @inventories = Inventory.paginate(:page => params[:page])
+  end
+  
+  def category_write
+    
+  end
+  
+  def category_write_complete
+    c = Category.new
+    c.name = params[:categoryname]
+    if c.save
+      redirect_to "/categories"
+    else
+      flash[:alert] = c.errors[:categoryname][0]
+      redirect_to :back
+    end
+  end
+  
+  def categories
+    @categories = Category.all
   end
 
   # GET /inventories/1
@@ -29,17 +61,11 @@ class InventoriesController < ApplicationController
   # GET /inventories/1/edit
   def edit
   end
-  
-  def setting_page
-     @inventories = Inventory.all
-  end
 
   # POST /inventories
   # POST /inventories.json
   def create
     @inventory = Inventory.new(inventory_params)
-    
-
 
     respond_to do |format|
       if @inventory.save
@@ -74,7 +100,7 @@ class InventoriesController < ApplicationController
     @MonthaverageController = MonthaverageController.new
     @MonthaverageController.month_destroy(@inventory[:id], 0)
     respond_to do |format|
-      format.html { redirect_to inventories_url, notice: 'Inventory was successfully destroyed.' }
+      format.html { redirect_to setting_page_url, notice: 'Inventory was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -88,7 +114,7 @@ class InventoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def inventory_params
-      params.require(:inventory).permit(:iname, :created_at)
+      params.require(:inventory).permit(:iname, :inputID, :categoryID, :text, :category_id)
     end
     
     # 보조 & 필터 메소드 끝 ↑↑↑

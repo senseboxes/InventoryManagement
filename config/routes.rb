@@ -1,10 +1,4 @@
 Rails.application.routes.draw do
-  get 'monthaverage/yearavg'
-
-  get 'monthaverage/monthavg'
-
-  get 'monthaverage/dailyavg'  
-
   resources :inventories do
     resources :products do
         end
@@ -13,9 +7,26 @@ Rails.application.routes.draw do
   root :to => "home#index"
 #  match ':controller(/:action(/:id))', via: [ :get, :post, :patch ]
 # get 'inventories/:inventory_id/products/:product_id/avg' => 'products#avg'
-  get '/setting_page' => 'inventories#setting_page'
+
+# inventory 밑으로 product를 연결하는 경로
   get 'inventories/:inventory_id/products' => 'inventories#show'  
+  
+# monthaverage의 경로
+  get 'monthaverage/yearavg'
+  get 'monthaverage/monthavg'
+  get 'monthaverage/dailyavg'  
   get "monthaverage/:category" => 'monthaverage#years_category'
+  
+# 설정 페이지의 경로
+  get '/setting_page' => 'inventories#setting_page'
+
+# inventory를 카테고리별로 볼 수 있게 만든 경로
+  get "index_category/:indexcategory" => 'inventories#index_category'
+
+# 카테고리를 등록하는 경로
+  get "/category_write" => 'inventories#category_write'
+  post '/category_write_complete' => 'inventories#category_write_complete'
+  get '/categories' => 'inventories#categories'
   
 
   

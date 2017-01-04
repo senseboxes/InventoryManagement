@@ -1,5 +1,5 @@
 class Monthaverage < ApplicationRecord
-  belongs_to :inventory  
+  belongs_to :inventory
   
     def init_value
       self[:january] = 0

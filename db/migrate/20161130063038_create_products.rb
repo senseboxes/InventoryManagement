@@ -9,7 +9,6 @@ class CreateProducts < ActiveRecord::Migration[5.0]
       t.integer :month_avg
       t.string :memo
       t.references :inventory, foreign_key: true
-      t.references :iteminfo, foreign_key: true
 
       t.timestamps
     end
