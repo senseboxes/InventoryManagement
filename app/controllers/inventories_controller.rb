@@ -26,7 +26,7 @@ class InventoriesController < ApplicationController
   end
   
   def setting_page
-    @inventories = Inventory.paginate(:page => params[:page])
+    @inventories = Inventory.paginate(:page => params[:page]).order("id DESC")
   end
   
   def category_write
@@ -59,6 +59,7 @@ class InventoriesController < ApplicationController
   # GET /inventories/new
   def new
     @inventory = Inventory.new
+    @product = Product.new
   end
 
   # GET /inventories/1/edit
@@ -72,7 +73,7 @@ class InventoriesController < ApplicationController
 
     respond_to do |format|
       if @inventory.save
-        format.html { redirect_to '/setting_page', notice: 'Inventory was successfully created.' }
+        format.html { redirect_to '/setting_page', notice: '재고을 저장 하였습니다.' }
         format.json { render :show, status: :created, location: @inventory }
       else
         format.html { render :new }
@@ -86,7 +87,7 @@ class InventoriesController < ApplicationController
   def update
     respond_to do |format|
       if @inventory.update(inventory_params)
-        format.html { redirect_to @inventory, notice: 'Inventory was successfully updated.' }
+        format.html { redirect_to '/setting_page', notice: '재고를 수정하였습니다.' }
         format.json { render :show, status: :ok, location: @inventory }
       else
         format.html { render :edit }
@@ -103,7 +104,7 @@ class InventoriesController < ApplicationController
     @MonthaverageController = MonthaverageController.new
     @MonthaverageController.month_destroy(@inventory[:id], 0)
     respond_to do |format|
-      format.html { redirect_to setting_page_url, notice: 'Inventory was successfully destroyed.' }
+      format.html { redirect_to setting_page_url, notice: '재고가 삭제되었습니다.' }
       format.json { head :no_content }
     end
   end
