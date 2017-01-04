@@ -5,20 +5,23 @@ class InventoriesController < ApplicationController
   # GET /inventories
   # GET /inventories.json
   def index
+    @categories = Category.all
     @inventories = Inventory.paginate(:page => params[:page])
 #    @inventories = Inventory.order("id DESC")    or @inventories = Inventory.reverse # 역정렬
   end
   
   def index_category
-    case params[:indexcategory]
-    when "재고상품1"
+    @categories = Category.all
+    
+    case params[:category_id]
+    when "1"
       @indexcategory = "1"
-    when "재고상품2"
+    when "2"
       @indexcategory = "2"
-    when "재고상품3"
+    when "3"
       @indexcategory = "3"
     end
-    @inventories = Inventory.where(category_id: @indexcategory)
+    @inventories = Inventory.where(category_id: params[:category_id])
     @inventories = @inventories.paginate(:page => params[:page])
   end
   

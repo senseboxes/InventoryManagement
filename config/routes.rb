@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   get '/setting_page' => 'inventories#setting_page'
 
 # inventory를 카테고리별로 볼 수 있게 만든 경로
-  get "index_category/:indexcategory" => 'inventories#index_category'
+  get "index_category/:category_id" => 'inventories#index_category'
 
 # 카테고리를 등록하는 경로
   get "/category_write" => 'inventories#category_write'

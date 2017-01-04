@@ -7,9 +7,9 @@
 		<fieldset>
 			<legend>분 류</legend>
 				<h4>
-					<a href="/index_category/재고상품1">[ Cat-1 ]</a>
-					<a href="/index_category/재고상품2">[ Cat-2 ]</a>
-					<a href="/index_category/재고상품3">[ Cat-3 ]</a>
+					| <% @categories.each do |c| %>
+					<a href="/index_category/<%= c.id %>">| <%= c.name %> |</a>
+					<% end %>|
 				</h4>
 		</fieldset>
 		<br>
