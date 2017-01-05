@@ -13,14 +13,14 @@ class InventoriesController < ApplicationController
   def index_category
     @categories = Category.all
     
-    case params[:category_id]
-    when "1"
-      @indexcategory = "1"
-    when "2"
-      @indexcategory = "2"
-    when "3"
-      @indexcategory = "3"
-    end
+#    case params[:category_id]
+#    when "1"
+#      @indexcategory = "1"
+#    when "2"
+#      @indexcategory = "2"
+#    when "3"
+#      @indexcategory = "3"
+#    end
     @inventories = Inventory.where(category_id: params[:category_id])
     @inventories = @inventories.paginate(:page => params[:page])
   end

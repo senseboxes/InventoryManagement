@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get 'monthaverage/yearavg'
   get 'monthaverage/monthavg'
   get 'monthaverage/dailyavg'  
-  get "monthaverage/:category" => 'monthaverage#years_category'
+  get "monthaverage/:y_index" => 'monthaverage#years_category'
   
 # 설정 페이지의 경로
   get '/setting_page' => 'inventories#setting_page'

@@ -5,9 +5,9 @@ class MonthaverageController < ApplicationController
 
 @@user_time = 0
 
-def set_usertime(utime)
-  @@user_time = utime
-end
+  def set_usertime(utime)
+    @@user_time = utime
+  end
 
   # 새로운 함수 호출
   # 월 합산o, 월 사용 카운트[월에 몇번을 생산했는지 카운트 기록], 월평균 사용량o, 회당 평균 사용량, 년합산o
@@ -81,19 +81,21 @@ end
   end
   
   def years_category # 연도를 선택하면 해당 연도의 사용량 통계만 볼 수 있다.
-    case params[:category]
-    when "2015"
-      @category = "2015"
-    when "2016"
-      @category = "2016"
-    when "2017"
-      @category = "2017"
-    end
-    @monthaverages = Monthaverage.where(y_index: @category)
+    @years_categories = Monthaverage.all
+#    case params[:category]
+#    when "2015"
+#      @category = "2015"
+#    when "2016"
+#      @category = "2016"
+#    when "2017"
+#      @category = "2017"
+#    end
+    @year_sort = Monthaverage.where(y_index: params[:y_index])
   end
 
   def monthavg # 가장 최근 연도의 사용량 통계만 표시 예) 지금이 2016년이면 2016년의 자료만 출력 .... 17년이면 17년의 자료만 출력
-    now_year = Time.new    
+    @years_categories = Monthaverage.all
+    now_year = Time.new
     @yeardroplist = Monthaverage.where(y_index: now_year.year)
   end
   
