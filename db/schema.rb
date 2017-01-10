@@ -12,32 +12,32 @@
 
 ActiveRecord::Schema.define(version: 20170104020435) do
 
-  create_table "categories", force: :cascade do |t|
+  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "inventories", force: :cascade do |t|
+  create_table "inventories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "iname"
     t.integer  "inputID"
     t.integer  "categoryID"
     t.boolean  "bool1"
     t.boolean  "bool2"
-    t.text     "text"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.text     "text",        limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.integer  "category_id"
-    t.index ["category_id"], name: "index_inventories_on_category_id"
+    t.index ["category_id"], name: "index_inventories_on_category_id", using: :btree
   end
 
-  create_table "invinfos", force: :cascade do |t|
+  create_table "invinfos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "iiname"
     t.integer  "iinputID"
     t.integer  "icategoryID"
     t.boolean  "ibool1"
     t.boolean  "ibool2"
-    t.text     "itext"
+    t.text     "itext",       limit: 65535
     t.string   "reserve1_s"
     t.string   "reserve2_s"
     t.string   "reserve3_s"
@@ -48,11 +48,11 @@ ActiveRecord::Schema.define(version: 20170104020435) do
     t.integer  "reserve3_i"
     t.integer  "reserve4_i"
     t.integer  "reserve5_i"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
-  create_table "monthaverages", force: :cascade do |t|
+  create_table "monthaverages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "inven_name"
     t.integer  "january"
     t.integer  "february"
@@ -86,10 +86,10 @@ ActiveRecord::Schema.define(version: 20170104020435) do
     t.integer  "inventory_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.index ["inventory_id"], name: "index_monthaverages_on_inventory_id"
+    t.index ["inventory_id"], name: "index_monthaverages_on_inventory_id", using: :btree
   end
 
-  create_table "products", force: :cascade do |t|
+  create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "pname"
     t.integer  "puchase_kg"
     t.integer  "release_kg"
@@ -100,7 +100,10 @@ ActiveRecord::Schema.define(version: 20170104020435) do
     t.integer  "inventory_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.index ["inventory_id"], name: "index_products_on_inventory_id"
+    t.index ["inventory_id"], name: "index_products_on_inventory_id", using: :btree
   end
 
+  add_foreign_key "inventories", "categories"
+  add_foreign_key "monthaverages", "inventories"
+  add_foreign_key "products", "inventories"
 end
