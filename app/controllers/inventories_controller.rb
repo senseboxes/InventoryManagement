@@ -9,10 +9,10 @@ class InventoriesController < ApplicationController
     @inventories = Inventory.paginate(:page => params[:page])
 #    @inventories = Inventory.order("id DESC")    or @inventories = Inventory.reverse # 역정렬
   end
-  
+
   def index_category
     @categories = Category.all
-    
+
 #    case params[:category_id]
 #    when "1"
 #      @indexcategory = "1"
@@ -24,15 +24,15 @@ class InventoriesController < ApplicationController
     @inventories = Inventory.where(category_id: params[:category_id])
     @inventories = @inventories.paginate(:page => params[:page])
   end
-  
+
   def setting_page
     @inventories = Inventory.paginate(:page => params[:page]).order("id DESC")
   end
-  
+
   def category_write
-    
+
   end
-  
+
   def category_write_complete
     c = Category.new
     c.name = params[:categoryname]
@@ -43,7 +43,7 @@ class InventoriesController < ApplicationController
       redirect_to :back
     end
   end
-  
+
   def categories
     @categories = Category.all
   end
@@ -53,7 +53,7 @@ class InventoriesController < ApplicationController
   def show
     @inventory = Inventory.find(params[:id])
     @products = @inventory.products.paginate(:page => params[:page]).order("id DESC")
-    
+
   end
 
   # GET /inventories/new
@@ -73,7 +73,7 @@ class InventoriesController < ApplicationController
 
     respond_to do |format|
       if @inventory.save
-        format.html { redirect_to '/setting_page', notice: '재고을 저장 하였습니다.' }
+        format.html { redirect_to '/setting_page', notice: '재고를 저장 하였습니다.' }
         format.json { render :show, status: :created, location: @inventory }
       else
         format.html { render :new }
@@ -98,7 +98,7 @@ class InventoriesController < ApplicationController
 
   # DELETE /inventories/1
   # DELETE /inventories/1.json
-  
+
   def destroy
     @inventory.destroy
     @MonthaverageController = MonthaverageController.new
@@ -110,7 +110,7 @@ class InventoriesController < ApplicationController
   end
   # Public 메소드 끝 ↑↑↑
   private # 보조 메소드 & 필터 시작  ↓↓↓
-  
+
     # Use callbacks to share common setup or constraints between actions.
     def set_inventory
       @inventory = Inventory.find(params[:id])
@@ -120,6 +120,6 @@ class InventoriesController < ApplicationController
     def inventory_params
       params.require(:inventory).permit(:iname, :inputID, :categoryID, :text, :category_id)
     end
-    
+
     # 보조 & 필터 메소드 끝 ↑↑↑
 end
