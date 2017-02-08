@@ -4,6 +4,7 @@ lock "3.7.2"
 set :application, "InventorySystem"
 set :repo_url, "git@github.com:senseboxes/InventorySystem.git"
 
+set :passenger_restart_with_touch, true
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
