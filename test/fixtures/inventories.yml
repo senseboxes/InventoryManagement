@@ -1,7 +1,176 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  iname: MyString
+A1:
+  id: 1
+  iname: LMF 15D
+  categoryID: 1
 
-two:
-  iname: MyString
+A2:
+  id: 2
+  iname: PA66HI-A 17 40
+  categoryID: 1
+
+A3:
+  id: 3
+  iname: PA66HI-B 17 40
+  categoryID: 1
+
+A4:
+  id: 4
+  iname: PA66M-B 20 40
+  categoryID: 1
+
+A5:
+  id: 5
+  iname: PA66M 20 40
+  categoryID: 1
+
+A6:
+  id: 6
+  iname: 대만 40D 51mm
+  categoryID: 2
+
+A7:
+  id: 7
+  iname: 대만6 15D 51mm
+  categoryID: 2
+
+A8:
+  id: 8
+  iname: 대만 60D 51mm
+  categoryID: 2
+
+A9:
+  id: 9
+  iname: 대만66 10D 38mm
+  categoryID: 2
+
+A10:
+  id: 10
+  iname: 대만66 12D 38mm
+  categoryID: 2
+
+A11:
+  id: 11
+  iname: 대만66 15D 38mm
+  categoryID: 2
+
+A12:
+  id: 12
+  iname: 대만66 15D 38mm HI
+  categoryID: 2
+
+A13:
+  id: 13
+  iname: 롱 110D
+  categoryID: 3
+
+A14:
+  id: 14
+  iname: 롱 140D
+  categoryID: 3
+
+A15:
+  id: 15
+  iname: 롱 200D
+  categoryID: 3
+
+A16:
+  id: 16
+  iname: 롱 40D 44 50
+  categoryID: 3
+
+A17:
+  id: 17
+  iname: 롱 60D 70 50
+  categoryID: 3
+
+A18:
+  id: 18
+  iname: 부림케미칼 폴리 15D(W)
+  categoryID: 7
+
+A19:
+  id: 19
+  iname: 삼정 10D
+  categoryID: 7
+
+A20:
+  id: 20
+  iname: 삼정 15D
+  categoryID: 8
+
+A21:
+  id: 21
+  iname: 삼정 18D
+  categoryID: 8
+
+A22:
+  id: 22
+  iname: 삼정 40D
+  categoryID: 8
+
+A23:
+  id: 23
+  iname: 삼정 60D
+  categoryID: 8
+
+A24:
+  id: 24
+  iname: 애수달폴리 15D(W)
+  categoryID: 9
+
+A25:
+  id: 25
+  iname: 애수달폴리 45D
+  categoryID: 9
+
+A26:
+  id: 26
+  iname: 애수달폴리 60D 64mm
+  categoryID: 10
+
+A27:
+  id: 27
+  iname: 윈테크 15DX 51mm
+  categoryID: 10
+
+A28:
+  id: 28
+  iname: 윈테크G 12D 44mm
+  categoryID: 10
+
+A29:
+  id: 29
+  iname: 폴리G(덕영15D)
+  categoryID: 11
+
+A30:
+  id: 30
+  iname: 폴리윈테크 15D 38mm
+  categoryID: 11
+
+A31:
+  id: 31
+  iname: 프랑스-B 20 40
+  categoryID: 12
+
+A32:
+  id: 32
+  iname: 프랑스-B 20 60
+  categoryID: 12
+
+A33:
+  id: 33
+  iname: 프랑스 HI-A17 40
+  categoryID: 12
+
+A34:
+  id: 34
+  iname: 프랑스 HI-B17 40
+  categoryID: 12
+
+A35:
+  id: 35
+  iname: 휴비스폴리 15D(W)
+  categoryID: 13

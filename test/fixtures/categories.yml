@@ -1,9 +1,53 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  inventory: one
+c1:
+  id: 1
+  name: 화이버
 
-two:
-  name: MyString
-  inventory: two
+c2:
+  id: 2
+  name: 연마사
+
+c3:
+  id: 3
+  name: 약품
+
+c4:
+  id: 4
+  name: 박스
+
+c5:
+  id: 5
+  name: 포장제
+
+c6:
+  id: 6
+  name: 보호구
+
+c7:
+  id: 7
+  name: 완제품(일반)
+
+c8:
+  id: 8
+  name: 완제품(2차가공)
+
+c9:
+  id: 9
+  name: 반제품(일반)
+
+c10:
+  id: 10
+  name: 반제품(2차가공)
+
+c11:
+  id: 11
+  name: OEM(일반)
+
+c12:
+  id: 12
+  name: 거래처(매출)
+
+c13:
+  id: 13
+  name: 거래처(매입)

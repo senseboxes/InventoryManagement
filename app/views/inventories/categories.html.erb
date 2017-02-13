@@ -2,7 +2,7 @@
 <div style="background-color:#e9eaed;">
   <% @categories.each do |c| %>
   <div>
-    <p style="color: blue;"><%= c.name %></p>
+    <p style="color: blue;"><%= c.name %>, <%= c.id %></p>
   </div>
   <% end %>
   <button type="button" class="btn btn-default"><a href="/category_write">카테고리 등록</a></button>

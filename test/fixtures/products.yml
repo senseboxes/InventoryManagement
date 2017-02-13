@@ -1,210 +1,145 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 1:
-  pname: aa-a
-  puchase_kg: 1000
-  release_kg: 200
-  stock_kg: 0
+  id: 1
+  pname: 미화산업
+  puchase_kg: 0
+  release_kg: 38
+  stock_kg: 5325
   predict: 0
   month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-01-01 AM 01:00
+  memo: null
+  inventory_id: 1
+  created_at: 2012-02-08 AM 01:00
 
 2:
-  pname: bb-b
-  puchase_kg: 1000
-  release_kg: 200
-  stock_kg: 0
+  id: 2
+  pname: 숄펜
+  puchase_kg: 0
+  release_kg: 220
+  stock_kg: 5105
   predict: 0
   month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-01-11 AM 03:00
-  
+  memo: null
+  inventory_id: 1
+  created_at: 2015-02-15 AM 03:00
+
 3:
-  pname: cc-c
-  puchase_kg: 1000
-  release_kg: 200
-  stock_kg: 0
+  id: 3
+  pname: 길성A400
+  puchase_kg: 0
+  release_kg: 60
+  stock_kg: 5045
   predict: 0
   month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-01-21 PM 05:00
-  
+  memo: null
+  inventory_id: 1
+  created_at: 2012-02-27 PM 05:00
+
 4:
-  pname: dd-d
-  puchase_kg: 1000
-  release_kg: 200
-  stock_kg: 0
+  id: 4
+  pname: 길성A401
+  puchase_kg: 0
+  release_kg: 97
+  stock_kg: 4948
   predict: 0
   month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-01-29 AM 01:00
-  
+  memo: null
+  inventory_id: 1
+  created_at: 2012-02-28 AM 01:00
+
 5:
-  pname: bb
-  puchase_kg: 2000
-  release_kg: 100
-  stock_kg: 0
+  id: 5
+  pname: 유니탑
+  puchase_kg: 0
+  release_kg: 140
+  stock_kg: 4808
   predict: 0
   month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-02-01 AM 01:00
-  
+  memo: null
+  inventory_id: 1
+  created_at: 2012-03-02 AM 01:00
+
 6:
-  pname: bb
-  puchase_kg: 2000
-  release_kg: 100
-  stock_kg: 0
+  id: 6
+  pname: 오발
+  puchase_kg: 0
+  release_kg: 72
+  stock_kg: 4736
   predict: 0
   month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-02-11 AM 01:00
-  
+  memo: null
+  inventory_id: 1
+  created_at: 2012-03-20 AM 01:00
+
 7:
-  pname: bb
-  puchase_kg: 2000
-  release_kg: 100
-  stock_kg: 0
+  id: 7
+  pname: 유니탑(G)(HiEND)
+  puchase_kg: 0
+  release_kg: 127
+  stock_kg: 4609
   predict: 0
   month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-02-21 AM 01:00
-  
+  memo: null
+  inventory_id: 1
+  created_at: 2012-03-26 AM 01:00
+
 8:
-  pname: bb
-  puchase_kg: 2000
-  release_kg: 100
-  stock_kg: 0
+  id: 8
+  pname: OHE16m/m, 10m/m
+  puchase_kg: 0
+  release_kg: 143
+  stock_kg: 4466
   predict: 0
   month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-02-29 AM 01:00
-  
+  memo: null
+  inventory_id: 1
+  created_at: 2012-04-02 AM 01:00
+
 9:
-  pname: bb
-  puchase_kg: 5000
-  release_kg: 200
-  stock_kg: 0
+  id: 9
+  pname: 숄펜
+  puchase_kg: 0
+  release_kg: 107
+  stock_kg: 4359
   predict: 0
   month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-03-01 AM 01:00
-  
+  memo: null
+  inventory_id: 1
+  created_at: 2012-04-03 AM 01:00
+
 10:
-  pname: bb
-  puchase_kg: 100
-  release_kg: 200
-  stock_kg: 0
+  id: 10
+  pname: 오성 DP7"
+  puchase_kg: 0
+  release_kg: 90
+  stock_kg: 4269
   predict: 0
   month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-03-04 AM 01:00
-  
+  memo: null
+  inventory_id: 1
+  created_at: 2012-05-15 AM 01:00
+
 11:
-  pname: bb
-  puchase_kg: 10000
-  release_kg: 200
-  stock_kg: 0
+  id: 11
+  pname: 도아(B)
+  puchase_kg: 0
+  release_kg: 6
+  stock_kg: 4263
   predict: 0
   month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-04-01 AM 01:00
-    
+  memo: null
+  inventory_id: 1
+  created_at: 2012-05-25 AM 01:00
+
 12:
-  pname: bb
-  puchase_kg: 500
-  release_kg: 200
-  stock_kg: 0
+  id: 12
+  pname: 페루
+  puchase_kg: 0
+  release_kg: 140
+  stock_kg: 4123
   predict: 0
   month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-05-01 AM 01:00
-    
-13:
-  pname: bb
-  puchase_kg: 500
-  release_kg: 200
-  stock_kg: 0
-  predict: 0
-  month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-06-01 AM 01:00
-    
-14:
-  pname: bb
-  puchase_kg: 500
-  release_kg: 200
-  stock_kg: 0
-  predict: 0
-  month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-07-01 AM 01:00
-    
-15:
-  pname: bb
-  puchase_kg: 500
-  release_kg: 200
-  stock_kg: 0
-  predict: 0
-  month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-08-01 AM 01:00
-    
-16:
-  pname: bb
-  puchase_kg: 500
-  release_kg: 200
-  stock_kg: 0
-  predict: 0
-  month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-09-01 AM 01:00
-    
-17:
-  pname: bb
-  puchase_kg: 500
-  release_kg: 200
-  stock_kg: 0
-  predict: 0
-  month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-10-01 AM 01:00
-    
-12:
-  pname: bb
-  puchase_kg: 550
-  release_kg: 200
-  stock_kg: 0
-  predict: 0
-  month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-11-01 AM 01:00
-    
-12:
-  pname: bb
-  puchase_kg: 5500
-  release_kg: 200
-  stock_kg: 0
-  predict: 0
-  month_avg: 0
-  memo: MyString
-  inventory: 1
-  created_at: 2015-12-01 AM 01:00
+  memo: null
+  inventory_id: 1
+  created_at: 2012-05-25 AM 01:00
