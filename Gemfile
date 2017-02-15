@@ -19,10 +19,11 @@ gem 'coffee-rails', '~> 4.2'
 # gem add to mysql2
 # gem 'mysql2'
 # bootstrap-sass
-#gem 'bootstrap-sass'
-
+# gem 'bootstrap-sass'
 # simple_form
-#gem 'seimple_form'
+# gem 'seimple_form'
+# Importing CSV & Excel file
+gem 'roo'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

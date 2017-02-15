@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">ID</Data></Cell>
+        <Cell><Data ss:Type="String">생산품명</Data></Cell>
+        <Cell><Data ss:Type="String">입고중량</Data></Cell>
+        <Cell><Data ss:Type="String">출고중량</Data></Cell>
+        <Cell><Data ss:Type="String">재고중량</Data></Cell>
+        <Cell><Data ss:Type="String">예상잔량</Data></Cell>
+        <Cell><Data ss:Type="String">월평균</Data></Cell>
+        <Cell><Data ss:Type="String">메모</Data></Cell>
+        <Cell><Data ss:Type="String">inventory_id</Data></Cell>
+        <Cell><Data ss:Type="String">생성일</Data></Cell>
+        <Cell><Data ss:Type="String">수정일</Data></Cell>
+      </Row>
+    <% @products.each do |product| %>
+      <Row>
+        <Cell><Data ss:Type="Number"><%= product.id %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.pname %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= product.puchase_kg %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= product.release_kg %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= product.stock_kg %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= product.predict %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= product.month_avg %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.memo %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= product.inventory_id %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= product.created_at %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= product.updated_at %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

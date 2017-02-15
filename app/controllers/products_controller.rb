@@ -1,5 +1,21 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: []
+
+  def index
+    @products = Product.all
+    respond_to do |format|
+      format.html
+      format.csv { send_data @products.to_csv }
+      format.xls
+    end
+  end
+
+  def import
+    Product.import(params[:file])
+
+    redirect_to "products", notice: 'Products imported.'
+  end
+
   # EditBox에서 입고, 출고, 재고를 입력받아 사용상에 문제가 없는지 체크한다.
   # 계산상에 문제가 없다면 true를 리턴한다.
   def check_inout(puchase_kg, release_kg, stock_kg)
