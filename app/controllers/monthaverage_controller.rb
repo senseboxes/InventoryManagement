@@ -12,26 +12,26 @@ class MonthaverageController < ApplicationController
   # 새로운 함수 호출
   # 월 합산o, 월 사용 카운트[월에 몇번을 생산했는지 카운트 기록], 월평균 사용량o, 회당 평균 사용량, 년합산o
   def sum_monthavg(pro_params, recent_proparams)  #recent_proparams = @recentdata
-    
+
      @inventory = Inventory.find(pro_params[:inventory_id])
      @lastdata = @inventory.products.last
-      
+
 #    time = recent_proparams[:created_at]
      @monthaverages = Monthaverage.find_by(inventory_id: recent_proparams[:inventory_id], y_index: @@user_time.year ) # inventor_id = 1이면서 현재 연 필드 불러오기
     #fine_by 검색에 실패했을 경우
     if ( @monthaverages == nil )
       @monthaverages = Monthaverage.new
       @monthaverages.init_value
-      
+
       @monthaverages[:inventory_id] = @inventory[:id]
       @monthaverages[:inven_name] = @inventory[:iname]
       @monthaverages.save(:validate => false)  #  (:validate => false)는 검증을 예외처리
-    
+
       @monthaverages[:inventory_id] = recent_proparams[:inventory_id]     # ID 셋팅하고
       @monthaverages[:y_index] = @@user_time.year                                        # 년도 셋팅한다.
       @monthaverages[:m_index] = @@user_time.month
     end
-    
+
     case @@user_time.month
     when 1
       @monthaverages[:january] += recent_proparams[:release_kg]
@@ -72,14 +72,14 @@ class MonthaverageController < ApplicationController
     end
     avg_sum_year(@monthaverages)
   end
-  
+
   def avg_sum_year(month_avg_sum)
     month_avg_sum[:y_sum] =  month_avg_sum[:january] + month_avg_sum[:february] + month_avg_sum[:march] + month_avg_sum[:april] + month_avg_sum[:may] + month_avg_sum[:june] + month_avg_sum[:july] + month_avg_sum[:august] + month_avg_sum[:september] + month_avg_sum[:october] + month_avg_sum[:november] + month_avg_sum[:december]
     month_avg_sum[:y_avg] = month_avg_sum[:y_sum] / 12
     @monthaverages = month_avg_sum
     @monthaverages.save
   end
-  
+
   def years_category # 연도를 선택하면 해당 연도의 사용량 통계만 볼 수 있다.
     @years_categories = Monthaverage.all
 #    case params[:category]
@@ -98,10 +98,10 @@ class MonthaverageController < ApplicationController
     now_year = Time.new
     @yeardroplist = Monthaverage.where(y_index: now_year.year)
   end
-  
+
   def month_destroy(inventory_id, month)
     @monthaverages = Monthaverage.find_by(inventory_id: inventory_id)
-    
+
     if(month != 0)
       @monthaverages = Monthaverage.find_by(m_index: month)
       if(@monthaverages != nil)
@@ -117,16 +117,12 @@ class MonthaverageController < ApplicationController
       end
     end
   end
-  
-  def count_zero_destroy(year_avg)
-    
-  end
-  
+
   def month_minus(pro_info)
     pro_invenID = pro_info[:inventory_id]
     pro_year = pro_info[:created_at].year
     pro_month = pro_info[:created_at].month
-    
+
     @monthaverages = Monthaverage.find_by(inventory_id: pro_invenID, y_index: pro_year)
 
     case pro_month
@@ -168,27 +164,27 @@ class MonthaverageController < ApplicationController
       @monthaverages[:december_c] -= 1
     end
     avg_sum_year(@monthaverages)
-    
+
     # 연 합계가 0일 경우 해당 리스트를 삭제한다
     if @monthaverages[:y_sum].zero?
       month_destroy(pro_info[:inventory_id], pro_month)
     end
 #    count_zero_destroy(@monthaverages[:y_avg])
   end
-  
+
   def yearavg
-    
+
   end
-  
+
   def dailyavg
-      
-  end    
-   
+
+  end
+
   def month_params
     params.require(:monthaverage).permit(:inven_name, :inventory_id, :january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december,
              :january_c, :february_c, :march_c, :april_c, :may_c, :june_c, :july_c, :august_c, :september_c, :october_c, :november_c, :decemver_c, :y_sum, :y_avg, :m_avg, :y_index, :m_index)
   end
-    
-    
-  
+
+
+
 end

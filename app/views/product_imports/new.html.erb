@@ -1,6 +1,8 @@
 <h1>Product Import</h1>
-<p>A CSV or Excel file can be used to import records. The first row should be the column name. The following columns are allowed.</p>
+<p>CSV파일 또는 Excel파일로 Products의 Record를 등록합니다.</p>
+<p>아래는 Products테이블의 컬럼 유형입니다.</p>
 
+<!-- Products 테이블의 컬럼 타입을 보여준다. -->
 <ul>
   <% Product.columns.each do |column| %>
     <% if column.name.in? ["id", "pname", "puchase_kg", "release_kg", "stock_kg", "predict", "month_avg", "memo", "inventory_id", "created_at", "updated_at"] %>
@@ -12,12 +14,13 @@
   <% end %>
 </ul>
 
-<p>If an <strong>id</strong> is supplied it will update the matching record instead of creating a new one.</p>
+<p>만약 <strong>id</strong>가 제공되면 새로운 레코드를 만드는 대신 일치하는 레코드를 업데이트합니다.</p>
 
+<!-- Import관련 폼 : Import error시 출력할 메시지 -->
 <%= form_for @product_import do |f| %>
   <% if @product_import.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@product_import.errors.count, "error") %> prohibited this import from completing:</h2>
+      <h2><%= pluralize(@product_import.errors.count, "error") %> Import 작업을 수행할 수 없습니다.:</h2>
       <ul>
       <% @product_import.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -25,7 +28,7 @@
       </ul>
     </div>
   <% end %>
-
+<!-- 파일 선택 및 Import버튼 -->
   <div class="field">
     <%= f.file_field :file %>
   </div>

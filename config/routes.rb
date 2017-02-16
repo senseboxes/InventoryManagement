@@ -30,4 +30,7 @@ Rails.application.routes.draw do
   post '/category_write_complete' => 'inventories#category_write_complete'
   get '/categories' => 'inventories#categories'
 
+# Export & Import
+  get 'product_imports/complete' => 'product_imports#complete'
+
 end

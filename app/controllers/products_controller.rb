@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: []
 
+# index 페이지에서 export하기 위한 액션
   def index
     @products = Product.all
     respond_to do |format|
@@ -8,12 +9,6 @@ class ProductsController < ApplicationController
       format.csv { send_data @products.to_csv }
       format.xls
     end
-  end
-
-  def import
-    Product.import(params[:file])
-
-    redirect_to "products", notice: 'Products imported.'
   end
 
   # EditBox에서 입고, 출고, 재고를 입력받아 사용상에 문제가 없는지 체크한다.
