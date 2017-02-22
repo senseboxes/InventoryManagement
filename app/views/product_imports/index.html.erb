@@ -1,0 +1,34 @@
+<h1>생산품 들여오기 결과</h1>
+<table class="table table-hover">
+	<thead>
+		<tr>
+      <th>생산품 날짜</th>
+      <th>생산품 넘버</th>
+			<th>생산품 이름</th>
+			<th>입고 중량</th>
+			<th>출고 중량</th>
+      <th>재고 중량</th>
+			<th>재고 넘버</th>
+			<th>예상 잔량</th>
+			<th>월 평 균</th>
+      <th>메  모</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @products.each do |product| %>
+		        <tr>
+		        	<td><%= product.created_at.strftime( '%Y년 %m월 %d일' ) %></td> <!-- .strftime( '%Y년 %m월 %d일 %H:%M:%S' ) -->
+		    			<td><%= product.id %></td>
+		  	  		<td><%= product.pname %></td>
+		  	  		<td><%= product.puchase_kg %></td>
+		  	  		<td><%= product.release_kg %></td>
+		  	  		<td><%= product.stock_kg %></td>
+							<td><%= product.inventory_id %></td>
+		  	  		<td><%= product.predict %></td>
+		  	  		<td><%= product.month_avg %></td>
+		  	  		<td><%= product.memo %></td>
+		  		</tr>
+		<% end %>
+
+  </tbody>
+</table>

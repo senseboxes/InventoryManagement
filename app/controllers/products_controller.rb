@@ -91,6 +91,55 @@ class ProductsController < ApplicationController
 
   end
 
+# => import create 시
+  def import_create(product)
+    @inventory = Inventory.find(product["inventory_id"])
+    cnt = @inventory.products.count
+    isTrue = false
+    @lastdata = @inventory.products.last
+
+
+    # 입고나 출고가 nil일 경우 0으로 초기화 한다.
+    if( product["puchase_kg"] == nil)
+      product["puchase_kg"] = 0
+    end
+    if( product["release_kg"] == nil)
+      product["release_kg"] = 0
+    end
+
+    if ( cnt == 0)  #재고리스트가 비어있는 경우
+      product["stock_kg"] = 0        #인자로 넘어갈 값이 nil일 경우 계산에 문제가 생길 수 있으므로 초기화한다.
+      if(!check_inout(product["puchase_kg"], product["release_kg"], product["stock_kg"]))
+        isTrue = false
+      else
+        product["stock_kg"] = set_stock_zero(product["puchase_kg"], product["release_kg"])
+         if( product["stock_kg"] > 0)
+           isTrue = true
+         end
+      end
+
+
+    else            #재고리스트가 한개라도 존재하는 경우
+      if(!check_inout(product["puchase_kg"], product["release_kg"], @lastdata[:stock_kg]))
+        isTrue = false
+      else
+        product["stock_kg"] = @lastdata[:stock_kg] + product["puchase_kg"] - product["release_kg"]
+        isTrue = true
+      end
+    end
+      pro_params = product
+#      respond_to do |format|
+      isTrue == true && pro_params.save
+      @MonthaverageController = MonthaverageController.new
+      @MonthaverageController.import_sum_monthavg(product)
+#        format.html { redirect_to product_imports_path, notice: '성공적으로 저장되었습니다.' }
+#      else
+#        format.html { redirect_to product_imports_path, notice: '저장에 실패했습니다.' }
+#      end
+#    end
+
+  end
+
 # ' 해당 레코드 삭제 ' 시 ↓↓↓↓↓
   def destroy
     @inventory = Inventory.find(params[:inventory_id])

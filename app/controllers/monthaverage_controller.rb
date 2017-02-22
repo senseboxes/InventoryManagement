@@ -1,5 +1,4 @@
 require 'time'
-
 class MonthaverageController < ApplicationController
     before_action :set_monthaverage, only: []
 
@@ -170,6 +169,68 @@ class MonthaverageController < ApplicationController
       month_destroy(pro_info[:inventory_id], pro_month)
     end
 #    count_zero_destroy(@monthaverages[:y_avg])
+  end
+
+  def import_sum_monthavg(product)  #recent_proparams = @recentdata
+
+     @inventory = Inventory.find(product["inventory_id"])
+     @lastdata = @inventory.products.last
+
+  #    time = recent_proparams[:created_at]
+     @monthaverages = Monthaverage.find_by(inventory_id: product["inventory_id"], y_index: product["created_at"].year ) # inventor_id = 1이면서 현재 연 필드 불러오기
+    #fine_by 검색에 실패했을 경우
+    if ( @monthaverages == nil )
+      @monthaverages = Monthaverage.new
+      @monthaverages.init_value
+
+      @monthaverages[:inventory_id] = @inventory[:id]
+      @monthaverages[:inven_name] = @inventory[:iname]
+      @monthaverages.save(:validate => false)  #  (:validate => false)는 검증을 예외처리
+
+      @monthaverages[:inventory_id] = product["inventory_id"]     # ID 셋팅하고
+      @monthaverages[:y_index] = product["created_at"].year                                        # 년도 셋팅한다.
+      @monthaverages[:m_index] = product["created_at"].month
+    end
+
+    case product["created_at"].month
+    when 1
+      @monthaverages[:january] += product["release_kg"]
+      @monthaverages[:january_c] += 1
+    when 2
+      @monthaverages[:february] += product["release_kg"]
+      @monthaverages[:february_c] += 1
+    when 3
+      @monthaverages[:march] += product["release_kg"]
+      @monthaverages[:march_c] += 1
+    when 4
+      @monthaverages[:april] += product["release_kg"]
+      @monthaverages[:april_c] += 1
+    when 5
+      @monthaverages[:may] += product["release_kg"]
+      @monthaverages[:may_c] += 1
+    when 6
+      @monthaverages[:june] += product["release_kg"]
+      @monthaverages[:june_c] += 1
+    when 7
+      @monthaverages[:july] += product["release_kg"]
+      @monthaverages[:july_c] += 1
+    when 8
+      @monthaverages[:august] += product["release_kg"]
+      @monthaverages[:august_c] += 1
+    when 9
+      @monthaverages[:september] += product["release_kg"]
+      @monthaverages[:september_c] += 1
+    when 10
+      @monthaverages[:october] += product["release_kg"]
+      @monthaverages[:october_c] += 1
+    when 11
+      @monthaverages[:november] += product["release_kg"]
+      @monthaverages[:november_c] += 1
+    when 12
+      @monthaverages[:december] += product["release_kg"]
+      @monthaverages[:december_c] += 1
+    end
+    avg_sum_year(@monthaverages)
   end
 
   def yearavg
