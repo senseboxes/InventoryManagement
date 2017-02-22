@@ -80,7 +80,7 @@ class MonthaverageController < ApplicationController
   end
 
   def years_category # 연도를 선택하면 해당 연도의 사용량 통계만 볼 수 있다.
-    @years_categories = Monthaverage.order("y_index DESC")
+    @years_categories = Monthaverage.select(:y_index).distinct.order("y_index DESC")
 #    case params[:category]
 #    when "2015"
 #      @category = "2015"
@@ -93,7 +93,8 @@ class MonthaverageController < ApplicationController
   end
 
   def monthavg # 가장 최근 연도의 사용량 통계만 표시 예) 지금이 2016년이면 2016년의 자료만 출력 .... 17년이면 17년의 자료만 출력
-    @years_categories = Monthaverage.order("y_index DESC")
+    @years_categories = Monthaverage.select(:y_index).distinct.order("y_index DESC")
+#    @years_categories = Monthaverage.order("y_index DESC")
     now_year = Time.new
     @yeardroplist = Monthaverage.where(y_index: now_year.year)
   end
