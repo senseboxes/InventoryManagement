@@ -1,26 +1,34 @@
 <h1>Products</h1>
+<!-- 버튼를 누르면 위의 데이터를 format에 맞게 다운로드 함 -->
+<p>
+  Download export file: <br>
+  <%= link_to "CSV", products_path(format: "csv") %>
+<!--  <%= link_to "Excel", products_path(format: "xls") %>  -->
+</p>
+
 <!-- 현재 Products 테이블의 레코드 값 전체를 불러옴 -->
 <table class="table table-hover">
 	<thead>
 		<tr>
-      <th>생산품 날짜</th>
+
       <th>생산품 넘버</th>
 			<th>생산품 이름</th>
 			<th>입고 중량</th>
 			<th>출고 중량</th>
       <th>재고 중량</th>
-			<th>예상 잔량</th>
-			<th>월 평 균</th>
       <th>메  모</th>
 		</tr>
 	</thead>
 	<tbody>
-    <%= render "products/product" %>
+		<% @products.each do |product| %>
+		        <tr>
+		    			<td><%= product.id %></td>
+		  	  		<td><%= product.pname %></td>
+		  	  		<td><%= product.puchase_kg %></td>
+		  	  		<td><%= product.release_kg %></td>
+		  	  		<td><%= product.stock_kg %></td>
+		  	  		<td><%= product.memo %></td>
+		  		</tr>
+		<% end %>
   </tbody>
 </table>
-<!-- 버튼를 누르면 위의 데이터를 format에 맞게 다운로드 함 -->
-<p>
-  Download export file: <br>
-  <%= link_to "CSV", products_path(format: "csv") %> |
-  <%= link_to "Excel", products_path(format: "xls") %>
-</p>

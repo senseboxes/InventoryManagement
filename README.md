@@ -21,4 +21,5 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
+* Export, Import는 CSV파일로만 작성 (Excel구현은 실패...Export시 MSOffie에서 알수없는파일로인식)
+  CSV파일로 Export하여 MSOffice로 열고 작성하면 됨

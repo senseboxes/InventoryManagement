@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   resources :product_imports
-  resources :products
+  resources :products do
+    collection do
+      post :import
+    end
+  end
   resources :inventories do
     resources :products do
     end
