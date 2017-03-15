@@ -6,7 +6,7 @@ class InventoriesController < ApplicationController
   # GET /inventories.json
   def index
     @categories = Category.all
-    @inventories = Inventory.paginate(:page => params[:page])
+    @inventories = Inventory.order("id ASC").paginate(:page => params[:page])
 #    @inventories = Inventory.order("id DESC")    or @inventories = Inventory.reverse # 역정렬
   end
 

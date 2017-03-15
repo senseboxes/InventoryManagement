@@ -23,5 +23,6 @@
 # add to swp
 *.swp
 
+# add to capistrano
 config/database.yml
 config/secrets.yml

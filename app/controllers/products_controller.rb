@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
 
 # index 페이지에서 export하기 위한 액션
   def index
-    @products = Product.order(:pname)
+    @products = Product.order(:created_at)
     respond_to do |format|
       format.html
       format.csv { send_data @products.to_csv }
@@ -13,7 +13,7 @@ class ProductsController < ApplicationController
 
   def import
     Product.import(params[:file])
-    redirect_to inventory_products_path, notice: 'Products imported.'
+    redirect_to root_url, notice: 'Products imported.'
   end
 
   # EditBox에서 입고, 출고, 재고를 입력받아 사용상에 문제가 없는지 체크한다.

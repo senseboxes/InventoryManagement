@@ -16,17 +16,17 @@ class Product < ApplicationRecord
 #  end
 
 # Export 할 때 이와 같은 구조로 출력이 됨
-# csv desired_columns 먼저 input
-# product의 값이 desired_columns에 맞게 전부 input
+# csv desired_columns 먼저 output
+# product의 값이 desired_columns에 맞게 전부 output
 #    ====결과====
 #  컬럼1  컬럼3   컬럼2 ...
 # 데이터1 데이터3 데이터2 ...
   def self.to_csv(options = {})
-#    desired_columns = ["id", "pname", "puchase_kg", "release_kg", "stock_kg", "predict", "month_avg", "memo", "inventory_id", "created_at", "updated_at"]
+    desired_columns = ["id", "pname", "puchase_kg", "release_kg", "stock_kg", "predict", "month_avg", "memo", "inventory_id", "created_at", "updated_at"]
     CSV.generate(options) do |csv|
       csv << column_names
       all.each do |product|
-        csv << product.attributes.values_at(*column_names)
+        csv << product.attributes.values_at(*desired_columns)
       end
     end
   end
@@ -36,9 +36,9 @@ class Product < ApplicationRecord
     header = spreadsheet.row(1)
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
-      Product.find_by(id: row["id"]) || new
-      Product.attributes = row.to_hash
-      Product.save!
+      product = find_by(id: row["id"]) || new
+      product.attributes = row.to_hash
+      product.save!
     end
   end
 

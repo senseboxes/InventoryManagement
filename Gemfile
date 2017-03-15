@@ -24,8 +24,6 @@ gem 'coffee-rails', '~> 4.2'
 # gem 'seimple_form'
 # Importing CSV & Excel file
 gem 'roo', '~> 2.7', '>= 2.7.1'
-gem 'iconv', '~> 1.0', '>= 1.0.4'
-gem 'roo-xls', '~> 1.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks

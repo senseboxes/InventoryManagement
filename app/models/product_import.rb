@@ -49,9 +49,6 @@ class ProductImport
 # => row.to_hash값을 product.attributes로 저장
       product.attributes = row.to_hash
 # => 최종적인 값은 product = load_imported_products
-#      product["stock_kg"] = product["puchase_kg"] - product["release_kg"]
-#      @MonthaverageController = MonthaverageController.new
-#      @MonthaverageController.import_sum_monthavg(product)
 
       @ProductsController = ProductsController.new
       @ProductsController.import_create(product)
