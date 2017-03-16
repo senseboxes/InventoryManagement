@@ -29,6 +29,6 @@
   </div>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit '저 장', data: { confirm: '저장 하시겠습니까?', disable_with: '처리중...'} %> | <button type="button" class="btn btn-default"><%= link_to 'Back', '/setting_page' %></button>
   </div>
 <% end %>

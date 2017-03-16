@@ -22,11 +22,18 @@ class InventoriesController < ApplicationController
 #      @indexcategory = "3"
 #    end
     @inventories = Inventory.where(category_id: params[:category_id])
-    @inventories = @inventories.paginate(:page => params[:page])
+    @inventories = @inventories.paginate(:page => params[:page]).order("id ASC")
   end
 
   def setting_page
+    @categories = Category.all
     @inventories = Inventory.paginate(:page => params[:page]).order("id DESC")
+  end
+
+  def setting_category
+    @categories = Category.all
+    @inventories = Inventory.where(category_id: params[:category_id])
+    @inventories = @inventories.paginate(:page => params[:page]).order("id ASC")
   end
 
   def category_write
@@ -98,7 +105,7 @@ class InventoriesController < ApplicationController
 
   # DELETE /inventories/1
   # DELETE /inventories/1.json
-
+  
   def destroy
     @inventory.destroy
     @MonthaverageController = MonthaverageController.new

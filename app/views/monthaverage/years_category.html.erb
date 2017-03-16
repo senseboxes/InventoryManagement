@@ -4,62 +4,57 @@
   <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">연도 별 선택
   <span class="caret"></span></button>
   <ul class="dropdown-menu">
-  	
+
   	<% @years_categories.each do |years| %>
-      <li><a href="/monthaverage/<%= years.y_index %>"><%= years.y_index %></a></li> <!-- d.created_at.strftime( '%Y' ) -->
-	<% end %>
+      <li><a href="/monthaverage/<%= years.y_index %>"><%= years.y_index %></a></li>
+	  <% end %>
   </ul>
 </div>
-        
-        <div class="col-sm-12">
-        	<h1 class="bg-info" align="center">연 평균 사용량 통계</h1>
-<!--         	<h4><%= @category %>의 리스트 입니다.</h4>  -->
 
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>연도</th>
-      				<th>재고 품명</th>
-      				<th>1월</th>
-      				<th>2월</th>
-      				<th>3월</th>
-      				<th>4월</th>
-      				<th>5월</th>
-      				<th>6월</th>
-      				<th>7월</th>
-      				<th>8월</th>
-      				<th>9월</th>
-      				<th>10월</th>
-      				<th>11월</th>
-      				<th>12월</th>
-      				<th>연 합계</th>
-      				<th>연 평균</th>
-    			</tr>
-			</thead>
-			<tbody>
-				<% @year_sort.each do |m| %>
-      			<tr>
-      				<td><%= m.y_index %></td>
-  					<td><%= m.inven_name %></td>
-  					<td><%= m.january %></td>
-  					<td><%= m.february %></td>
-  					<td><%= m.march %></td>
-  					<td><%= m.april %></td>
-  					<td><%= m.may %></td>
-  					<td><%= m.june %></td>
-  					<td><%= m.july %></td>
-  					<td><%= m.august %></td>
-  					<td><%= m.september %></td>
-  					<td><%= m.october %></td>
-  					<td><%= m.november %></td>
-  					<td><%= m.december %></td>
-  					<td><%= m.y_sum %></td>
-  					<td><%= m.y_avg %></td>
+<div class="col-sm-12">
+  <h1 class="bg-info" align="center"><%= @year_title %> 년 평균 사용량 통계 </h1>
 
-  				</tr>
-      			<% end %>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>재고 품명</th>
+          <th>1월</th>
+          <th>2월</th>
+          <th>3월</th>
+          <th>4월</th>
+          <th>5월</th>
+          <th>6월</th>
+          <th>7월</th>
+          <th>8월</th>
+          <th>9월</th>
+          <th>10월</th>
+          <th>11월</th>
+          <th>12월</th>
+          <th>연 합계</th>
+          <th>연 평균</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @year_sort.each do |m| %>
+          <tr>
+            <td><%= m.inven_name %></td>
+            <td><%= m.january %></td>
+            <td><%= m.february %></td>
+            <td><%= m.march %></td>
+            <td><%= m.april %></td>
+            <td><%= m.may %></td>
+            <td><%= m.june %></td>
+            <td><%= m.july %></td>
+            <td><%= m.august %></td>
+            <td><%= m.september %></td>
+            <td><%= m.october %></td>
+            <td><%= m.november %></td>
+            <td><%= m.december %></td>
+            <td><%= m.y_sum %></td>
+            <td><%= m.y_avg %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
-			</tbody>
-		</table>
-        	
-        </div>
+</div>

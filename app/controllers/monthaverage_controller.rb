@@ -90,6 +90,7 @@ class MonthaverageController < ApplicationController
 #      @category = "2017"
 #    end
     @year_sort = Monthaverage.where(y_index: params[:y_index])
+    @year_title = @year_sort.first.y_index
   end
 
   def monthavg # 가장 최근 연도의 사용량 통계만 표시 예) 지금이 2016년이면 2016년의 자료만 출력 .... 17년이면 17년의 자료만 출력
@@ -97,6 +98,7 @@ class MonthaverageController < ApplicationController
 #    @years_categories = Monthaverage.order("y_index DESC")
     now_year = Time.new
     @yeardroplist = Monthaverage.where(y_index: now_year.year)
+    @year_title1 = @yeardroplist.first.y_index
   end
 
   def month_destroy(inventory_id, month)

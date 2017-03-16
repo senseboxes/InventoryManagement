@@ -9,6 +9,6 @@
   	  		<td><%= product.predict %></td>
   	  		<td><%= product.month_avg %></td>
   	  		<td><%= product.memo %></td>
-	  		  <td><button type="button" class="btn btn-warning"><%= link_to 'Destroy Product', [product.inventory, product], :confirm => 'Are you sure?',:method => :delete %></button></td>
+	  		  <td><button type="button" class="btn btn-warning"><%= link_to 'Destroy Product', [product.inventory, product], :confirm => '정말 삭제하시겠습니까?',:method => :delete %></button></td>
   		</tr>
 <% end %>
