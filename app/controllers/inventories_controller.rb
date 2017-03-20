@@ -6,22 +6,19 @@ class InventoriesController < ApplicationController
   # GET /inventories.json
   def index
     @categories = Category.all
-    @inventories = Inventory.order("id ASC").paginate(:page => params[:page])
-#    @inventories = Inventory.order("id DESC")    or @inventories = Inventory.reverse # 역정렬
+      if cookies[:cookie_name] == 'fiber'
+        @category_id = '1'
+      elsif cookies[:cookie_name] == 'grind'
+        @category_id = '2'
+      end
+      @inventories = Inventory.where(category_id: @category_id)
+      @inventories = @inventories.paginate(:page => params[:page]).order("id ASC")
   end
 
   def index_category
     @categories = Category.all
-
-#    case params[:category_id]
-#    when "1"
-#      @indexcategory = "1"
-#    when "2"
-#      @indexcategory = "2"
-#    when "3"
-#      @indexcategory = "3"
-#    end
     @inventories = Inventory.where(category_id: params[:category_id])
+    @categories_title = @categories.find_by(id: params[:category_id]).name
     @inventories = @inventories.paginate(:page => params[:page]).order("id ASC")
   end
 
@@ -34,10 +31,6 @@ class InventoriesController < ApplicationController
     @categories = Category.all
     @inventories = Inventory.where(category_id: params[:category_id])
     @inventories = @inventories.paginate(:page => params[:page]).order("id ASC")
-  end
-
-  def category_write
-
   end
 
   def category_write_complete
@@ -105,7 +98,7 @@ class InventoriesController < ApplicationController
 
   # DELETE /inventories/1
   # DELETE /inventories/1.json
-  
+
   def destroy
     @inventory.destroy
     @MonthaverageController = MonthaverageController.new

@@ -1,7 +1,5 @@
-<h1><strong>재고관리</strong>페이지입니다.</h1>
-<p>아래 목록을 클릭해주세요.</p>
-<ul>
-	<li>화이버</li>
-	<li>연마사</li>
-	<li><a href="/monthaverage/monthavg">월 사용량</a></li>
-</ul>
+<%= form_tag(action: :cookie_rec) do %>
+  <label>분류 명 :</label>
+		<label><button type="submit" class="btn btn-default" name="cookie_name" value="fiber"><%link_to '/inventories' %>화이버연결</button></label>
+		<label><button type="submit" class="btn btn-default" name="cookie_name" value="grind"><%link_to '/inventories' %>연마사연결</button></label>
+<% end %>

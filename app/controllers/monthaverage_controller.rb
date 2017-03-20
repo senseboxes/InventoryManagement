@@ -10,7 +10,7 @@ class MonthaverageController < ApplicationController
 
   # 새로운 함수 호출
   # 월 합산o, 월 사용 카운트[월에 몇번을 생산했는지 카운트 기록], 월평균 사용량o, 회당 평균 사용량, 년합산o
-  def sum_monthavg(pro_params, recent_proparams)  #recent_proparams = @recentdata
+  def sum_monthavg(pro_params, recent_proparams, inventory_inf)  #recent_proparams = @recentdata
 
      @inventory = Inventory.find(pro_params[:inventory_id])
      @lastdata = @inventory.products.last
@@ -29,6 +29,7 @@ class MonthaverageController < ApplicationController
       @monthaverages[:inventory_id] = recent_proparams[:inventory_id]     # ID 셋팅하고
       @monthaverages[:y_index] = @@user_time.year                                        # 년도 셋팅한다.
       @monthaverages[:m_index] = @@user_time.month
+      @monthaverages[:cat_ID] = inventory_inf[:category_id]
     end
 
     case @@user_time.month
@@ -246,7 +247,7 @@ class MonthaverageController < ApplicationController
 
   def month_params
     params.require(:monthaverage).permit(:inven_name, :inventory_id, :january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december,
-             :january_c, :february_c, :march_c, :april_c, :may_c, :june_c, :july_c, :august_c, :september_c, :october_c, :november_c, :decemver_c, :y_sum, :y_avg, :m_avg, :y_index, :m_index)
+             :january_c, :february_c, :march_c, :april_c, :may_c, :june_c, :july_c, :august_c, :september_c, :october_c, :november_c, :decemver_c, :y_sum, :y_avg, :m_avg, :y_index, :m_index, :cat_ID)
   end
 
 
