@@ -22,11 +22,11 @@ class ProductsController < ApplicationController
     isTrue = false
 
     if( puchase_kg == 0 && release_kg == 0)                                 #입고와 출고를 모두 입력하지 않은 경우
-        flash[:msg] = '입고와 출고중 한가지는 입력하셔야 합니다.'
+        flash[:notice] = '입고와 출고중 한가지는 입력하셔야 합니다.'
     elsif(puchase_kg < 0 || release_kg < 0)                                     #입고와 출고를 음수나 0을 넣은 경우
-          flash[:msg] = '숫자만 넣어주세요.'
+          flash[:notice] = '숫자만 넣어주세요.'
     elsif(puchase_kg - release_kg + stock_kg < 0)                             #입고와 출고의 계산값이 재고보다 클 경우
-          flash[:msg] = '재고가 음수입니다.'
+          flash[:notice] = '재고가 음수입니다.'
     else
       isTrue = true
     end

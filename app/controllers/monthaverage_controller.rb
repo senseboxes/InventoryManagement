@@ -29,7 +29,7 @@ class MonthaverageController < ApplicationController
       @monthaverages[:inventory_id] = recent_proparams[:inventory_id]     # ID 셋팅하고
       @monthaverages[:y_index] = @@user_time.year                                        # 년도 셋팅한다.
       @monthaverages[:m_index] = @@user_time.month
-      @monthaverages[:cat_ID] = inventory_inf[:category_id]
+      @monthaverages[:cat_ID] = inventory_inf[:category_id] #쿠키 사용을 위해 카테고리 아이디를 넣음
     end
 
     case @@user_time.month
@@ -82,24 +82,37 @@ class MonthaverageController < ApplicationController
 
   def years_category # 연도를 선택하면 해당 연도의 사용량 통계만 볼 수 있다.
     @years_categories = Monthaverage.select(:y_index).distinct.order("y_index DESC")
-#    case params[:category]
-#    when "2015"
-#      @category = "2015"
-#    when "2016"
-#      @category = "2016"
-#    when "2017"
-#      @category = "2017"
-#    end
-    @year_sort = Monthaverage.where(y_index: params[:y_index])
-    @year_title = @year_sort.first.y_index
+
+    if cookies[:cookie_name] == 'fiber'
+      @category_id = '1'
+    elsif cookies[:cookie_name] == 'grind'
+      @category_id = '2'
+    elsif cookies[:cookie_name] == nil
+      flash[:notice] = "초기화면으로 돌아가 화이버 또는 연마사를 선택하시면 선택한 분류만 볼 수 있습니다."
+      @category_id ='1', '2'
+    end
+    @year_sort = Monthaverage.where(y_index: params[:y_index], cat_ID: @category_id)
+    @year_title = params[:y_index]
+
+
   end
 
   def monthavg # 가장 최근 연도의 사용량 통계만 표시 예) 지금이 2016년이면 2016년의 자료만 출력 .... 17년이면 17년의 자료만 출력
-    @years_categories = Monthaverage.select(:y_index).distinct.order("y_index DESC")
-#    @years_categories = Monthaverage.order("y_index DESC")
     now_year = Time.new
-    @yeardroplist = Monthaverage.where(y_index: now_year.year)
-    @year_title1 = @yeardroplist.first.y_index
+
+    if cookies[:cookie_name] == 'fiber'
+      @category_id = '1'
+    elsif cookies[:cookie_name] == 'grind'
+      @category_id = '2'
+    elsif cookies[:cookie_name] == nil
+      flash[:notice] = "초기화면으로 돌아가 화이버 또는 연마사를 선택하시면 선택한 분류만 볼 수 있습니다."
+      @category_id ='1', '2'
+    end
+    @years_categories = Monthaverage.select(:y_index).distinct.order("y_index DESC")
+    @years_avglist = Monthaverage.where(y_index: now_year.year)
+    @yeardroplist = @years_avglist.where(cat_ID: @category_id)
+    @year_title1 = now_year.year
+
   end
 
   def month_destroy(inventory_id, month)

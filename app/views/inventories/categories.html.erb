@@ -1,10 +1,13 @@
+<p id="notice"><%= notice %></p>
+
 <h1>카테고리 리스트</h1>
-<div style="background-color:#e9eaed;">
-  <% @categories.each do |c| %>
-  <div>
-    <p style="color: blue;">카테고리 이름 : <%= c.name %>, 카테고리 ID : <%= c.id %></p>
+  <div style="background-color:#e9eaed;">
+    <% @categories.each do |c| %>
+      <div>
+        <p style="color: blue;">카테고리 이름 : <%= c.name %>, 카테고리 ID : <%= c.id %></p>
+      </div>
+    <% end %>
+    
+    <button type="button" class="btn btn-default"><a href="/category_write">카테고리 등록</a></button>
+    <button type="button" class="btn btn-default"><%= link_to '뒤로 가기', '/setting_page' %></button>
   </div>
-  <% end %>
-  <button type="button" class="btn btn-default"><a href="/category_write">카테고리 등록</a></button>
-  <button type="button" class="btn btn-default"><%= link_to '뒤로 가기', '/setting_page' %></button>
-</div>

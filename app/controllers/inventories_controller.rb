@@ -10,6 +10,9 @@ class InventoriesController < ApplicationController
         @category_id = '1'
       elsif cookies[:cookie_name] == 'grind'
         @category_id = '2'
+      elsif cookies[:cookie_name] == nil
+        flash[:notice] = "초기화면으로 돌아가 화이버 또는 연마사를 선택하시면 선택한 분류만 볼 수 있습니다."
+        @category_id ='1', '2'
       end
       @inventories = Inventory.where(category_id: @category_id)
       @inventories = @inventories.paginate(:page => params[:page]).order("id ASC")
@@ -25,12 +28,6 @@ class InventoriesController < ApplicationController
   def setting_page
     @categories = Category.all
     @inventories = Inventory.paginate(:page => params[:page]).order("id DESC")
-  end
-
-  def setting_category
-    @categories = Category.all
-    @inventories = Inventory.where(category_id: params[:category_id])
-    @inventories = @inventories.paginate(:page => params[:page]).order("id ASC")
   end
 
   def category_write_complete

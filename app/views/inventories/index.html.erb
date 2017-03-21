@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
+
 	<div class="container">
 		<h1 class="bg-info" align="center">재고 리스트</h1>
 	</div>
@@ -14,6 +15,7 @@
 
 				<div id="categories" class="panel-collapse collapse">
 					<ul class="list-group">
+							<li class="list-group-item"><a href="/inventories"> ALL </a></li>
 						<% @categories.each do |c| %>
 							<li class="list-group-item"><a href="/index_category/<%= c.id %>"> <%= c.name %> </a></li>
 						<% end %>
