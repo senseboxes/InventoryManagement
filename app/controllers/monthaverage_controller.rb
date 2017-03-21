@@ -94,11 +94,13 @@ class MonthaverageController < ApplicationController
     @year_sort = Monthaverage.where(y_index: params[:y_index], cat_ID: @category_id)
     @year_title = params[:y_index]
 
-
   end
 
   def monthavg # 가장 최근 연도의 사용량 통계만 표시 예) 지금이 2016년이면 2016년의 자료만 출력 .... 17년이면 17년의 자료만 출력
     now_year = Time.new
+
+    @years_categories = Monthaverage.select(:y_index).distinct.order("y_index DESC")
+    @year_title1 = now_year.year
 
     if cookies[:cookie_name] == 'fiber'
       @category_id = '1'
@@ -108,11 +110,9 @@ class MonthaverageController < ApplicationController
       flash[:notice] = "초기화면으로 돌아가 화이버 또는 연마사를 선택하시면 선택한 분류만 볼 수 있습니다."
       @category_id ='1', '2'
     end
-    @years_categories = Monthaverage.select(:y_index).distinct.order("y_index DESC")
+
     @years_avglist = Monthaverage.where(y_index: now_year.year)
     @yeardroplist = @years_avglist.where(cat_ID: @category_id)
-    @year_title1 = now_year.year
-
   end
 
   def month_destroy(inventory_id, month)
