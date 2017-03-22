@@ -15,7 +15,7 @@ class InventoriesController < ApplicationController
         @category_id ='1', '2'
       end
       @inventories = Inventory.where(category_id: @category_id)
-      @inventories = @inventories.paginate(:page => params[:page]).order("id ASC")
+      @inventories = @inventories.paginate(:page => params[:page]).order("id DESC")
   end
 
   def index_category
@@ -28,6 +28,13 @@ class InventoriesController < ApplicationController
   def setting_page
     @categories = Category.all
     @inventories = Inventory.paginate(:page => params[:page]).order("id DESC")
+  end
+
+  def setting_category
+    @categories = Category.all
+    @inventories = Inventory.where(category_id: params[:category_id])
+    @categories_title = @categories.find_by(id: params[:category_id]).name
+    @inventories = @inventories.paginate(:page => params[:page]).order("id ASC")
   end
 
   def category_write_complete
