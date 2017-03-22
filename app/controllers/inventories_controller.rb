@@ -92,6 +92,13 @@ class InventoriesController < ApplicationController
     end
   end
 
+  def stock_Sum(now_stock)
+    @inventories = Inventory.find_by(id: now_stock[:inventory_id])
+    @inventories[:iST_KG] = 0
+    @inventories[:iST_KG] = now_stock[:stock_kg]
+    @inventories.save
+  end
+
   # PATCH/PUT /inventories/1
   # PATCH/PUT /inventories/1.json
   def update
@@ -128,7 +135,7 @@ class InventoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def inventory_params
-      params.require(:inventory).permit(:iname, :inputID, :categoryID, :text, :category_id)
+      params.require(:inventory).permit(:iname, :inputID, :categoryID, :text, :category_id, :iSK_KG)
     end
 
     # 보조 & 필터 메소드 끝 ↑↑↑

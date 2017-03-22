@@ -30,19 +30,21 @@
 				<tr>
 					<th>ID</th>
 					<th>생성일</th>
-      				<th>재고 품명</th>
-      				<th colspan="1"></th>
+  				<th>재고 품명</th>
+					<th>현 재고 중량(단위:kg)</th>
+  				<th colspan="1"></th>
     			</tr>
 			</thead>
 			<tbody>
 				<% @inventories.each do |inventory| %>
-      				<tr>
-      					<td><%= inventory.id %></td>
-      					<td><%= inventory.created_at.strftime( '%Y년 %m월 %d일' ) %></td>
-        				<td><%= inventory.iname %></td>
-        				<td align="right"><button type="button"  class="btn btn-info"><%= link_to '보기', inventory %></button></td>
-      				</tr>
-    			<% end %>
+  				<tr>
+  					<td><%= inventory.id %></td>
+  					<td><%= inventory.created_at.strftime( '%Y년 %m월 %d일' ) %></td>
+    				<td><%= inventory.iname %></td>
+						<td><%= inventory.iST_KG %></td>
+    				<td align="right"><button type="button"  class="btn btn-info"><%= link_to '보기', inventory %></button></td>
+  				</tr>
+  			<% end %>
 			</tbody>
 		</table>
 		<%= will_paginate @inventories %>

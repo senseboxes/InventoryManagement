@@ -88,6 +88,8 @@ class ProductsController < ApplicationController
         @MonthaverageController = MonthaverageController.new
         @MonthaverageController.set_usertime(@recentdata[:created_at])
         @MonthaverageController.sum_monthavg(params, @recentdata, @inventory)
+        @InventoriesController = InventoriesController.new
+        @InventoriesController.stock_Sum(pro_params)
         format.html { redirect_to inventory_path(@inventory), notice: '성공적으로 저장되었습니다.' }
       else
         format.html { redirect_to inventory_path(@inventory), notice: '저장에 실패했습니다.' }
