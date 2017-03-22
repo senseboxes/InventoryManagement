@@ -34,11 +34,17 @@ class InventoriesController < ApplicationController
     c = Category.new
     c.name = params[:categoryname]
     if c.save
-      redirect_to "/categories"
+      redirect_to "/categories", notice: "정상적으로 저장 되었습니다."
     else
       flash[:alert] = c.errors[:categoryname][0]
       redirect_to :back
     end
+  end
+
+  def  category_destroy
+    @categories = Category.find(params[:id])
+    @categories.destroy
+    redirect_to "/categories", notice: "정상적으로 삭제 되었습니다."
   end
 
   def categories

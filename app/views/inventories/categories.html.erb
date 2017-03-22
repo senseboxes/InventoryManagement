@@ -3,24 +3,30 @@
 	<div class="container">
 		<h1 class="bg-info" align="center">분류명 목록</h1>
 
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>고유번호</th>
-						<th>분류 명</th>
-	    		</tr>
-				</thead>
 
-				<tbody>
-					<% @categories.each do |c| %>
-	  				<tr>
-              <td><%= c.id %></td>
-	  					<td><%= c.name %></td>
-	  				</tr>
-	    		<% end %>
-				</tbody>
-			</table>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>분류 명</th>
+		    		</tr>
+					</thead>
 
-      <button type="button" class="btn btn-default"><a href="/category_write">카테고리 등록</a></button>
-      <button type="button" class="btn btn-default"><%= link_to '뒤로 가기', '/setting_page' %></button>
+					<tbody>
+						<% @categories.each do |c| %>
+						<form action="categories/<%= c.id %>" method="post">
+		  				<tr>
+		  					<td><%= c.name %></td>
+								<td><%= c.id %></td>
+								<td align="right">
+									<a data-confirm="정말로 삭제하시겠습니까?"><button type="submit" class="btn btn-warning">삭 제</button></a>
+								</td>
+		  				</tr>
+							</form>
+		    		<% end %>
+					</tbody>
+				</table>
+
+
+      <a href="/category_write"><button type="button" class="btn btn-default">카테고리 등록</button></a>
+      <a href="/setting_page"><button type="button" class="btn btn-default">뒤로가기</button></a>
     </div>

@@ -28,8 +28,10 @@ Rails.application.routes.draw do
   get "/category_write" => 'inventories#category_write'
   post '/category_write_complete' => 'inventories#category_write_complete'
   get '/categories' => 'inventories#categories'
+  post '/categories/:id' => 'inventories#category_destroy'
 
-# 세션을 위한 경로지정
+
+# 쿠키부여를 위한 경로지정
   post "/home" => 'home#cookie_rec'
 
 end

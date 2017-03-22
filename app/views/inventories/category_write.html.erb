@@ -1,7 +1,10 @@
-<div style="background-color:#e9eaed;">
-	<h1>카테고리 등록</h1>
+<div class="container">
+	<h1 class="bg-info" align="center">분류 등록 페이지</h1>
 	<form action="/category_write_complete" method="post">
-		카테고리 이름 : <input type="text" name="categoryname" placeholder="카테고리 이름을 입력하세요"><br>
-		<input type="submit" class="btn btn-default" value="저장"> | <button type="button" class="btn btn-default"><%= link_to '뒤로 가기', '/categories' %></button>
+		<lable>분류 명 : <input type="text" name="categoryname" placeholder="카테고리 이름을 입력하세요"></label>
+			<br>
+			<br>
+	  <button type="submit" class="btn btn-default">저 장</button>
+	  <a href="/categories"><button type="button" class="btn btn-default">뒤로 가기</button></a>
 	</form>
 </div>

@@ -1,14 +1,14 @@
 <% @products.each do |product| %>
-        <tr>
-        	<td><%= product.created_at.strftime( '%Y년 %m월 %d일' ) %></td> <!-- .strftime( '%Y년 %m월 %d일 %H:%M:%S' ) -->
-    			<td><%= product.id %></td>
-  	  		<td><%= product.pname %></td>
-  	  		<td><%= product.puchase_kg %></td>
-  	  		<td><%= product.release_kg %></td>
-  	  		<td><%= product.stock_kg %></td>
-  	  		<td><%= product.predict %></td>
-  	  		<td><%= product.month_avg %></td>
-  	  		<td><%= product.memo %></td>
-	  		  <td><button type="button" class="btn btn-warning"><%= link_to 'Destroy Product', [product.inventory, product], :confirm => '정말 삭제하시겠습니까?',:method => :delete %></button></td>
-  		</tr>
+  <tr>
+  	<td><%= product.created_at.strftime( '%Y년 %m월 %d일' ) %></td> <!-- .strftime( '%Y년 %m월 %d일 %H:%M:%S' ) -->
+  	<td><%= product.id %></td>
+  	<td><%= product.pname %></td>
+  	<td><%= product.puchase_kg %></td>
+  	<td><%= product.release_kg %></td>
+  	<td><%= product.stock_kg %></td>
+  	<td><%= product.predict %></td>
+  	<td><%= product.month_avg %></td>
+  	<td><%= product.memo %></td>
+    <td><button type="button" class="btn btn-warning"><%= link_to '생산품 삭제', [product.inventory, product], method: :delete, data: { confirm: '정말 삭제하시겠습니까?' } %></button></td>
+  </tr>
 <% end %>
