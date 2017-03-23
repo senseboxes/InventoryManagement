@@ -77,7 +77,12 @@ class MonthaverageController < ApplicationController
     month_avg_sum[:y_sum] =  month_avg_sum[:january] + month_avg_sum[:february] + month_avg_sum[:march] + month_avg_sum[:april] + month_avg_sum[:may] + month_avg_sum[:june] + month_avg_sum[:july] + month_avg_sum[:august] + month_avg_sum[:september] + month_avg_sum[:october] + month_avg_sum[:november] + month_avg_sum[:december]
     month_avg_sum[:y_avg] = month_avg_sum[:y_sum] / 12
     @monthaverages = month_avg_sum
+    pro_monthavg_save(@monthaverages)
     @monthaverages.save
+  end
+
+  def pro_monthavg_save
+    @ProductsController = ProductsController.new
   end
 
   def years_category # 연도를 선택하면 해당 연도의 사용량 통계만 볼 수 있다.

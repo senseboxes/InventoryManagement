@@ -62,7 +62,8 @@ class InventoriesController < ApplicationController
   # GET /inventories/1.json
   def show
     @inventory = Inventory.find(params[:id])
-    @products = @inventory.products.paginate(:page => params[:page]).order("id DESC")
+    @products = @inventory.products.order("id DESC")
+#    @products = @inventory.products.paginate(:page => params[:page]).order("id DESC")
 
   end
 
