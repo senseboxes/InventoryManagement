@@ -45,6 +45,10 @@ class ProductsController < ApplicationController
       end
   end
 
+  def date_check(recentdata)
+#    recentdata[:create_at].year
+  end
+
 # ' Create Product ' 시 ↓↓↓↓↓
   def create
     @inventory = Inventory.find(params[:inventory_id])
@@ -53,6 +57,7 @@ class ProductsController < ApplicationController
     @lastdata = @inventory.products.last
     @recentdata = @inventory.products.new(pro_params)
 
+#    date_check(@recentdata)
 
     # 입고나 출고가 nil일 경우 0으로 초기화 한다.
     if( @recentdata[:puchase_kg] == nil)
@@ -105,8 +110,6 @@ class ProductsController < ApplicationController
     isTrue = false
     @lastdata = @inventory.products.last
 
-
-    # 입고나 출고가 nil일 경우 0으로 초기화 한다.
     if( product["puchase_kg"] == nil)
       product["puchase_kg"] = 0
     end
@@ -114,8 +117,8 @@ class ProductsController < ApplicationController
       product["release_kg"] = 0
     end
 
-    if ( cnt == 0)  #재고리스트가 비어있는 경우
-      product["stock_kg"] = 0        #인자로 넘어갈 값이 nil일 경우 계산에 문제가 생길 수 있으므로 초기화한다.
+    if ( cnt == 0)
+      product["stock_kg"] = 0
       if(!check_inout(product["puchase_kg"], product["release_kg"], product["stock_kg"]))
         isTrue = false
       else
@@ -126,7 +129,7 @@ class ProductsController < ApplicationController
       end
 
 
-    else            #재고리스트가 한개라도 존재하는 경우
+    else
       if(!check_inout(product["puchase_kg"], product["release_kg"], @lastdata[:stock_kg]))
         isTrue = false
       else
@@ -135,15 +138,9 @@ class ProductsController < ApplicationController
       end
     end
       pro_params = product
-#      respond_to do |format|
       isTrue == true && pro_params.save
       @MonthaverageController = MonthaverageController.new
       @MonthaverageController.import_sum_monthavg(product)
-#        format.html { redirect_to product_imports_path, notice: '성공적으로 저장되었습니다.' }
-#      else
-#        format.html { redirect_to product_imports_path, notice: '저장에 실패했습니다.' }
-#      end
-#    end
 
   end
 
@@ -152,6 +149,9 @@ class ProductsController < ApplicationController
     @inventory = Inventory.find(params[:inventory_id])
     @product = @inventory.products.find(params[:id])
     @product.destroy
+    @lastdata = @inventory.products.last
+    @InventoriesController = InventoriesController.new
+    @InventoriesController.pro_delete(@lastdata)
 
     @MonthaverageController = MonthaverageController.new
     @MonthaverageController.month_minus(@product)

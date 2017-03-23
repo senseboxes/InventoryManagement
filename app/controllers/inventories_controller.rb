@@ -92,10 +92,16 @@ class InventoriesController < ApplicationController
     end
   end
 
-  def stock_Sum(now_stock)
-    @inventories = Inventory.find_by(id: now_stock[:inventory_id])
+  def stock_Sum(s_stock) # creat 시점에서 모든 계산이 끝난 후 재고중량을 iST_KG에 저장
+    @inventories = Inventory.find_by(id: s_stock[:inventory_id])
     @inventories[:iST_KG] = 0
-    @inventories[:iST_KG] = now_stock[:stock_kg]
+    @inventories[:iST_KG] = s_stock[:stock_kg]
+    @inventories.save
+  end
+
+  def pro_delete(m_last) # 삭제된 시점 이후의 products 테이블의 마지막 데이터를 불러와서 재고중량을 inventory 테이블의 iST_KG에 저장한다.
+    @inventories = Inventory.find_by(id: m_last[:inventory_id])
+    @inventories[:iST_KG] = m_last[:stock_kg]
     @inventories.save
   end
 
