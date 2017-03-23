@@ -32,3 +32,5 @@ Things you may want to cover:
 
   * show.html.erb 페이지에 TOP버튼 추가
     - jquery를 이용해서 부드럽게 맨위로 이동하는 버튼을 생성
+
+  * 재고관리의 products 정보를 보는 페이지(show.html.erb)에 월평균 사용량 추가

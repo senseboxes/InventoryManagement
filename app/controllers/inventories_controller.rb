@@ -100,9 +100,14 @@ class InventoriesController < ApplicationController
     @inventories.save
   end
 
-  def pro_delete(m_last) # 삭제된 시점 이후의 products 테이블의 마지막 데이터를 불러와서 재고중량을 inventory 테이블의 iST_KG에 저장한다.
-    @inventories = Inventory.find_by(id: m_last[:inventory_id])
-    @inventories[:iST_KG] = m_last[:stock_kg]
+  def pro_delete(m_last, inven_id) # 삭제된 시점 이후의 products 테이블의 마지막 데이터를 불러와서 재고중량을 inventory 테이블의 iST_KG에 저장한다.
+    if m_last != nil
+      @inventories = Inventory.find_by(id: m_last[:inventory_id])
+      @inventories[:iST_KG] = m_last[:stock_kg]
+    elsif m_last == nil
+      @inventories = Inventory.find_by(id: inven_id[:id])
+      @inventories[:iST_KG] = 0
+    end
     @inventories.save
   end
 
@@ -124,9 +129,9 @@ class InventoriesController < ApplicationController
   # DELETE /inventories/1.json
 
   def destroy
-    @inventory.destroy
     @MonthaverageController = MonthaverageController.new
     @MonthaverageController.month_destroy(@inventory[:id], 0)
+    @inventory.destroy
     respond_to do |format|
       format.html { redirect_to setting_page_url, notice: '재고가 삭제되었습니다.' }
       format.json { head :no_content }

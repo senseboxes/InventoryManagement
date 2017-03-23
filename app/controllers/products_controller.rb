@@ -100,7 +100,20 @@ class ProductsController < ApplicationController
         format.html { redirect_to inventory_path(@inventory), notice: '저장에 실패했습니다.' }
       end
     end
+  end
 
+  # 보낸곳_받는곳_받은목적_실행목적(보낸 변수의 첫글자를 따서 변수명으로 지정)
+  def monthaverage_pro_monthvalue_save(ma_value)
+    if ma_value != nil
+      @inventory = Inventory.find(ma_value[:inventory_id])
+      @m_avg_save = @inventory.products.last
+      if @m_avg_save != nil
+      @m_avg_save[:month_avg] = ma_value[:m_avg]
+      @m_avg_save.save
+      else
+        return
+      end
+    end
   end
 
 # => import create 시
@@ -151,7 +164,7 @@ class ProductsController < ApplicationController
     @product.destroy
     @lastdata = @inventory.products.last
     @InventoriesController = InventoriesController.new
-    @InventoriesController.pro_delete(@lastdata)
+    @InventoriesController.pro_delete(@lastdata, @inventory)
 
     @MonthaverageController = MonthaverageController.new
     @MonthaverageController.month_minus(@product)
