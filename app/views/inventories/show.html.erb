@@ -4,15 +4,15 @@
 	<h1 class="bg-info" align="center"><%= @inventory.iname %></h1>
 </div>
 
-<h3>정보 입력</h3>
-<p>정보 입력 시 반드시 <strong style="color: red">입고나 출고 중량</strong> 중에 한 가지는 입력하셔야 합니다.</p>
 <div class="container">
+	<h3>정보 입력</h3>
+	<p>정보 입력 시 반드시 <strong style="color: red">입고나 출고 중량</strong> 중에 한 가지는 입력하셔야 합니다.</p>
 	<%= render "products/form" %>
 </div>
 
-<h2>재고에 대한 정보</h2>
 <div class="container">
-	<table class="table table-hover">
+	<h2>재고에 대한 정보</h2>
+		<table class="table table-hover">
   		<thead>
   			<tr>
   				<th>날짜</th>
@@ -28,8 +28,8 @@
 	  		</tr>
   		</thead>
   		<tbody>
-		  <%= render "products/product" %>
-		</tbody>
-  </table>
-	<a id="MOVE_TOP_BTN" href="#">TOP</a>
+		  	<%= render "products/product" %>
+			</tbody>
+  	</table>
+		<a id="MOVE_TOP_BTN" href="#">TOP</a>
 </div>

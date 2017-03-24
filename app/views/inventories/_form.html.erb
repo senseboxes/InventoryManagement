@@ -10,25 +10,22 @@
       </ul>
     </div>
   <% end %>
-  <%= field_set_tag '카테고리 선택' do %>
 
-      <div class="field">
-      	<%= f.label :category_id %>
-      	<%= f.collection_select :category_id, Category.all , :id, :name %>
-      </div>
+    <div align="center" class="field">
+    	<%= f.label :category_id %>
+    	<%= f.collection_select :category_id, Category.all , :id, :name %>
+    </div>
 
-  <% end %>
+    <div align="center" class="field">
+      <%= f.label :iname %>
+      <%= f.text_field :iname %>
+      <%= f.label :inputID %>
+      <%= f.text_field :inputID %>
+      <%= f.label :text %>
+      <%= f.text_field :text %>
+    </div>
 
-  <div class="field">
-    <%= f.label :iname %>
-    <%= f.text_field :iname %>
-    <%= f.label :inputID %>
-    <%= f.text_field :inputID %>
-    <%= f.label :text %>
-    <%= f.text_field :text %>
-  </div>
-
-  <div class="actions">
-    <button type="submit" class="btn btn-default">저 장</button> | <a href="/setting_page"><button type="button" class="btn btn-default">뒤로 가기</button></a>
-  </div>
+    <div align="center" class="actions">
+      <button type="submit" class="btn btn-default">저 장</button> | <a href="/setting_page"><button type="button" class="btn btn-default">뒤로 가기</button></a>
+    </div>
 <% end %>

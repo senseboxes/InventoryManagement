@@ -24,13 +24,6 @@ Things you may want to cover:
 
 * Deployment instructions
 
-# 2017-03-23
+# 2017-03-24
 
-  * 재고관리페이지에 '현재고 중량' 필드 추가(수정)
-    - 현재 재고의 중량을 '보기'를 누르지 않아도 볼 수 있음
-    - products 생성 및 삭제 시 계산 후 inventory(iST_KG)에 저장됨
-
-  * show.html.erb 페이지에 TOP버튼 추가
-    - jquery를 이용해서 부드럽게 맨위로 이동하는 버튼을 생성
-
-  * 재고관리의 products 정보를 보는 페이지(show.html.erb)에 월평균 사용량 추가
+* CSS 일부 수정(보기 편하도록)

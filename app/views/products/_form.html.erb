@@ -1,26 +1,28 @@
-<%= form_for([@inventory, @inventory.products.build]) do |f| %>
-<table class="table table-hover">
-	<thead>
-		<tr>
-			<th>생산품 명</th>
-			<th>입고 중량</th>
-			<th>출고 중량</th>
-			<th>비 고</th>
-			<th>날 짜</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td><%= f.text_field :pname %></td>
-			<td><%= f.number_field :puchase_kg %></td>
-			<td><%= f.number_field :release_kg %></td>
-			<td><%= f.text_field :memo %></td>
-			<td><%= f.date_field :created_at %></td>
-		</tr>
-	</tbody>
-</table>
-  <div align="right" class="actions">
-  	<button type="submit" class="btn btn-success"> 저 장 </button>
-		<a href="/inventories"><button type="button" class="btn btn-default">뒤로 가기</button></a>
-  </div>
-  <% end %>
+<div class="container">
+	<%= form_for([@inventory, @inventory.products.build]) do |f| %>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>생산품 명</th>
+					<th>입고 중량</th>
+					<th>출고 중량</th>
+					<th>비 고</th>
+					<th>날 짜</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><%= f.text_field :pname %></td>
+					<td><%= f.number_field :puchase_kg %></td>
+					<td><%= f.number_field :release_kg %></td>
+					<td><%= f.text_field :memo %></td>
+					<td><%= f.date_field :created_at %></td>
+				</tr>
+			</tbody>
+		</table>
+	  <div align="right" class="actions">
+	  	<button type="submit" class="btn btn-success"> 저 장 </button>
+			<a href="/inventories"><button type="button" class="btn btn-default">뒤로 가기</button></a>
+	  </div>
+	<% end %>
+</div>
