@@ -42,8 +42,8 @@
 	    				<td><%= inventory.inputID %></td>
 	    				<td><%= inventory.category_id %></td>
 	    				<td><%= inventory.text %></td>
-	    				<td align="right"><button type="button" class="btn btn-success"><%= link_to '수정', edit_inventory_path(inventory) %></button>
-	    					  <button type="button" class="btn btn-warning"><%= link_to '삭제', inventory, method: :delete, data: { confirm: '정말 삭제하시겠습니까?' } %></button></td>
+	    				<td align="right"><button type="button" class="btn btn-success btn-xs"><%= link_to '수정', edit_inventory_path(inventory) %></button>
+	    					  <button type="button" class="btn btn-warning btn-xs"><%= link_to '삭제', inventory, method: :delete, data: { confirm: '정말 삭제하시겠습니까?' } %></button></td>
 	  				</tr>
 	    		<% end %>
 				</tbody>

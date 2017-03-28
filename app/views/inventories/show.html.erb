@@ -4,10 +4,39 @@
 	<h1 class="bg-info" align="center"><%= @inventory.iname %></h1>
 </div>
 
+<div class="link to">
+	<%= link_to '팝업띄우기', inventories_path, remote: true %>
+</div>
+
 <div class="container">
 	<h3>정보 입력</h3>
 	<p>정보 입력 시 반드시 <strong style="color: red">입고나 출고 중량</strong> 중에 한 가지는 입력하셔야 합니다.</p>
-	<%= render "products/form" %>
+		<%= form_for([@inventory, @inventory.products.build]) do |f| %>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>생산품 명</th>
+						<th>입고 중량</th>
+						<th>출고 중량</th>
+						<th>비 고</th>
+						<th>날 짜</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><%= f.text_field :pname %></td>
+						<td><%= f.number_field :puchase_kg %></td>
+						<td><%= f.number_field :release_kg %></td>
+						<td><%= f.text_field :memo %></td>
+						<td><%= f.date_field :created_at %></td>
+					</tr>
+				</tbody>
+			</table>
+		  <div align="right" class="actions">
+		  	<button type="submit" class="btn btn-success"> 저 장 </button>
+				<a href="/inventories"><button type="button" class="btn btn-default">뒤로 가기</button></a>
+		  </div>
+		<% end %>
 </div>
 
 <div class="container">
@@ -28,7 +57,20 @@
 	  		</tr>
   		</thead>
   		<tbody>
-		  	<%= render "products/product" %>
+				<% @products.each do |product| %>
+				  <tr>
+				  	<td><%= product.created_at.strftime( '%Y년 %m월 %d일' ) %></td> <!-- .strftime( '%Y년 %m월 %d일 %H:%M:%S' ) -->
+				  	<td><%= product.id %></td>
+				  	<td><%= product.pname %></td>
+				  	<td><%= product.puchase_kg %></td>
+				  	<td><%= product.release_kg %></td>
+				  	<td><%= product.stock_kg %></td>
+				  	<td><%= product.predict %></td>
+				  	<td><%= product.month_avg %></td>
+				  	<td><%= product.memo %></td>
+				    <td><button type="button" class="btn btn-warning btn-xs"><%= link_to '생산품 삭제', [product.inventory, product], method: :delete, data: { confirm: '정말 삭제하시겠습니까?' } %></button></td>
+				  </tr>
+				<% end %>
 			</tbody>
   	</table>
 		<a id="MOVE_TOP_BTN" href="#">TOP</a>
