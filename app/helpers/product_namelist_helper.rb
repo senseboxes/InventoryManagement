@@ -1,0 +1,2 @@
+module ProductNamelistHelper
+end

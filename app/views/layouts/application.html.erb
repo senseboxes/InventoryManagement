@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -38,7 +38,6 @@
                         <ul class="dropdown-menu">
                           <li><a href="/setting_page">재고 설정</a></li>
                           <li><a href="/categories">재고분류 설정</a></li>
-                          <li><a href="/pitem_lists/plists">생산품명 목록설정</a></li>
                         </ul>
                     </li>
 	    					</ul>
@@ -46,10 +45,12 @@
 				</nav>
 			</div>
 		</div>
-
-      <%= yield %>
-
 	</div>
+
+  <div class="container">
+    <%= yield %>
+  </div>
+
   </body>
 
 </html>

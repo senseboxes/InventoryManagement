@@ -2,45 +2,49 @@
 
 	<div class="container">
 		<h1 class="bg-info" align="center">재고 리스트</h1>
-			<div class="panel-group">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4 class="panel-title">
-							<a data-toggle="collapse" href="#categories">분류 목록</a>
-						</h4>
-					</div>
+	</div>
+	<div class="container">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#categories">분류 목록</a>
+					</h4>
+				</div>
 
-					<div id="categories" class="panel-collapse collapse">
-						<ul class="list-group">
-								<li class="list-group-item"><a href="/inventories">ALL</a></li>
-							<% @categories.each do |c| %>
-								<li class="list-group-item"><a href="/index_category/<%= c.id %>"> <%= c.name %> </a></li>
-							<% end %>
-						</ul>
-						<div class="panel-footer"></div>
-					</div>
+				<div id="categories" class="panel-collapse collapse">
+					<ul class="list-group">
+							<li class="list-group-item"><a href="/inventories">ALL</a></li>
+						<% @categories.each do |c| %>
+							<li class="list-group-item"><a href="/index_category/<%= c.id %>"> <%= c.name %> </a></li>
+						<% end %>
+					</ul>
+					<div class="panel-footer"></div>
 				</div>
 			</div>
-
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>생성일</th>
-      				<th>재고 품명</th>
-      				<th colspan="1"></th>
-	    			</tr>
-				</thead>
-				<tbody>
-					<% @inventories.each do |inventory| %>
-    				<tr>
-    					<td><%= inventory.id %></td>
-    					<td><%= inventory.created_at.strftime( '%Y년 %m월 %d일' ) %></td>
-      				<td><%= inventory.iname %></td>
-      				<td align="right"><button type="button"  class="btn btn-info btn-xs"><%= link_to '보기', inventory %></button></td>
-    				</tr>
-    			<% end %>
-				</tbody>
-			</table>
-			<%= will_paginate @inventories %>
 		</div>
+	</div>
+
+	<div class="container">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>생성일</th>
+    				<th>재고 품명</th>
+    				<th colspan="1"></th>
+    			</tr>
+			</thead>
+			<tbody>
+				<% @inventories.each do |inventory| %>
+  				<tr>
+  					<td><%= inventory.id %></td>
+  					<td><%= inventory.created_at.strftime( '%Y년 %m월 %d일' ) %></td>
+    				<td><%= inventory.iname %></td>
+    				<td align="right"><button type="button"  class="btn btn-info btn-xs"><%= link_to '보기', inventory %></button></td>
+  				</tr>
+  			<% end %>
+			</tbody>
+		</table>
+		<%= will_paginate @inventories %>
+	</div>

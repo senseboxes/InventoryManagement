@@ -45,10 +45,6 @@ class ProductsController < ApplicationController
       end
   end
 
-  def date_check(recentdata)
-#    recentdata[:create_at].year
-  end
-
 # ' Create Product ' 시 ↓↓↓↓↓
   def create
     @inventory = Inventory.find(params[:inventory_id])
@@ -56,9 +52,6 @@ class ProductsController < ApplicationController
     isTrue = false
     @lastdata = @inventory.products.last
     @recentdata = @inventory.products.new(pro_params)
-
-#    date_check(@recentdata)
-
     # 입고나 출고가 nil일 경우 0으로 초기화 한다.
     if( @recentdata[:puchase_kg] == nil)
       @recentdata[:puchase_kg] = 0
@@ -171,12 +164,18 @@ class ProductsController < ApplicationController
     redirect_to inventory_path(@inventory)
   end
 
-  def set_product
-    @product = Product.find(params[:id])
+  def new
+    @product = Product.new
   end
 
-  def pro_params
-    params.require(:product).permit(:pname, :puchase_kg, :release_kg, :stock_kg, :predict, :month_avg, :memo, :created_at)
-  end
+  private
+
+    def set_product
+      @product = Product.find(params[:id])
+    end
+
+    def pro_params
+      params.require(:product).permit(:pname, :puchase_kg, :release_kg, :stock_kg, :predict, :month_avg, :memo, :created_at, prod_namelist_ids: [])
+    end
 
 end

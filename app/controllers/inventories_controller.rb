@@ -70,7 +70,6 @@ class InventoriesController < ApplicationController
   # GET /inventories/new
   def new
     @inventory = Inventory.new
-    @product = Product.new
   end
 
   # GET /inventories/1/edit

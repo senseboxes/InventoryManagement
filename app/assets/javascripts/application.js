@@ -12,7 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require tether
 //= require turbolinks
+//= require bootstrap
+//= require selectize
 //= require_tree .
 
 // TOP 버튼 jquery show.html.erb에 적용
