@@ -1,4 +1,6 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+	<p id="notice"><%= notice %></p>
+</div>
 
 <div class="container">
 	<h1 class="bg-info" align="center"><%= @inventory.iname %></h1>
@@ -26,7 +28,7 @@
 					<td><%= f.number_field :puchase_kg %></td>
 					<td><%= f.number_field :release_kg %></td>
 					<td><%= f.text_field :memo %></td>
-					<td><%= f.date_field :created_at %></td>
+					<td><%= f.datetime_select :created_at, :include_seconds => true %></td>
 				</tr>
 			</tbody>
 		</table>

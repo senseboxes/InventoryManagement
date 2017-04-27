@@ -18,7 +18,7 @@ $(document).on("turbolinks:load", function() {
       url: $(this).attr("action"),
       data: $(this).serialize(),
       success: function(response) {
-        selectizeCallback({value: response.id, text: response.name});
+        selectizeCallback({value: response.id, text: response.pname});
         selectizeCallback = null;
 
         $(".category-modal").modal('toggle');
@@ -26,13 +26,13 @@ $(document).on("turbolinks:load", function() {
     });
   });
 
-  $(".selectize").selectize({
+  $(".new_product .selectize").selectize({
     plugins: ['remove_button'],
     delimiter: ',',
     persist: false
   });
 
-  $(".new_product").change( function(){
+  $(".new_product .selectize").change( function(){
     pname_box(this);
   });
   function pname_box(o){

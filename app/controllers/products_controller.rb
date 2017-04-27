@@ -1,6 +1,7 @@
+require 'time'
 class ProductsController < ApplicationController
-  before_action :set_product, only: []
-
+  before_action :set_product, only: [:update_product]
+@@find_record = 0
 # index 페이지에서 export하기 위한 액션
   def index
     @products = Product.order(:created_at)
@@ -45,12 +46,79 @@ class ProductsController < ApplicationController
       end
   end
 
+  # 시간 기준으로 계산을 한다.
+  def chk_date(recent_chk)
+=begin
+    날짜가 입력된다.
+    입력된 날짜(input_date)와 현재 날짜(now_date)를 between으로 db에서 검색한다.
+    검색해온 값들과 새로입력한 값을 계산하고 값이 변한 상수를 def update로 넘겨주고 save
+    새로 입력된 값은 create에서 save
+
+    만약 새로 입력된 데이터가 오늘 날짜와 틀리다면 a 같다면 b
+
+    recent_chk => create 함수의 @recentdata(지금입력된 데이터의 값들)
+    search_date => 지금 입력된 데이터의 created_at를 불러옴 년/월/일/시/분/초
+    now_date => 현재 시간의 년/월/일/시/분/초
+    arr_date => search_date부터 now_date까지 products테이블에서 전부 불러옴
+    record_c => 불러온 데이터의 레코드가 몇 개인지 체크
+    now - 24.hours      # => Sun, 02 Nov 2014 01:26:28 EDT -04:00
+    now - 1.day         # => Sun, 02 Nov 2014 00:26:28 EDT -04:00
+=end
+    search_date = recent_chk[:created_at]
+    now_date = Time.zone.now
+#    search_date_value = search_date.strftime("%Y%m%d%H%M%S")
+#    arr_date_value = arr_date[0].created_at.strftime("%Y%m%d%H%M%S")
+    arr_date = @inventory.products.where('created_at BETWEEN ? AND ?', search_date, now_date).order('created_at ASC')
+    table_data_c = @inventory.products.where(inventory_id: recent_chk[:inventory_id]).count
+    record_c = arr_date.records.count
+    byebug
+# 재고 중간에 삽입.
+    if record_c > 0 && record_c != table_data_c
+      byebug
+      update_product(arr_date, table_data_c, record_c, recent_chk)
+      return true
+# 재고리스트 가장 마지막에 등록
+    elsif record_c == 0
+      return false
+      byebug
+# 재고리스트 가장 처음에 등록
+    else
+      @@find_record = 1
+      return false
+      byebug
+    end
+  end
+=begin
+  arr_record => 언제부터 언제까지 날짜로 검색한 데이터들
+  record_c => 위의 데이터들의 갯수
+  recent_chk => @recentdata
+=end
+  def update_product(arr_record, table_data_c, record_c, recent_chk)
+byebug
+      real_record = arr_record[0]
+      recent_chk[:stock_kg] = (real_record[:stock_kg]-real_record[:puchase_kg]+real_record[:release_kg])+(recent_chk[:puchase_kg]-recent_chk[:release_kg])
+      real_record[:stock_kg] = recent_chk[:stock_kg]-real_record[:release_kg]+real_record[:puchase_kg]
+      @recentdata = recent_chk
+      pro_params = real_record
+      byebug
+      pro_params.save
+      n = 1
+      while n < record_c
+        arr_record[n].stock_kg = arr_record[n-1].stock_kg - arr_record[n-1].release_kg + arr_record[n-1].puchase_kg
+        pro_params = arr_record[n]
+        byebug
+        pro_params.save
+        n += 1
+      end
+  end
+
+
 # ' Create Product ' 시 ↓↓↓↓↓
   def create
     @inventory = Inventory.find(params[:inventory_id])
     cnt = @inventory.products.count
     isTrue = false
-    @lastdata = @inventory.products.last
+    @lastdata = @inventory.products.order("created_at ASC").last # 날짜 기준으로 마지막데이터를 불러옴
     @recentdata = @inventory.products.new(pro_params)
     # 입고나 출고가 nil일 경우 0으로 초기화 한다.
     if( @recentdata[:puchase_kg] == nil)
@@ -71,14 +139,37 @@ class ProductsController < ApplicationController
          end
       end
 
+=begin
+기존 레코드는 존재하는데 날짜를 등록된 레코드 날짜보다 전으로 선택
+첫번째 레코드 저장일 때 ....
+전역변수? 지역변수?
+@lastdata = 모든 레코드중에서 가장 최근 날짜
+@fs_lastdata = 모든 레코드중에서 가장 오래된 날짜의 레코드
+
+변수가 1이면 a식 실행
+변수가 없거나 또는 2이면 b식 실행
+
+return은 값을 반환하지못함 ... only true, false만 인듯
+=end
 
     else            #재고리스트가 한개라도 존재하는 경우
-      if(!check_inout(@recentdata[:puchase_kg], @recentdata[:release_kg], @lastdata[:stock_kg]))
-        isTrue = false
-      else
-        @recentdata[:stock_kg] = @lastdata[:stock_kg] + @recentdata[:puchase_kg] - @recentdata[:release_kg]
-        isTrue = true
-      end
+      # 재고리스트 중간에 삽입되는게 아니라면 false를 리턴한다.
+      chk_date(@recentdata)
+        if(!check_inout(@recentdata[:puchase_kg], @recentdata[:release_kg], @lastdata[:stock_kg]))
+          isTrue = false
+          byebug
+        elsif @@find_record == 1
+          @fs_lastdata = @inventory.products.order("created_at ASC").first
+          @recentdata[:stock_kg] = @fs_lastdata[:stock_kg] + @fs_lastdata[:release_kg] - @fs_lastdata[:puchase_kg] + @recentdata[:puchase_kg] - @recentdata[:release_kg]
+          @@find_record = 0
+          isTrue = true
+          byebug
+        else
+          byebug
+          @recentdata[:stock_kg] = @lastdata[:stock_kg] + @recentdata[:puchase_kg] - @recentdata[:release_kg]
+          isTrue = true
+          byebug
+        end
     end
       pro_params = @recentdata
       respond_to do |format|
@@ -175,7 +266,7 @@ class ProductsController < ApplicationController
     end
 
     def pro_params
-      params.require(:product).permit(:pname, :puchase_kg, :release_kg, :stock_kg, :predict, :month_avg, :memo, :created_at, prod_namelist_ids: [])
+      params.require(:product).permit(:pname, :puchase_kg, :release_kg, :stock_kg, :predict, :month_avg, :memo, :created_at, :updated_at)
     end
 
 end

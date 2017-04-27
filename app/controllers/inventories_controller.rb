@@ -43,7 +43,7 @@ class InventoriesController < ApplicationController
     if c.save
       redirect_to "/categories", notice: "정상적으로 저장 되었습니다."
     else
-      flash[:alert] = c.errors[:categoryname][0]
+      flash[:notice] = c.errors[:categoryname][0]
       redirect_to :back
     end
   end
@@ -62,7 +62,7 @@ class InventoriesController < ApplicationController
   # GET /inventories/1.json
   def show
     @inventory = Inventory.find(params[:id])
-    @products = @inventory.products.order("id DESC")
+    @products = @inventory.products.order("created_at DESC")
 #    @products = @inventory.products.paginate(:page => params[:page]).order("id DESC")
 
   end
