@@ -20,19 +20,18 @@ class ProductsController < ApplicationController
   # EditBox에서 입고, 출고, 재고를 입력받아 사용상에 문제가 없는지 체크한다.
   # 계산상에 문제가 없다면 true를 리턴한다.
   def check_inout(puchase_kg, release_kg, stock_kg)
-    isTrue = false
-
     if( puchase_kg == 0 && release_kg == 0)                                 #입고와 출고를 모두 입력하지 않은 경우
         flash[:notice] = '입고와 출고중 한가지는 입력하셔야 합니다.'
+        isTrue = false
     elsif(puchase_kg < 0 || release_kg < 0)                                     #입고와 출고를 음수나 0을 넣은 경우
-          flash[:notice] = '숫자만 넣어주세요.'
+        flash[:notice] = '숫자만 넣어주세요.'
+        isTrue = false
     elsif(puchase_kg - release_kg + stock_kg < 0)                             #입고와 출고의 계산값이 재고보다 클 경우
-          flash[:notice] = '재고가 음수입니다.'
+        flash[:notice] = '재고가 음수입니다.'
+        isTrue = false
     else
       isTrue = true
     end
-
-    return isTrue
   end
 
   # 재고리스트가 '0'일 경우에만 호출한다.
@@ -46,46 +45,46 @@ class ProductsController < ApplicationController
       end
   end
 
+=begin
+      날짜가 입력된다.
+      입력된 날짜(input_date)와 현재 날짜(now_date)를 between으로 db에서 검색한다.
+      검색해온 값들과 새로입력한 값을 계산하고 값이 변한 상수를 def update로 넘겨주고 save
+      새로 입력된 값은 create에서 save
+
+      만약 새로 입력된 데이터가 오늘 날짜와 틀리다면 a 같다면 b
+
+      recent_chk => create 함수의 @recentdata(지금입력된 데이터의 값들)
+      search_date => 지금 입력된 데이터의 created_at를 불러옴 년/월/일/시/분/초
+      now_date => 현재 시간의 년/월/일/시/분/초
+      arr_date => search_date부터 now_date까지 products테이블에서 전부 불러옴
+      record_c => 불러온 데이터의 레코드가 몇 개인지 체크
+      now - 24.hours      # => Sun, 02 Nov 2014 01:26:28 EDT -04:00
+      now - 1.day         # => Sun, 02 Nov 2014 00:26:28 EDT -04:00
+=end
   # 시간 기준으로 계산을 한다.
   def chk_date(recent_chk)
-=begin
-    날짜가 입력된다.
-    입력된 날짜(input_date)와 현재 날짜(now_date)를 between으로 db에서 검색한다.
-    검색해온 값들과 새로입력한 값을 계산하고 값이 변한 상수를 def update로 넘겨주고 save
-    새로 입력된 값은 create에서 save
-
-    만약 새로 입력된 데이터가 오늘 날짜와 틀리다면 a 같다면 b
-
-    recent_chk => create 함수의 @recentdata(지금입력된 데이터의 값들)
-    search_date => 지금 입력된 데이터의 created_at를 불러옴 년/월/일/시/분/초
-    now_date => 현재 시간의 년/월/일/시/분/초
-    arr_date => search_date부터 now_date까지 products테이블에서 전부 불러옴
-    record_c => 불러온 데이터의 레코드가 몇 개인지 체크
-    now - 24.hours      # => Sun, 02 Nov 2014 01:26:28 EDT -04:00
-    now - 1.day         # => Sun, 02 Nov 2014 00:26:28 EDT -04:00
-=end
+    @@find_record = 0
     search_date = recent_chk[:created_at]
     now_date = Time.zone.now
-#    search_date_value = search_date.strftime("%Y%m%d%H%M%S")
-#    arr_date_value = arr_date[0].created_at.strftime("%Y%m%d%H%M%S")
-    arr_date = @inventory.products.where('created_at BETWEEN ? AND ?', search_date, now_date).order('created_at ASC')
+    arr_date = @inventory.products.where("created_at BETWEEN ? AND ?", search_date, now_date).order("created_at")
     table_data_c = @inventory.products.where(inventory_id: recent_chk[:inventory_id]).count
     record_c = arr_date.records.count
-    byebug
-# 재고 중간에 삽입.
+# @recentdata를 어떻게 보낼 것인가 ...
+# 재고 중간에 삽입
     if record_c > 0 && record_c != table_data_c
-      byebug
-      update_product(arr_date, table_data_c, record_c, recent_chk)
-      return true
+      if recent_chk[:puchase_kg] - recent_chk[:release_kg] < arr_date[0].stock_kg
+        update_product(arr_date, record_c, recent_chk)
+        @@find_record = 1
+      end
 # 재고리스트 가장 마지막에 등록
     elsif record_c == 0
-      return false
-      byebug
+      @@find_record = 2
 # 재고리스트 가장 처음에 등록
     else
-      @@find_record = 1
-      return false
-      byebug
+      if recent_chk[:puchase_kg] > recent_chk[:release_kg]
+        update_lowrank(arr_date, record_c, recent_chk)
+        @@find_record = 3
+      end
     end
   end
 =begin
@@ -93,32 +92,48 @@ class ProductsController < ApplicationController
   record_c => 위의 데이터들의 갯수
   recent_chk => @recentdata
 =end
-  def update_product(arr_record, table_data_c, record_c, recent_chk)
-byebug
-      real_record = arr_record[0]
-      recent_chk[:stock_kg] = (real_record[:stock_kg]-real_record[:puchase_kg]+real_record[:release_kg])+(recent_chk[:puchase_kg]-recent_chk[:release_kg])
-      real_record[:stock_kg] = recent_chk[:stock_kg]-real_record[:release_kg]+real_record[:puchase_kg]
-      @recentdata = recent_chk
-      pro_params = real_record
-      byebug
+  def update_product(arr_record, record_c, recent_chk)
+    # 검색할 날짜(search_date)부터 현재 날짜(now_date)까지의 레코드(데이터) => arr_date[n개]
+    real_record = arr_record[0]
+    real_record_stock = real_record[:stock_kg] + real_record[:release_kg] - real_record[:puchase_kg]
+    recent_chk[:stock_kg] = real_record_stock + recent_chk[:puchase_kg] - recent_chk[:release_kg]
+    real_record[:stock_kg] = recent_chk[:stock_kg] + real_record[:puchase_kg] - real_record[:release_kg]
+    # (arr_date중에서 가장 첫[0] 번째) 데이터를 pro_params에 대입
+    pro_params = real_record
+    # pro_params 저장
+    pro_params.save
+    # 여기서부터는 (arr_date의 두 번째 레코드부터 업데이트)
+    n = 1
+    while n < record_c
+      # n 번째 레코드의 재고중량 = n-1 번째 재고중량(n번째의 바로 전 데이터와 계산해야하기 때문에 n-1이 됨) - 출고중량 + 입고중량
+      arr_record[n].stock_kg = arr_record[n-1].stock_kg + arr_record[n].puchase_kg - arr_record[n].release_kg
+      pro_params = arr_record[n]
       pro_params.save
-      n = 1
-      while n < record_c
-        arr_record[n].stock_kg = arr_record[n-1].stock_kg - arr_record[n-1].release_kg + arr_record[n-1].puchase_kg
-        pro_params = arr_record[n]
-        byebug
-        pro_params.save
-        n += 1
-      end
+      n += 1
+    end
   end
 
+  def update_lowrank(arry_record, record_c, recent_chk)
+    record_no = arry_record[0]
+    record_no_stock = record_no[:stock_kg] + recent_chk[:puchase_kg] - recent_chk[:release_kg]
+    record_no[:stock_kg] = record_no_stock
+    pro_params = record_no
+    pro_params.save
+    n = 1
+    while n < record_c
+      arry_record[n].stock_kg = arry_record[n-1].stock_kg + arry_record[n].puchase_kg - arry_record[n].release_kg
+      pro_params = arry_record[n]
+      pro_params.save
+      n += 1
+    end
+  end
 
 # ' Create Product ' 시 ↓↓↓↓↓
   def create
+    isTrue = false
     @inventory = Inventory.find(params[:inventory_id])
     cnt = @inventory.products.count
-    isTrue = false
-    @lastdata = @inventory.products.order("created_at ASC").last # 날짜 기준으로 마지막데이터를 불러옴
+    @lastdata = @inventory.products.order("created_at").last # 날짜 기준으로 마지막데이터를 불러옴
     @recentdata = @inventory.products.new(pro_params)
     # 입고나 출고가 nil일 경우 0으로 초기화 한다.
     if( @recentdata[:puchase_kg] == nil)
@@ -153,22 +168,40 @@ return은 값을 반환하지못함 ... only true, false만 인듯
 =end
 
     else            #재고리스트가 한개라도 존재하는 경우
-      # 재고리스트 중간에 삽입되는게 아니라면 false를 리턴한다.
       chk_date(@recentdata)
-        if(!check_inout(@recentdata[:puchase_kg], @recentdata[:release_kg], @lastdata[:stock_kg]))
-          isTrue = false
+          # 재고 중간에 등록
+        if @@find_record == 1
+          fr1_sear_date = @recentdata[:created_at]
+          fr1_now_date = Time.zone.now
+          @fr1_lastdata = @inventory.products.where("created_at BETWEEN ? AND ?", fr1_sear_date, fr1_now_date).order("created_at")
+          if check_inout(@recentdata[:puchase_kg], @recentdata[:release_kg], @fr1_lastdata[0].stock_kg) == true
+            #@recentdata[:stock_kg] = @fr1_lastdata[0].stock_kg + @recentdata[:puchase_kg] - @recentdata[:release_kg]
+            isTrue = true
+          else
+            isTrue = false
+          end
+          # 재고 가장 마지막에 등록
+        elsif @@find_record == 2
+          # ASC : 오름차순 , DESC : 내림차순 ( ASC는 생략해도 됨 ; 기본이 ASC )
+          @fr2_lastdata = @inventory.products.order("created_at").first
+          if check_inout(@recentdata[:puchase_kg], @recentdata[:release_kg], @fr2_lastdata[:stock_kg]) == true
+            @recentdata[:stock_kg] = @fr2_lastdata[:stock_kg] + @recentdata[:puchase_kg] - @recentdata[:release_kg]
+            isTrue = true
+          else
+            isTrue = false
+          end
           byebug
-        elsif @@find_record == 1
-          @fs_lastdata = @inventory.products.order("created_at ASC").first
-          @recentdata[:stock_kg] = @fs_lastdata[:stock_kg] + @fs_lastdata[:release_kg] - @fs_lastdata[:puchase_kg] + @recentdata[:puchase_kg] - @recentdata[:release_kg]
-          @@find_record = 0
-          isTrue = true
-          byebug
+        # 재고 가장 처음에 등록
+        elsif @@find_record == 3
+          @fr3_firstdata = @inventory.products.order("created_at").first
+          if check_inout(@recentdata[:puchase_kg], @recentdata[:release_kg], @recentdata[:puchase_kg]) == true
+            @recentdata[:stock_kg] = @recentdata[:puchase_kg] - @recentdata[:release_kg]
+            isTrue = true
+          else
+            isTrue = false
+          end
         else
-          byebug
-          @recentdata[:stock_kg] = @lastdata[:stock_kg] + @recentdata[:puchase_kg] - @recentdata[:release_kg]
-          isTrue = true
-          byebug
+
         end
     end
       pro_params = @recentdata

@@ -58,6 +58,7 @@ group :development do
   gem 'capistrano-rails', '~> 1.2', '>= 1.2.2'
   gem 'capistrano-rbenv', '~> 2.1'
   gem 'capistrano-passenger'
+  gem 'meta_request', '~> 0.4.0'
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console'
 end
