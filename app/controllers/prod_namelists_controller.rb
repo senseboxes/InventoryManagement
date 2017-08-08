@@ -8,9 +8,7 @@ class ProdNamelistsController < ApplicationController
     end
   end
 
-  private
-
-    def prod_namelist_params
-      params.require(:prod_namelist).permit(:name, :description)
-    end
+  def prod_namelist_params
+    params.require(:prod_namelist).permit(:name, :description)
+  end
 end

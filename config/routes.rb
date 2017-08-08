@@ -35,4 +35,6 @@ Rails.application.routes.draw do
 # 쿠키부여를 위한 경로지정
   post "/home" => 'home#cookie_rec'
 
+# product 생성
+  get "/AddTopro" => "inventories#AddTopro"
 end

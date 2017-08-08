@@ -66,7 +66,10 @@ class ProductsController < ApplicationController
     @@find_record = 0
     search_date = recent_chk[:created_at]
     now_date = Time.zone.now
-    arr_date = @inventory.products.where("created_at BETWEEN ? AND ?", search_date, now_date).order("created_at")
+    arr_date = @inventory.products.where("created_at BETWEEN ? AND ?", search_date, now_date).order(created_at: :DESC
+    #arr_date = @inventory.products.where("created_at BETWEEN ? AND ?", search_date, now_date).order("created_at")
+    #arr_date = @inventory.products.where("created_at BETWEEN ? AND ?", search_date, now_date).order(:created_at)
+    #asc:오름차순-> 1,2,3,4,5 // desc:내림차순 -> 5,4,3,2,1
     table_data_c = @inventory.products.where(inventory_id: recent_chk[:inventory_id]).count
     record_c = arr_date.records.count
 # @recentdata를 어떻게 보낼 것인가 ...
@@ -143,7 +146,7 @@ class ProductsController < ApplicationController
       @recentdata[:release_kg] = 0
     end
 
-    if ( cnt == 0)  #재고리스트가 비어있는 경우
+    if ( cnt == 0 )  #재고리스트가 비어있는 경우
       @recentdata[:stock_kg] = 0        #인자로 넘어갈 값이 nil일 경우 계산에 문제가 생길 수 있으므로 초기화한다.
       if(!check_inout(@recentdata[:puchase_kg], @recentdata[:release_kg], @recentdata[:stock_kg]))
         isTrue = false
@@ -190,7 +193,6 @@ return은 값을 반환하지못함 ... only true, false만 인듯
           else
             isTrue = false
           end
-          byebug
         # 재고 가장 처음에 등록
         elsif @@find_record == 3
           @fr3_firstdata = @inventory.products.order("created_at").first
