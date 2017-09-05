@@ -1,0 +1,2 @@
+class ProductProductnameset < ApplicationRecord
+end

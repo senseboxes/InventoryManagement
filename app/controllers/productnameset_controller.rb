@@ -1,0 +1,2 @@
+class ProductnamesetController < ApplicationController
+end

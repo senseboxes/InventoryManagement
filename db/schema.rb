@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170322063342) do
+ActiveRecord::Schema.define(version: 20170905025155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,22 @@ ActiveRecord::Schema.define(version: 20170322063342) do
     t.index ["inventory_id"], name: "index_monthaverages_on_inventory_id"
   end
 
+  create_table "product_productnamesets", force: :cascade do |t|
+    t.bigint "product_id"
+    t.bigint "productnameset_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_product_productnamesets_on_product_id"
+    t.index ["productnameset_id"], name: "index_product_productnamesets_on_productnameset_id"
+  end
+
+  create_table "productnamesets", force: :cascade do |t|
+    t.string "productname"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "products", id: :serial, force: :cascade do |t|
     t.string "pname"
     t.integer "puchase_kg"
@@ -110,5 +126,7 @@ ActiveRecord::Schema.define(version: 20170322063342) do
 
   add_foreign_key "inventories", "categories"
   add_foreign_key "monthaverages", "inventories"
+  add_foreign_key "product_productnamesets", "productnamesets"
+  add_foreign_key "product_productnamesets", "products"
   add_foreign_key "products", "inventories"
 end
