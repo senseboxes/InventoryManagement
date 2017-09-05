@@ -10,8 +10,6 @@
 	<h3>정보 입력</h3>
 	<p>정보 입력 시 반드시 <strong style="color: red">입고나 출고 중량</strong> 중에 한 가지는 입력하셔야 합니다.</p>
 	<%= form_for([@inventory, @inventory.products.build]) do |f| %>
-		<%= f.label :prod_namelist_ids, "생산품 선택" %>
-		<%= f.select :prod_namelist_ids, ProdNamelist.all.pluck(:name, :id), {}, { multiple: true, class: "selectize" } %>
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -24,7 +22,7 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td><%= f.text_field :pname, class: "p_pname" %></td>
+					<td><%= f.text_field :pname %></td>
 					<td><%= f.number_field :puchase_kg %></td>
 					<td><%= f.number_field :release_kg %></td>
 					<td><%= f.text_field :memo %></td>
@@ -38,32 +36,6 @@
 	  </div>
 	<% end %>
 </div>
-<div class="modal fade category-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <h4 class="modal-title" id="mySmallModalLabel">생산품명 추가</h4>
-      </div>
-      <div class="modal-body">
-        <%= form_for ProdNamelist.new do |f| %>
-          <div class="form-group">
-            <%= f.label :name %>
-            <%= f.text_field :name, class: "form-control" %>
-          </div>
-          <div class="form-group">
-            <%= f.label :description %>
-            <%= f.text_area :description, class: "form-control" %>
-          </div>
-          <div class="form-group">
-            <%= f.submit class: "btn btn-primary" %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="container">
 	<h2>재고에 대한 정보</h2>
 		<table class="table table-hover">

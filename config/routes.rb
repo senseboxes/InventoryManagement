@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :products do
     end
   end
-  resources :prod_namelists
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root :to => "home#index"
 
@@ -35,6 +35,4 @@ Rails.application.routes.draw do
 # 쿠키부여를 위한 경로지정
   post "/home" => 'home#cookie_rec'
 
-# product 생성
-  get "/AddTopro" => "inventories#AddTopro"
 end

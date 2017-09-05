@@ -1,7 +1,5 @@
 class Product < ApplicationRecord
   belongs_to :inventory
-  has_many :product_namelists, :dependent => :destroy
-  has_many :prod_namelists, through: :product_namelists
 
   def self.to_csv(options = {})
     desired_columns = ["id", "pname", "puchase_kg", "release_kg", "stock_kg", "predict", "month_avg", "memo", "inventory_id", "created_at", "updated_at"]

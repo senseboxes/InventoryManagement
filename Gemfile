@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.2'
+gem 'rails'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 # Use Puma as the app server
@@ -54,8 +54,8 @@ gem 'roo', '~> 2.7', '>= 2.7.1'
 gem 'pg', '~> 0.18'
 # Capistrano setup
 group :development do
-  gem 'capistrano', '~> 3.7', '>= 3.7.2'
-  gem 'capistrano-rails', '~> 1.2', '>= 1.2.2'
+  gem 'capistrano', '~> 3.9.0'
+  gem 'capistrano-rails', '~> 1.2'
   gem 'capistrano-rbenv', '~> 2.1'
   gem 'capistrano-passenger'
   gem 'meta_request', '~> 0.4.0'

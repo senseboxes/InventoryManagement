@@ -58,10 +58,6 @@ class InventoriesController < ApplicationController
     @categories = Category.all
   end
 
-  def AddTopro
-    @prodnamelists = ProdNamelist.new
-  end
-
   # GET /inventories/1
   # GET /inventories/1.json
   def show

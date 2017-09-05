@@ -10,123 +10,105 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170406024331) do
+ActiveRecord::Schema.define(version: 20170322063342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "categories", force: :cascade do |t|
-    t.string   "name"
+  create_table "categories", id: :serial, force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "inventories", force: :cascade do |t|
-    t.string   "iname"
-    t.integer  "inputID"
-    t.integer  "categoryID"
-    t.boolean  "bool1"
-    t.boolean  "bool2"
-    t.text     "text"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "category_id"
-    t.integer  "iST_KG"
-    t.index ["category_id"], name: "index_inventories_on_category_id", using: :btree
+  create_table "inventories", id: :serial, force: :cascade do |t|
+    t.string "iname"
+    t.integer "inputID"
+    t.integer "categoryID"
+    t.boolean "bool1"
+    t.boolean "bool2"
+    t.text "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "category_id"
+    t.integer "iST_KG"
+    t.index ["category_id"], name: "index_inventories_on_category_id"
   end
 
-  create_table "invinfos", force: :cascade do |t|
-    t.string   "iiname"
-    t.integer  "iinputID"
-    t.integer  "icategoryID"
-    t.boolean  "ibool1"
-    t.boolean  "ibool2"
-    t.text     "itext"
-    t.string   "reserve1_s"
-    t.string   "reserve2_s"
-    t.string   "reserve3_s"
-    t.string   "reserve4_s"
-    t.string   "reserve5_s"
-    t.integer  "reserve1_i"
-    t.integer  "reserve2_i"
-    t.integer  "reserve3_i"
-    t.integer  "reserve4_i"
-    t.integer  "reserve5_i"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "invinfos", id: :serial, force: :cascade do |t|
+    t.string "iiname"
+    t.integer "iinputID"
+    t.integer "icategoryID"
+    t.boolean "ibool1"
+    t.boolean "ibool2"
+    t.text "itext"
+    t.string "reserve1_s"
+    t.string "reserve2_s"
+    t.string "reserve3_s"
+    t.string "reserve4_s"
+    t.string "reserve5_s"
+    t.integer "reserve1_i"
+    t.integer "reserve2_i"
+    t.integer "reserve3_i"
+    t.integer "reserve4_i"
+    t.integer "reserve5_i"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "monthaverages", force: :cascade do |t|
-    t.string   "inven_name"
-    t.integer  "january"
-    t.integer  "february"
-    t.integer  "march"
-    t.integer  "april"
-    t.integer  "may"
-    t.integer  "june"
-    t.integer  "july"
-    t.integer  "august"
-    t.integer  "september"
-    t.integer  "october"
-    t.integer  "november"
-    t.integer  "december"
-    t.integer  "january_c"
-    t.integer  "february_c"
-    t.integer  "march_c"
-    t.integer  "april_c"
-    t.integer  "may_c"
-    t.integer  "june_c"
-    t.integer  "july_c"
-    t.integer  "august_c"
-    t.integer  "september_c"
-    t.integer  "october_c"
-    t.integer  "november_c"
-    t.integer  "december_c"
-    t.integer  "y_sum"
-    t.integer  "y_avg"
-    t.integer  "m_avg"
-    t.integer  "y_index"
-    t.integer  "m_index"
-    t.integer  "inventory_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.integer  "cat_ID"
-    t.index ["inventory_id"], name: "index_monthaverages_on_inventory_id", using: :btree
+  create_table "monthaverages", id: :serial, force: :cascade do |t|
+    t.string "inven_name"
+    t.integer "january"
+    t.integer "february"
+    t.integer "march"
+    t.integer "april"
+    t.integer "may"
+    t.integer "june"
+    t.integer "july"
+    t.integer "august"
+    t.integer "september"
+    t.integer "october"
+    t.integer "november"
+    t.integer "december"
+    t.integer "january_c"
+    t.integer "february_c"
+    t.integer "march_c"
+    t.integer "april_c"
+    t.integer "may_c"
+    t.integer "june_c"
+    t.integer "july_c"
+    t.integer "august_c"
+    t.integer "september_c"
+    t.integer "october_c"
+    t.integer "november_c"
+    t.integer "december_c"
+    t.integer "y_sum"
+    t.integer "y_avg"
+    t.integer "m_avg"
+    t.integer "y_index"
+    t.integer "m_index"
+    t.integer "inventory_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "cat_ID"
+    t.index ["inventory_id"], name: "index_monthaverages_on_inventory_id"
   end
 
-  create_table "prod_namelists", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  create_table "product_namelists", force: :cascade do |t|
-    t.integer  "product_id"
-    t.integer  "prod_namelist_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["prod_namelist_id"], name: "index_product_namelists_on_prod_namelist_id", using: :btree
-    t.index ["product_id"], name: "index_product_namelists_on_product_id", using: :btree
-  end
-
-  create_table "products", force: :cascade do |t|
-    t.string   "pname"
-    t.integer  "puchase_kg"
-    t.integer  "release_kg"
-    t.integer  "stock_kg"
-    t.integer  "predict"
-    t.integer  "month_avg"
-    t.string   "memo"
-    t.integer  "inventory_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["inventory_id"], name: "index_products_on_inventory_id", using: :btree
+  create_table "products", id: :serial, force: :cascade do |t|
+    t.string "pname"
+    t.integer "puchase_kg"
+    t.integer "release_kg"
+    t.integer "stock_kg"
+    t.integer "predict"
+    t.integer "month_avg"
+    t.string "memo"
+    t.integer "inventory_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["inventory_id"], name: "index_products_on_inventory_id"
   end
 
   add_foreign_key "inventories", "categories"
   add_foreign_key "monthaverages", "inventories"
-  add_foreign_key "product_namelists", "prod_namelists"
-  add_foreign_key "product_namelists", "products"
   add_foreign_key "products", "inventories"
 end

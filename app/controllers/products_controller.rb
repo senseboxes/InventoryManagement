@@ -66,10 +66,11 @@ class ProductsController < ApplicationController
     @@find_record = 0
     search_date = recent_chk[:created_at]
     now_date = Time.zone.now
-    arr_date = @inventory.products.where("created_at BETWEEN ? AND ?", search_date, now_date).order(created_at: :DESC
+    arr_date = @inventory.products.where("created_at BETWEEN ? AND ?", search_date, now_date).order(created_at: :ASC)
     #arr_date = @inventory.products.where("created_at BETWEEN ? AND ?", search_date, now_date).order("created_at")
     #arr_date = @inventory.products.where("created_at BETWEEN ? AND ?", search_date, now_date).order(:created_at)
     #asc:오름차순-> 1,2,3,4,5 // desc:내림차순 -> 5,4,3,2,1
+    byebug
     table_data_c = @inventory.products.where(inventory_id: recent_chk[:inventory_id]).count
     record_c = arr_date.records.count
 # @recentdata를 어떻게 보낼 것인가 ...
@@ -106,6 +107,7 @@ class ProductsController < ApplicationController
     # pro_params 저장
     pro_params.save
     # 여기서부터는 (arr_date의 두 번째 레코드부터 업데이트)
+    byebug
     n = 1
     while n < record_c
       # n 번째 레코드의 재고중량 = n-1 번째 재고중량(n번째의 바로 전 데이터와 계산해야하기 때문에 n-1이 됨) - 출고중량 + 입고중량
@@ -113,6 +115,7 @@ class ProductsController < ApplicationController
       pro_params = arr_record[n]
       pro_params.save
       n += 1
+      byebug
     end
   end
 
@@ -122,12 +125,14 @@ class ProductsController < ApplicationController
     record_no[:stock_kg] = record_no_stock
     pro_params = record_no
     pro_params.save
+    byebug
     n = 1
     while n < record_c
       arry_record[n].stock_kg = arry_record[n-1].stock_kg + arry_record[n].puchase_kg - arry_record[n].release_kg
       pro_params = arry_record[n]
       pro_params.save
       n += 1
+      byebug
     end
   end
 
@@ -186,7 +191,8 @@ return은 값을 반환하지못함 ... only true, false만 인듯
           # 재고 가장 마지막에 등록
         elsif @@find_record == 2
           # ASC : 오름차순 , DESC : 내림차순 ( ASC는 생략해도 됨 ; 기본이 ASC )
-          @fr2_lastdata = @inventory.products.order("created_at").first
+          @fr2_lastdata = @inventory.products.order("created_at").last
+          byebug
           if check_inout(@recentdata[:puchase_kg], @recentdata[:release_kg], @fr2_lastdata[:stock_kg]) == true
             @recentdata[:stock_kg] = @fr2_lastdata[:stock_kg] + @recentdata[:puchase_kg] - @recentdata[:release_kg]
             isTrue = true
