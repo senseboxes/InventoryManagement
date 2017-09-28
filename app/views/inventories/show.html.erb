@@ -10,10 +10,12 @@
 	<h3>정보 입력</h3>
 	<p>정보 입력 시 반드시 <strong style="color: red">입고나 출고 중량</strong> 중에 한 가지는 입력하셔야 합니다.</p>
 	<%= form_for([@inventory, @inventory.products.build]) do |f| %>
+	<%= f.label :productnameset_ids, "생산품 선택" %>
+	<%= f.select :productnameset_ids, Productnameset.all.pluck(:productname, :id), {}, { multiple: true, class: "selectize" } %>
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th>생산품명</th>
+					<th>생산품 명</th>
 					<th>입고 중량</th>
 					<th>출고 중량</th>
 					<th>비 고</th>
@@ -22,7 +24,7 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td><%= f.text_field :pname %></td>
+					<td><%= f.text_field :pname, class: "p_pname" %></td>
 					<td><%= f.number_field :puchase_kg %></td>
 					<td><%= f.number_field :release_kg %></td>
 					<td><%= f.text_field :memo %></td>

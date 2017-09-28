@@ -8,13 +8,14 @@ class InventoriesController < ApplicationController
     @categories = Category.all
       if cookies[:cookie_name] == 'fiber'
         @category_id = '1'
+        @inventories = Inventory.where(category_id: @category_id)
       elsif cookies[:cookie_name] == 'grind'
         @category_id = '2'
-      elsif cookies[:cookie_name] == nil
+        @inventories = Inventory.where(category_id: @category_id)
+      else
         flash[:notice] = "초기화면으로 돌아가 화이버 또는 연마사를 선택하시면 선택한 분류만 볼 수 있습니다."
-        @category_id ='1', '2'
+        @inventories = Inventory.all
       end
-      @inventories = Inventory.where(category_id: @category_id)
       @inventories = @inventories.paginate(:page => params[:page]).order("id DESC")
   end
 
@@ -41,17 +42,17 @@ class InventoriesController < ApplicationController
     c = Category.new
     c.name = params[:categoryname]
     if c.save
-      redirect_to "/categories", notice: "정상적으로 저장 되었습니다."
+      redirect_to "/categories", notice: "정상적으로 저장되었습니다."
     else
       flash[:notice] = c.errors[:categoryname][0]
       redirect_to :back
     end
   end
 
-  def  category_destroy
+  def category_destroy
     @categories = Category.find(params[:id])
     @categories.destroy
-    redirect_to "/categories", notice: "정상적으로 삭제 되었습니다."
+    redirect_to "/categories", notice: "정상적으로 삭제되었습니다."
   end
 
   def categories

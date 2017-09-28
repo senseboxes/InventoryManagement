@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  productname: MyString
-  description: MyText
+  product_id: 1
+  productnameset_id: 1
 
 two:
-  productname: MyString
-  description: MyText
+  product_id: 1
+  productnameset_id: 1

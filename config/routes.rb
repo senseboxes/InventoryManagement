@@ -1,17 +1,17 @@
 Rails.application.routes.draw do
+  root :to => "home#index"
+
+  resources :inventories do
+    resources :products do
+    end
+  end
+
   resources :product_imports
   resources :products do
     collection do
       post :import
     end
   end
-  resources :inventories do
-    resources :products do
-    end
-  end
-
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root :to => "home#index"
 
 # monthaverage의 경로
   get 'monthaverage/monthavg'
@@ -34,5 +34,11 @@ Rails.application.routes.draw do
 
 # 쿠키부여를 위한 경로지정
   post "/home" => 'home#cookie_rec'
+
+# 생산품명를 등록하는 경로
+  get "/productnameset_write" => 'products#productnameset_write'
+  post '/productnameset_write_complete' => 'products#productnameset_write_complete'
+  get '/productnameset' => 'products#productnameset'
+  post '/productnameset/:id' => 'products#productnameset_destroy'
 
 end

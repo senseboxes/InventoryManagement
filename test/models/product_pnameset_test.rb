@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ProductnamesetControllerTest < ActionDispatch::IntegrationTest
+class ProductPnamesetTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -1,6 +1,6 @@
 require 'time'
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:update_product]
+  before_action :set_product, only: [:update_product, :destroy]
 @@find_record = 0
 # index 페이지에서 export하기 위한 액션
   def index
@@ -57,9 +57,9 @@ class ProductsController < ApplicationController
       search_date => 지금 입력된 데이터의 created_at를 불러옴 년/월/일/시/분/초
       now_date => 현재 시간의 년/월/일/시/분/초
       arr_date => search_date부터 now_date까지 products테이블에서 전부 불러옴
-      record_c => 불러온 데이터의 레코드가 몇 개인지 체크
-      now - 24.hours      # => Sun, 02 Nov 2014 01:26:28 EDT -04:00
-      now - 1.day         # => Sun, 02 Nov 2014 00:26:28 EDT -04:00
+      record_c => arr_date의 레코드가 몇 개인지 체크
+      now - 24.hours       => Sun, 02 Nov 2014 01:26:28 EDT -04:00
+      now - 1.day          => Sun, 02 Nov 2014 00:26:28 EDT -04:00
 =end
   # 시간 기준으로 계산을 한다.
   def chk_date(recent_chk)
@@ -67,10 +67,8 @@ class ProductsController < ApplicationController
     search_date = recent_chk[:created_at]
     now_date = Time.zone.now
     arr_date = @inventory.products.where("created_at BETWEEN ? AND ?", search_date, now_date).order(created_at: :ASC)
-    #arr_date = @inventory.products.where("created_at BETWEEN ? AND ?", search_date, now_date).order("created_at")
-    #arr_date = @inventory.products.where("created_at BETWEEN ? AND ?", search_date, now_date).order(:created_at)
+    #가장 마지막(즉)
     #asc:오름차순-> 1,2,3,4,5 // desc:내림차순 -> 5,4,3,2,1
-    byebug
     table_data_c = @inventory.products.where(inventory_id: recent_chk[:inventory_id]).count
     record_c = arr_date.records.count
 # @recentdata를 어떻게 보낼 것인가 ...
@@ -107,7 +105,6 @@ class ProductsController < ApplicationController
     # pro_params 저장
     pro_params.save
     # 여기서부터는 (arr_date의 두 번째 레코드부터 업데이트)
-    byebug
     n = 1
     while n < record_c
       # n 번째 레코드의 재고중량 = n-1 번째 재고중량(n번째의 바로 전 데이터와 계산해야하기 때문에 n-1이 됨) - 출고중량 + 입고중량
@@ -115,7 +112,6 @@ class ProductsController < ApplicationController
       pro_params = arr_record[n]
       pro_params.save
       n += 1
-      byebug
     end
   end
 
@@ -125,14 +121,12 @@ class ProductsController < ApplicationController
     record_no[:stock_kg] = record_no_stock
     pro_params = record_no
     pro_params.save
-    byebug
     n = 1
     while n < record_c
       arry_record[n].stock_kg = arry_record[n-1].stock_kg + arry_record[n].puchase_kg - arry_record[n].release_kg
       pro_params = arry_record[n]
       pro_params.save
       n += 1
-      byebug
     end
   end
 
@@ -176,6 +170,7 @@ return은 값을 반환하지못함 ... only true, false만 인듯
 =end
 
     else            #재고리스트가 한개라도 존재하는 경우
+
       chk_date(@recentdata)
           # 재고 중간에 등록
         if @@find_record == 1
@@ -192,7 +187,6 @@ return은 값을 반환하지못함 ... only true, false만 인듯
         elsif @@find_record == 2
           # ASC : 오름차순 , DESC : 내림차순 ( ASC는 생략해도 됨 ; 기본이 ASC )
           @fr2_lastdata = @inventory.products.order("created_at").last
-          byebug
           if check_inout(@recentdata[:puchase_kg], @recentdata[:release_kg], @fr2_lastdata[:stock_kg]) == true
             @recentdata[:stock_kg] = @fr2_lastdata[:stock_kg] + @recentdata[:puchase_kg] - @recentdata[:release_kg]
             isTrue = true
@@ -241,7 +235,7 @@ return은 값을 반환하지못함 ... only true, false만 인듯
     end
   end
 
-# => import create 시
+  # => import create 시
   def import_create(product)
     @inventory = Inventory.find(product["inventory_id"])
     cnt = @inventory.products.count
@@ -286,11 +280,13 @@ return은 값을 반환하지못함 ... only true, false만 인듯
   def destroy
     @inventory = Inventory.find(params[:inventory_id])
     @product = @inventory.products.find(params[:id])
+    # puchase_kg와 release_kg 값을 빼주는 식
+    # 여기도 create처럼 처음데어터 삭제냐? 중간데이터 삭제냐? 마지막 데이터삭제냐?의 조건식을 만들어야 할 듯....
+    # 조건은?
     @product.destroy
     @lastdata = @inventory.products.last
     @InventoriesController = InventoriesController.new
     @InventoriesController.pro_delete(@lastdata, @inventory)
-
     @MonthaverageController = MonthaverageController.new
     @MonthaverageController.month_minus(@product)
     redirect_to inventory_path(@inventory)
@@ -300,6 +296,27 @@ return은 값을 반환하지못함 ... only true, false만 인듯
     @product = Product.new
   end
 
+  def productnameset
+    @productnameset = Productnameset.all
+  end
+
+  def productnameset_write_complete
+    pro = Productnameset.new
+    pro.productname = params[:productname]
+    if pro.save
+      redirect_to "/productnameset", notice: "정상적으로 저장되었습니다."
+    else
+      flash[:notice] = pro.errors[:productname][0]
+      redirect_to :back
+    end
+  end
+
+  def productnameset_destroy
+    @productnameset = Productnameset.find(params[:id])
+    @productnameset.destroy
+    redirect_to "/productnameset", notice: "정상적으로 삭제되었습니다."
+  end
+
   private
 
     def set_product
@@ -307,7 +324,7 @@ return은 값을 반환하지못함 ... only true, false만 인듯
     end
 
     def pro_params
-      params.require(:product).permit(:pname, :puchase_kg, :release_kg, :stock_kg, :predict, :month_avg, :memo, :created_at, :updated_at)
+      params.require(:product).permit(:pname, :puchase_kg, :release_kg, :stock_kg, :predict, :month_avg, :memo, :created_at, :updated_at, :productnameset_id)
     end
 
 end

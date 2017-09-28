@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170905025155) do
+ActiveRecord::Schema.define(version: 20170918042605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,13 +94,13 @@ ActiveRecord::Schema.define(version: 20170905025155) do
     t.index ["inventory_id"], name: "index_monthaverages_on_inventory_id"
   end
 
-  create_table "product_productnamesets", force: :cascade do |t|
+  create_table "product_pnamesets", force: :cascade do |t|
     t.bigint "product_id"
     t.bigint "productnameset_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_product_productnamesets_on_product_id"
-    t.index ["productnameset_id"], name: "index_product_productnamesets_on_productnameset_id"
+    t.index ["product_id"], name: "index_product_pnamesets_on_product_id"
+    t.index ["productnameset_id"], name: "index_product_pnamesets_on_productnameset_id"
   end
 
   create_table "productnamesets", force: :cascade do |t|
@@ -121,12 +121,15 @@ ActiveRecord::Schema.define(version: 20170905025155) do
     t.integer "inventory_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "productnameset_id"
     t.index ["inventory_id"], name: "index_products_on_inventory_id"
+    t.index ["productnameset_id"], name: "index_products_on_productnameset_id"
   end
 
   add_foreign_key "inventories", "categories"
   add_foreign_key "monthaverages", "inventories"
-  add_foreign_key "product_productnamesets", "productnamesets"
-  add_foreign_key "product_productnamesets", "products"
+  add_foreign_key "product_pnamesets", "productnamesets"
+  add_foreign_key "product_pnamesets", "products"
   add_foreign_key "products", "inventories"
+  add_foreign_key "products", "productnamesets"
 end

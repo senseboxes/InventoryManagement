@@ -158,55 +158,84 @@ class MonthaverageController < ApplicationController
 
     @monthaverages = Monthaverage.find_by(inventory_id: pro_invenID, y_index: pro_year)
 
+
+# 문제 발생 ... 월 카운트가 1이었다가 -1하면 0이 되버리면서 에러 발생
+# 해결책 = ZeroDivisionError 예외처리
+# 출고에 대한 삭제처리는 정상이나 ... 입고에 대한 삭제처리는 없는 상태
+
     case pro_month
     when 1
       @monthaverages[:january] -= pro_info[:release_kg]
       @monthaverages[:january_c] -= 1
-      @monthaverages[:m_avg] = @monthaverages[:january]/@monthaverages[:january_c]
+      if @monthaverages[:january_c] != 0 # ZeroDivisionError을 위한 예외처리
+        @monthaverages[:m_avg] = @monthaverages[:january]/@monthaverages[:january_c]
+      end
     when 2
       @monthaverages[:february] -= pro_info[:release_kg]
       @monthaverages[:february_c] -= 1
-      @monthaverages[:m_avg] = @monthaverages[:february]/@monthaverages[:february_c]
+      if @monthaverages[:february_c] != 0
+        @monthaverages[:m_avg] = @monthaverages[:february]/@monthaverages[:february_c]
+      end
     when 3
       @monthaverages[:march] -= pro_info[:release_kg]
       @monthaverages[:march_c] -= 1
-      @monthaverages[:m_avg] = @monthaverages[:march]/@monthaverages[:march_c]
+      if @monthaverages[:march_c] != 0
+        @monthaverages[:m_avg] = @monthaverages[:march]/@monthaverages[:march_c]
+      end
     when 4
       @monthaverages[:april] -= pro_info[:release_kg]
       @monthaverages[:april_c] -= 1
-      @monthaverages[:m_avg] = @monthaverages[:april]/@monthaverages[:april_c]
+      if @monthaverages[:april_c] != 0
+        @monthaverages[:m_avg] = @monthaverages[:april]/@monthaverages[:april_c]
+      end
     when 5
       @monthaverages[:may] -= pro_info[:release_kg]
       @monthaverages[:may_c] -= 1
-      @monthaverages[:m_avg] = @monthaverages[:may]/@monthaverages[:may_c]
+      if @monthaverages[:may_c] != 0
+        @monthaverages[:m_avg] = @monthaverages[:may]/@monthaverages[:may_c]
+      end
     when 6
       @monthaverages[:june] -= pro_info[:release_kg]
       @monthaverages[:june_c] -= 1
-      @monthaverages[:m_avg] = @monthaverages[:june]/@monthaverages[:june_c]
+      if @monthaverages[:june_c] != 0
+        @monthaverages[:m_avg] = @monthaverages[:june]/@monthaverages[:june_c]
+      end
     when 7
       @monthaverages[:july] -= pro_info[:release_kg]
       @monthaverages[:july_c] -= 1
-      @monthaverages[:m_avg] = @monthaverages[:july]/@monthaverages[:july_c]
+      if @monthaverages[:july_c] != 0
+        @monthaverages[:m_avg] = @monthaverages[:july]/@monthaverages[:july_c]
+      end
     when 8
       @monthaverages[:august] -= pro_info[:release_kg]
       @monthaverages[:august_c] -= 1
-      @monthaverages[:m_avg] = @monthaverages[:august]/@monthaverages[:august_c]
+      if @monthaverages[:august_c] != 0
+        @monthaverages[:m_avg] = @monthaverages[:august]/@monthaverages[:august_c]
+      end
     when 9
-      @monthaverages[:september] = pro_info[:release_kg]
+      @monthaverages[:september] -= pro_info[:release_kg]
       @monthaverages[:september_c] -= 1
-      @monthaverages[:m_avg] = @monthaverages[:september]/@monthaverages[:september_c]
+      if @monthaverages[:september_c] != 0
+        @monthaverages[:m_avg] = @monthaverages[:september]/@monthaverages[:september_c]
+      end
     when 10
       @monthaverages[:october] -= pro_info[:release_kg]
       @monthaverages[:october_c] -= 1
-      @monthaverages[:m_avg] = @monthaverages[:october]/@monthaverages[:october_c]
+      if @monthaverages[:october_c] != 0
+        @monthaverages[:m_avg] = @monthaverages[:october]/@monthaverages[:october_c]
+      end
     when 11
       @monthaverages[:november] -= pro_info[:release_kg]
       @monthaverages[:november_c] -= 1
-      @monthaverages[:m_avg] = @monthaverages[:november]/@monthaverages[:november_c]
+      if @monthaverages[:november_c] != 0
+        @monthaverages[:m_avg] = @monthaverages[:november]/@monthaverages[:november_c]
+      end
     when 12
       @monthaverages[:december] -= pro_info[:release_kg]
       @monthaverages[:december_c] -= 1
-      @monthaverages[:m_avg] = @monthaverages[:december]/@monthaverages[:december_c]
+      if @monthaverages[:december_c] != 0
+        @monthaverages[:m_avg] = @monthaverages[:december]/@monthaverages[:december_c]
+      end
     end
     avg_sum_year(@monthaverages)
 
