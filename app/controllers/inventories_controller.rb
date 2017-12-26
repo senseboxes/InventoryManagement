@@ -95,8 +95,9 @@ class InventoriesController < ApplicationController
 
   def stock_Sum(s_stock) # creat 시점에서 모든 계산이 끝난 후 재고중량을 iST_KG에 저장
     @inventories = Inventory.find_by(id: s_stock[:inventory_id])
+    @s_stock = @inventories.products.order("created_at DESC").first
     @inventories[:iST_KG] = 0
-    @inventories[:iST_KG] = s_stock[:stock_kg]
+    @inventories[:iST_KG] = @s_stock[:stock_kg]
     @inventories.save
   end
 

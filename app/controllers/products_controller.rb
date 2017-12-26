@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
   # EditBox에서 입고, 출고, 재고를 입력받아 사용상에 문제가 없는지 체크한다.
   # 계산상에 문제가 없다면 true를 리턴한다.
   def check_inout(puchase_kg, release_kg, stock_kg)
-    if( puchase_kg == 0 && release_kg == 0)                                 #입고와 출고를 모두 입력하지 않은 경우
+    if(puchase_kg == 0 && release_kg == 0)                                 #입고와 출고를 모두 입력하지 않은 경우
         flash[:notice] = '입고와 출고중 한가지는 입력하셔야 합니다.'
         isTrue = false
     elsif(puchase_kg < 0 || release_kg < 0)                                     #입고와 출고를 음수나 0을 넣은 경우
@@ -62,26 +62,39 @@ class ProductsController < ApplicationController
       now - 1.day          => Sun, 02 Nov 2014 00:26:28 EDT -04:00
 =end
   # 시간 기준으로 계산을 한다.
+
+  def date_standard(recent_info)
+    all_data = @inventory.products.where(inventory_id: recent_info[:inventory_id]).order(created_at: :desc)
+    now_date = recent_info[:created_at]
+    alldata_first = all_data[0].created_at
+    if alldata_first > now_date
+      flash[:notice] = "now"
+    elsif alldata_first == now_date
+      flash[:notice] = "두 날짜가 같습니다."
+    else
+      flash[:notice] = "현재 입력된 데이터 날짜가 가장 오래된 데이터 날짜보다 다음 날입니다."
+    end
+  end
+
   def chk_date(recent_chk)
     @@find_record = 0
     search_date = recent_chk[:created_at]
     now_date = Time.zone.now
     arr_date = @inventory.products.where("created_at BETWEEN ? AND ?", search_date, now_date).order(created_at: :ASC)
-    #가장 마지막(즉)
     #asc:오름차순-> 1,2,3,4,5 // desc:내림차순 -> 5,4,3,2,1
     table_data_c = @inventory.products.where(inventory_id: recent_chk[:inventory_id]).count
     record_c = arr_date.records.count
 # @recentdata를 어떻게 보낼 것인가 ...
-# 재고 중간에 삽입
+# 재고 중간에 아무 곳이나 삽입
     if record_c > 0 && record_c != table_data_c
       if recent_chk[:puchase_kg] - recent_chk[:release_kg] < arr_date[0].stock_kg
         update_product(arr_date, record_c, recent_chk)
         @@find_record = 1
       end
-# 재고리스트 가장 마지막에 등록
+# 재고리스트 등록된 데이터들 중에 날짜가 가장 최근과 가까운 날짜 (등록된 데이터보다 전 날일수는 없다.)
     elsif record_c == 0
       @@find_record = 2
-# 재고리스트 가장 처음에 등록
+# 재고리스트 가장 처음 등록된 데이터보다 더 이전 날짜
     else
       if recent_chk[:puchase_kg] > recent_chk[:release_kg]
         update_lowrank(arr_date, record_c, recent_chk)
@@ -170,8 +183,8 @@ return은 값을 반환하지못함 ... only true, false만 인듯
 =end
 
     else            #재고리스트가 한개라도 존재하는 경우
-
       chk_date(@recentdata)
+      date_standard(@recentdata)
           # 재고 중간에 등록
         if @@find_record == 1
           fr1_sear_date = @recentdata[:created_at]
@@ -225,10 +238,19 @@ return은 값을 반환하지못함 ... only true, false만 인듯
   def monthaverage_pro_monthvalue_save(ma_value)
     if ma_value != nil
       @inventory = Inventory.find(ma_value[:inventory_id])
-      @m_avg_save = @inventory.products.last
+#      if @inventory.products.all != nil
+      @all_products = @inventory.products.all
+      if @all_products != nil
+        byebug
+        @m_avg_save = @inventory.products.order("created_at DESC").first
+      else
+        @m_avg_save = @inventory.products.last
+        byebug
+      end
+
       if @m_avg_save != nil
-      @m_avg_save[:month_avg] = ma_value[:m_avg]
-      @m_avg_save.save
+        @m_avg_save[:month_avg] = ma_value[:m_avg]
+        @m_avg_save.save
       else
         return
       end
@@ -260,7 +282,6 @@ return은 값을 반환하지못함 ... only true, false만 인듯
          end
       end
 
-
     else
       if(!check_inout(product["puchase_kg"], product["release_kg"], @lastdata[:stock_kg]))
         isTrue = false
@@ -273,7 +294,6 @@ return은 값을 반환하지못함 ... only true, false만 인듯
       isTrue == true && pro_params.save
       @MonthaverageController = MonthaverageController.new
       @MonthaverageController.import_sum_monthavg(product)
-
   end
 
 # ' 해당 레코드 삭제 ' 시 ↓↓↓↓↓

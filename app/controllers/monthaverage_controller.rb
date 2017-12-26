@@ -85,7 +85,6 @@ class MonthaverageController < ApplicationController
       end
     end
     avg_sum_year(@monthaverages)
-
   end
 
   def avg_sum_year(month_avg_sum)
