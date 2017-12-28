@@ -121,9 +121,7 @@ ActiveRecord::Schema.define(version: 20170918042605) do
     t.integer "inventory_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "productnameset_id"
     t.index ["inventory_id"], name: "index_products_on_inventory_id"
-    t.index ["productnameset_id"], name: "index_products_on_productnameset_id"
   end
 
   add_foreign_key "inventories", "categories"
@@ -131,5 +129,4 @@ ActiveRecord::Schema.define(version: 20170918042605) do
   add_foreign_key "product_pnamesets", "productnamesets"
   add_foreign_key "product_pnamesets", "products"
   add_foreign_key "products", "inventories"
-  add_foreign_key "products", "productnamesets"
 end

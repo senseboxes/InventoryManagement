@@ -81,20 +81,21 @@ class ProductsController < ApplicationController
     search_date = recent_chk[:created_at]
     now_date = Time.zone.now
     arr_date = @inventory.products.where("created_at BETWEEN ? AND ?", search_date, now_date).order(created_at: :ASC)
+    # 현재 날짜보다 미래의 날짜를 입력하면 계산 상 오류가 생긴다. 미래의 날짜를 입력할 경우가 있는가?
     #asc:오름차순-> 1,2,3,4,5 // desc:내림차순 -> 5,4,3,2,1
     table_data_c = @inventory.products.where(inventory_id: recent_chk[:inventory_id]).count
     record_c = arr_date.records.count
-# @recentdata를 어떻게 보낼 것인가 ...
-# 재고 중간에 아무 곳이나 삽입
+    # @recentdata를 어떻게 보낼 것인가 ...
+    # 재고 중간에 아무 곳이나 삽입
     if record_c > 0 && record_c != table_data_c
       if recent_chk[:puchase_kg] - recent_chk[:release_kg] < arr_date[0].stock_kg
         update_product(arr_date, record_c, recent_chk)
         @@find_record = 1
       end
-# 재고리스트 등록된 데이터들 중에 날짜가 가장 최근과 가까운 날짜 (등록된 데이터보다 전 날일수는 없다.)
+      # 재고리스트 등록된 데이터들 중에 날짜가 가장 최근과 가까운 날짜 (등록된 데이터보다 전 날일수는 없다.)
     elsif record_c == 0
       @@find_record = 2
-# 재고리스트 가장 처음 등록된 데이터보다 더 이전 날짜
+      # 재고리스트 가장 처음 등록된 데이터보다 더 이전 날짜
     else
       if recent_chk[:puchase_kg] > recent_chk[:release_kg]
         update_lowrank(arr_date, record_c, recent_chk)
@@ -241,15 +242,15 @@ return은 값을 반환하지못함 ... only true, false만 인듯
 #      if @inventory.products.all != nil
       @all_products = @inventory.products.all
       if @all_products != nil
-        byebug
         @m_avg_save = @inventory.products.order("created_at DESC").first
       else
         @m_avg_save = @inventory.products.last
-        byebug
       end
 
       if @m_avg_save != nil
         @m_avg_save[:month_avg] = ma_value[:m_avg]
+        # @m_avg_save[:month_avg] = ma_value[:y_avg] # 연 평균
+        # @m_avg_save[:month_avg] = ma_value[:y_sum] # 연 합계
         @m_avg_save.save
       else
         return

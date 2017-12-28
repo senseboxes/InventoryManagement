@@ -5,12 +5,10 @@ class InventoriesController < ApplicationController
   # GET /inventories
   # GET /inventories.json
   def index
+    cookies.delete(:cookie_name)
     @categories = Category.all
-      if cookies[:cookie_name] == 'fiber'
-        @category_id = '1'
-        @inventories = Inventory.where(category_id: @category_id)
-      elsif cookies[:cookie_name] == 'grind'
-        @category_id = '2'
+      if cookies[:cookie_name] != nil
+        @category_id = cookies[:cookie_name]
         @inventories = Inventory.where(category_id: @category_id)
       else
         flash[:notice] = "초기화면으로 돌아가 화이버 또는 연마사를 선택하시면 선택한 분류만 볼 수 있습니다."
@@ -20,9 +18,16 @@ class InventoriesController < ApplicationController
   end
 
   def index_category
+    if cookies[:cookie_name] != nil
+      @category_id = cookies[:cookie_name]
+      @inventories = Inventory.where(category_id: @category_id)
+    else
+      flash[:notice] = "초기화면으로 돌아가 화이버 또는 연마사를 선택하시면 선택한 분류만 볼 수 있습니다."
+      @inventories = Inventory.all
+    end
     @categories = Category.all
     @inventories = Inventory.where(category_id: params[:category_id])
-    @categories_title = @categories.find_by(id: params[:category_id]).name
+#    @categories_title = @categories.find_by(id: params[:category_id]).name
     @inventories = @inventories.paginate(:page => params[:page]).order("id ASC")
   end
 
@@ -34,7 +39,7 @@ class InventoriesController < ApplicationController
   def setting_category
     @categories = Category.all
     @inventories = Inventory.where(category_id: params[:category_id])
-    @categories_title = @categories.find_by(id: params[:category_id]).name
+#    @categories_title = @categories.find_by(id: params[:category_id]).name
     @inventories = @inventories.paginate(:page => params[:page]).order("id ASC")
   end
 

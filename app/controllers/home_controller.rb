@@ -2,6 +2,7 @@ class HomeController < ApplicationController
 
   def index
     cookies.delete(:cookie_name)
+    @category_list = Category.all
   end
 
   def cookie
@@ -9,9 +10,9 @@ class HomeController < ApplicationController
   end
 
   def cookie_rec
-    # 쿠키 :cookie_name을 설정(유효기간은 3개월)
+    # 쿠키 :cookie_name을 설정(유효기간은 1개월)
     cookies[:cookie_name] = { value: params[:cookie_name],
-       expires: 3.months.from_now, http_only: true }
+       expires: 1.months.from_now, http_only: true }
     respond_to do |format|
       format.html { redirect_to '/inventories' }
       format.json { head :no_content }

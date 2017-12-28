@@ -15,21 +15,21 @@ class MonthaverageController < ApplicationController
      @inventory = Inventory.find(pro_params[:inventory_id])
      @lastdata = @inventory.products.last
 
-#    time = recent_proparams[:created_at]
+     # time = recent_proparams[:created_at]
      @monthaverages = Monthaverage.find_by(inventory_id: recent_proparams[:inventory_id], y_index: @@user_time.year ) # inventor_id = 1이면서 현재 연 필드 불러오기
-    #fine_by 검색에 실패했을 경우
+     # fine_by 검색에 실패했을 경우
     if ( @monthaverages == nil )
       @monthaverages = Monthaverage.new
       @monthaverages.init_value
 
       @monthaverages[:inventory_id] = @inventory[:id]
       @monthaverages[:inven_name] = @inventory[:iname]
-      @monthaverages.save(:validate => false)  #  (:validate => false)는 검증을 예외처리
+      @monthaverages.save(:validate => false)                                            #  (:validate => false)는 검증을 예외처리
 
-      @monthaverages[:inventory_id] = recent_proparams[:inventory_id]     # ID 셋팅하고
+      @monthaverages[:inventory_id] = recent_proparams[:inventory_id]                    # ID 셋팅하고
       @monthaverages[:y_index] = @@user_time.year                                        # 년도 셋팅한다.
       @monthaverages[:m_index] = @@user_time.month
-      @monthaverages[:cat_ID] = inventory_inf[:category_id] #쿠키 사용을 위해 카테고리 아이디를 넣음
+      @monthaverages[:cat_ID] = inventory_inf[:category_id]                              # 쿠키 사용을 위해 카테고리 아이디를 넣음
     end
 
     if recent_proparams[:puchase_kg] == 0
@@ -99,17 +99,14 @@ class MonthaverageController < ApplicationController
   def years_category # 연도를 선택하면 해당 연도의 사용량 통계만 볼 수 있다.
     @years_categories = Monthaverage.select(:y_index).distinct.order("y_index DESC")
 
-    if cookies[:cookie_name] == 'fiber'
-      @category_id = '1'
-    elsif cookies[:cookie_name] == 'grind'
-      @category_id = '2'
-    elsif cookies[:cookie_name] == nil
+    if cookies[:cookie_name] != nil
+      @category_id = cookies[:cookie_name]
+      @year_sort = Monthaverage.where(y_index: params[:y_index], cat_ID: @category_id)
+    else
       flash[:notice] = "초기화면으로 돌아가 화이버 또는 연마사를 선택하시면 선택한 분류만 볼 수 있습니다."
-      @category_id ='1', '2'
+      @year_sort = Monthaverage.where(y_index: params[:y_index])
     end
-    @year_sort = Monthaverage.where(y_index: params[:y_index], cat_ID: @category_id)
     @year_title = params[:y_index]
-
   end
 
   def monthavg # 가장 최근 연도의 사용량 통계만 표시 예) 지금이 2016년이면 2016년의 자료만 출력 .... 17년이면 17년의 자료만 출력
@@ -117,18 +114,15 @@ class MonthaverageController < ApplicationController
 
     @years_categories = Monthaverage.select(:y_index).distinct.order("y_index DESC")
     @year_title1 = now_year.year
-
-    if cookies[:cookie_name] == 'fiber'
-      @category_id = '1'
-    elsif cookies[:cookie_name] == 'grind'
-      @category_id = '2'
-    elsif cookies[:cookie_name] == nil
-      flash[:notice] = "초기화면으로 돌아가 화이버 또는 연마사를 선택하시면 선택한 분류만 볼 수 있습니다."
-      @category_id ='1', '2'
-    end
-
     @years_avglist = Monthaverage.where(y_index: now_year.year)
-    @yeardroplist = @years_avglist.where(cat_ID: @category_id)
+
+    if cookies[:cookie_name] != nil
+      @category_id = cookies[:cookie_name]
+      @yeardroplist = @years_avglist.where(cat_ID: @category_id)
+    else
+      flash[:notice] = "초기화면으로 돌아가 화이버 또는 연마사를 선택하시면 선택한 분류만 볼 수 있습니다."
+      @yeardroplist = @years_avglist
+    end
   end
 
   def month_destroy(inventory_id, month)
