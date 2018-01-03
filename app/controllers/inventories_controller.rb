@@ -27,7 +27,7 @@ class InventoriesController < ApplicationController
     end
     @categories = Category.all
     @inventories = Inventory.where(category_id: params[:category_id])
-#    @categories_title = @categories.find_by(id: params[:category_id]).name
+    @categories_title = @categories.find_by(id: params[:category_id]).name
     @inventories = @inventories.paginate(:page => params[:page]).order("id ASC")
   end
 

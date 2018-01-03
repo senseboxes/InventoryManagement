@@ -39,7 +39,7 @@
 	<% end %>
 </div>
 <div class="container">
-	<h2>재고에 대한 정보</h2>
+	<h2>재고에 대한 정보</h2><p><mark>입/출/재고 단위는 kg</mark></p>
 		<table class="table table-hover">
   		<thead>
   			<tr>
@@ -49,7 +49,7 @@
 		  		<th>입고량</th>
 		  		<th>출고량</th>
 		  		<th>재고량</th>
-	<!--	  		<th>예상횟수</th>
+<!--  	  		<th>예상횟수</th> # 차후 기능추가 예상
 		  		<th>사용량</th>		-->
 		  		<th>비 고</th>
 		  		<th></th>
@@ -64,7 +64,7 @@
 				  	<td><%= product.puchase_kg %></td>
 				  	<td><%= product.release_kg %></td>
 				  	<td><%= product.stock_kg %></td>
-<!--				  	<td><%= product.predict %></td>
+<!--				  	<td><%= product.predict %></td> # 차후 기능추가 예상
 				  	<td><%= product.month_avg %></td>		-->
 				  	<td><%= product.memo %></td>
 				    <td><button type="button" class="btn btn-warning btn-xs"><%= link_to '생산품 삭제', [product.inventory, product], method: :delete, data: { confirm: '정말 삭제하시겠습니까?' } %></button></td>
