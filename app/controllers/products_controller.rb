@@ -318,7 +318,8 @@ return은 값을 반환하지못함 ... only true, false만 인듯
   end
 
   def productnameset
-    @productnameset = Productnameset.all
+#    @productnameset = Productnameset.all
+    @productnameset = Productnameset.paginate(:page => params[:page], :per_page => 10).order("productname ASC")
   end
 
   def productnameset_write_complete

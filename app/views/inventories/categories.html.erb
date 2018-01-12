@@ -24,6 +24,11 @@
 		    		<% end %>
 					</tbody>
 				</table>
-
+				<div class="digg_pagination">
+					<div class="page_info">
+						<%= page_entries_info @categories %>
+					</div>
+					<%= will_paginate @categories, :container => false %>
+				</div>
 
       <a href="/category_write"><button type="button" class="btn btn-default">카테고리 등록</button></a> | <a href="/."><button type="button" class="btn btn-default">처음으로</button></a>

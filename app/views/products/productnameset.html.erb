@@ -24,6 +24,13 @@
 		    		<% end %>
 					</tbody>
 				</table>
-
-
-      <a href="/productnameset_write"><button type="button" class="btn btn-default">생산품명 등록</button></a> | <a href="/."><button type="button" class="btn btn-default">처음으로</button></a>
+				<div class="digg_pagination">
+			    <div class="page_info">
+			      <%= page_entries_info @productnameset %>
+			    </div>
+			    <%= will_paginate @productnameset, :container => false %>
+			  </div>
+				<br>
+			<div class="button">
+      	<a href="/productnameset_write"><button type="button" class="btn btn-default">생산품명 등록</button></a> | <a href="/."><button type="button" class="btn btn-default">처음으로</button></a>
+			</div>
