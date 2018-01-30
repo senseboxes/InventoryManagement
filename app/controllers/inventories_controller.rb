@@ -61,7 +61,9 @@ class InventoriesController < ApplicationController
   end
 
   def categories
-    @categories = Category.paginate(:page => params[:page], :per_page => 10).order("id DESC")
+    @category = Category.all
+    @inventories = Inventory.where(category_id: params[:category_id])
+    @categories = @category.paginate(:page => params[:page], :per_page => 10).order("id DESC")
   end
 
   # GET /inventories/1

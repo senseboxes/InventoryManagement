@@ -1,11 +1,35 @@
 <div class="container">
-	<h1 class="bg-info" align="center">생산품명 등록 페이지</h1>
+	<h1 class="bg-info" align="center">생산품명 등록</h1>
 	<form action="/productnameset_write_complete" method="post">
-		<label>생산품명 : <input type="text" name="productname" placeholder="생산품명을 입력하세요" autofocus="true"></label>
-			<label>설명 : <textarea placeholder="설명을 입력하지 않아도 됩니다."></textarea></label>
-			<br>
-			<br>
-	  <button type="submit" class="btn btn-default">저 장</button>
-	  <a href="/productnameset"><button type="button" class="btn btn-default">뒤로 가기</button></a>
+		<%= form_tag(action: :productnameset_write_complete) do %>
+		<div align="center" class="field">
+			<label>분류 명</label>
+			<select name="category_id" id="category">
+				<option value="1">화이버</option>
+				<option value="2">연마사</option>
+				<option value="3">약품</option>
+				<option value="4">박스</option>
+				<option value="5">포장제</option>
+				<option value="6">보호구</option>
+				<option value="7">완제품(일반)</option>
+				<option value="8">완제품(2차가공)</option>
+				<option value="9">반제품(일반)</option>
+				<option value="10">반제품(2차가공)</option>
+				<option value="11">OEM(일반)</option>
+				<option value="12">거래처(매출)</option>
+				<option value="13">거래처(매입)</option>
+<!--			<%= collection_select :categoy, :category_id, Category.all , :id, :name %>		-->
+		</div>
+
+		<div align="center" class="field">
+			<label>생산품명</label>
+			<input name="productname" id="productnameset" size="20" type="text"/>
+			<label>설명</label>
+			<input name="description" id="productnameset" size="40" type="text"/>
+		</div>
+		<div align="center" class="actions">
+			<button type="submit" class="btn btn-default">저 장</button> | <a href="/productnameset"><button  type="button" class="btn btn-default">뒤로가기</button></a>
+		</div>
+		<% end %>
 	</form>
 </div>

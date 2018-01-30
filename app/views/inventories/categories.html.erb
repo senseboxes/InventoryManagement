@@ -12,12 +12,12 @@
 					</thead>
 
 					<tbody>
-						<% @categories.each do |c| %>
-						<form action="categories/<%= c.id %>" method="post">
+						<% @categories.each do |category| %>
+						<form action="categories/<%= category.id %>" method="post">
 		  				<tr>
-		  					<td><%= c.name %></td>
+		  					<td><%= category.name %></td>
 								<td align="right">
-									<a data-confirm="정말로 삭제하시겠습니까?"><button type="submit" class="btn btn-warning btn-xs">삭 제</button></a>
+									<a data-confirm="정말로 삭제하시겠습니까?" data-method="delete" href="/categories/<%= category.id %>" rel="nofollow">삭제</a>
 								</td>
 		  				</tr>
 							</form>

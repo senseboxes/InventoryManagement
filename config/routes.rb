@@ -29,16 +29,17 @@ Rails.application.routes.draw do
   get "/category_write" => 'inventories#category_write'
   post '/category_write_complete' => 'inventories#category_write_complete'
   get '/categories' => 'inventories#categories'
-  post '/categories/:id' => 'inventories#category_destroy'
+  delete '/categories/:id' => 'inventories#category_destroy'
 
 
 # 쿠키부여를 위한 경로지정
   post "/home" => 'home#cookie_rec'
 
 # 생산품명를 등록하는 경로
-  get "/productnameset_write" => 'products#productnameset_write'
+  get "/productnameset" => 'products#productnameset'
+  get '/productnameset_write' => 'products#productnameset_write'
   post '/productnameset_write_complete' => 'products#productnameset_write_complete'
-  get '/productnameset' => 'products#productnameset'
   post '/productnameset/:id' => 'products#productnameset_destroy'
+  get '/productnameset_sort/:category_id' => 'product#productnameset_sort'
 
 end

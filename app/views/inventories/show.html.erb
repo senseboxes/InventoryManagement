@@ -28,7 +28,7 @@
 					<td><%= f.number_field :puchase_kg %></td>
 					<td><%= f.number_field :release_kg %></td>
 					<td><%= f.text_field :memo %></td>
-					<td><%= f.datetime_select :created_at, :include_seconds => true, start_year: 1999 %></td>
+					<td><%= f.date_field :created_at, :include_seconds => true, start_year: 1999 %></td>
 				</tr>
 			</tbody>
 		</table>

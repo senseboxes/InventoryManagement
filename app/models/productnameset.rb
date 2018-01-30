@@ -1,4 +1,5 @@
 class Productnameset < ApplicationRecord
+  belongs_to :category
   has_many :inventories
-  has_many :products, through: :product_pnamesets
+  has_many :products
 end

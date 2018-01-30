@@ -319,17 +319,31 @@ return은 값을 반환하지못함 ... only true, false만 인듯
 
   def productnameset
 #    @productnameset = Productnameset.all
+    @categories = Category.all
     @productnameset = Productnameset.paginate(:page => params[:page], :per_page => 10).order("productname ASC")
   end
 
+  def productnameset_sort
+    @categories = Category.all
+    @prodctnamesets = Productnameset.where(category_id: params[:category_id])
+#    @categories_title = @categories.find_by(id: params[:category_id]).name
+    @prodctnamesets = @prodctnamesets.paginate(:page => params[:page]).order("id ASC")
+  end
+
+  def productnameset_write
+    @productnameset = Productnameset.all
+  end
+
   def productnameset_write_complete
-    pro = Productnameset.new
-    pro.productname = params[:productname]
-    if pro.save
+    pn = Productnameset.new
+    pn.productname = params[:productname]
+    pn.description = params[:description]
+    pn.category_id = params[:category_id]
+    if pn.save
       redirect_to "/productnameset", notice: "정상적으로 저장되었습니다."
     else
-      flash[:notice] = pro.errors[:productname][0]
-      redirect_to :back
+      flash[:notice] = pn.errors[:productname][0]
+      redirect_to "/productnameset", notice: "정상처리 되지않았습니다."
     end
   end
 
@@ -346,7 +360,7 @@ return은 값을 반환하지못함 ... only true, false만 인듯
     end
 
     def pro_params
-      params.require(:product).permit(:pname, :puchase_kg, :release_kg, :stock_kg, :predict, :month_avg, :memo, :created_at, :updated_at, :productnameset_id)
+      params.require(:product).permit(:pname, :puchase_kg, :release_kg, :stock_kg, :predict, :month_avg, :memo, :created_at, :updated_at)
     end
 
 end
