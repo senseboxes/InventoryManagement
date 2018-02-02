@@ -36,10 +36,10 @@ Rails.application.routes.draw do
   post "/home" => 'home#cookie_rec'
 
 # 생산품명를 등록하는 경로
-  get "/productnameset" => 'products#productnameset'
+  get '/productnameset' => 'products#productnameset'
   get '/productnameset_write' => 'products#productnameset_write'
   post '/productnameset_write_complete' => 'products#productnameset_write_complete'
-  post '/productnameset/:id' => 'products#productnameset_destroy'
-  get '/productnameset_sort/:category_id' => 'product#productnameset_sort'
+  delete '/productnameset/:id' => 'products#productnameset_destroy'
+  get '/productnameset_sort/:category_id' => 'products#productnameset_sort'
 
 end

@@ -12,10 +12,16 @@
 
 				<div id="pcategories" class="panel-collapse collapse">
 					<ul class="list-group">
-							<li class="list-group-item"><a href="/productnameset">ALL</a></li>
-						<% @categories.each do |c| %>
-							<li class="list-group-item"><a href="/productnameset_sort/<%= c.id %>"> <%= c.name %> </a></li>
-						<% end %>
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<td align="center"><a href="/productnameset">ALL</a></td>
+									<% @categories.each do |c| %>
+									<td align="center"><a href="/productnameset_sort/<%= c.id %>"> <%= c.name %> </a></td>
+									<% end %>
+								</tr>
+							</tbody>
+						</table>
 					</ul>
 					<div class="panel-footer"></div>
 				</div>
@@ -36,20 +42,22 @@
 		  				<tr>
 		  					<td><%= pns.productname %></td>
 								<td align="right">
-									<a data-confirm="정말로 삭제하시겠습니까?"><button type="submit" class="btn btn-warning btn-xs">삭 제</button></a>
+			    				<a data-confirm="정말로 삭제하시겠습니까?" data-method="delete" href="/productnameset/<%= pns.id %>" rel="nofollow">삭제</a>
 								</td>
 		  				</tr>
-							</form>
+						</form>
 		    		<% end %>
 					</tbody>
 				</table>
-				<div class="digg_pagination">
-			    <div class="page_info">
-			      <%= page_entries_info @productnameset %>
-			    </div>
-			    <%= will_paginate @productnameset, :container => false %>
-			  </div>
-				<br>
+
+			<div class="digg_pagination">
+		    <div class="page_info">
+		      <%= page_entries_info @productnameset %>
+		    </div>
+		    <%= will_paginate @productnameset, :container => false %>
+		  </div>
+			<br>
+
 			<div class="button">
       	<a href="/productnameset_write"><button type="button" class="btn btn-default">생산품명 등록</button></a> | <a href="/."><button type="button" class="btn btn-default">처음으로</button></a>
 			</div>

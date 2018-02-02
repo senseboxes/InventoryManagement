@@ -325,9 +325,9 @@ return은 값을 반환하지못함 ... only true, false만 인듯
 
   def productnameset_sort
     @categories = Category.all
-    @prodctnamesets = Productnameset.where(category_id: params[:category_id])
+    @productnameset = Productnameset.where(category_id: params[:category_id])
 #    @categories_title = @categories.find_by(id: params[:category_id]).name
-    @prodctnamesets = @prodctnamesets.paginate(:page => params[:page]).order("id ASC")
+    @productnamesets = @productnameset.paginate(:page => params[:page], :per_page => 10).order("productname ASC")
   end
 
   def productnameset_write
@@ -338,7 +338,7 @@ return은 값을 반환하지못함 ... only true, false만 인듯
     pn = Productnameset.new
     pn.productname = params[:productname]
     pn.description = params[:description]
-    pn.category_id = params[:category_id]
+    pn.category_id = params[:category][:category_id] # 이와 같이 했을 때 {category => [category_id]} 의 값을 선택할 수 있다. 설명 : 카테고리(id="category_category_id")의 카테고리 아이디(name="category[category_id]")의 값을 선택함
     if pn.save
       redirect_to "/productnameset", notice: "정상적으로 저장되었습니다."
     else
