@@ -30,7 +30,7 @@ class CreateMonthaverages < ActiveRecord::Migration[5.0]
       t.integer :y_avg
       t.integer :m_avg
       t.integer :y_index
-      t.integer :m_index          
+      t.integer :m_index
       t.references :inventory, foreign_key: true
 
       t.timestamps

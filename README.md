@@ -58,4 +58,16 @@ Things you may want to cover:
  - productnameset.html.erb 삭제기능이 작동하지 않아 수정함
  - productnameset_sort.html.erb 작성완료
 
+# 2018-02-07
  & 소수점 계산으로 수정시작
+  - pgsql에서 데이터타입을 decimal로 변경 =>
+    datatype(numeric), 숫자의 길이(length: 9), 소수점이하길이(precision: 3)
+    예)  123456 789
+        123456.123
+        * 변경한 테이블 : products / monthaverages / inventories
+  - views에서 f.number_field를 f.text_field로 변경
+    반드시 변경을 해줘야 소수점이 입력된다.
+
+
+ & 검색기능 추가 작업
+  - 검색기능으로 다음의 젬을 사용할까 생각중 sunspot_solr 2.2.7

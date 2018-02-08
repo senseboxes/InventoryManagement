@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180117041003) do
+ActiveRecord::Schema.define(version: 20180208054207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20180117041003) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "category_id"
-    t.integer "iST_KG"
+    t.decimal "iST_KG", precision: 9, scale: 3
     t.index ["category_id"], name: "index_inventories_on_category_id"
   end
 
@@ -58,18 +58,18 @@ ActiveRecord::Schema.define(version: 20180117041003) do
 
   create_table "monthaverages", id: :serial, force: :cascade do |t|
     t.string "inven_name"
-    t.integer "january"
-    t.integer "february"
-    t.integer "march"
-    t.integer "april"
-    t.integer "may"
-    t.integer "june"
-    t.integer "july"
-    t.integer "august"
-    t.integer "september"
-    t.integer "october"
-    t.integer "november"
-    t.integer "december"
+    t.decimal "january", precision: 10, scale: 3
+    t.decimal "february", precision: 10, scale: 3
+    t.decimal "march", precision: 10, scale: 3
+    t.decimal "april", precision: 10, scale: 3
+    t.decimal "may", precision: 10, scale: 3
+    t.decimal "june", precision: 10, scale: 3
+    t.decimal "july", precision: 10, scale: 3
+    t.decimal "august", precision: 10, scale: 3
+    t.decimal "september", precision: 10, scale: 3
+    t.decimal "october", precision: 10, scale: 3
+    t.decimal "november", precision: 10, scale: 3
+    t.decimal "december", precision: 10, scale: 3
     t.integer "january_c"
     t.integer "february_c"
     t.integer "march_c"
@@ -82,9 +82,9 @@ ActiveRecord::Schema.define(version: 20180117041003) do
     t.integer "october_c"
     t.integer "november_c"
     t.integer "december_c"
-    t.integer "y_sum"
-    t.integer "y_avg"
-    t.integer "m_avg"
+    t.decimal "y_sum", precision: 10, scale: 3
+    t.decimal "y_avg", precision: 10, scale: 3
+    t.decimal "m_avg", precision: 10, scale: 3
     t.integer "y_index"
     t.integer "m_index"
     t.integer "inventory_id"
@@ -92,15 +92,6 @@ ActiveRecord::Schema.define(version: 20180117041003) do
     t.datetime "updated_at", null: false
     t.integer "cat_ID"
     t.index ["inventory_id"], name: "index_monthaverages_on_inventory_id"
-  end
-
-  create_table "product_pnamesets", force: :cascade do |t|
-    t.bigint "product_id"
-    t.bigint "productnameset_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_product_pnamesets_on_product_id"
-    t.index ["productnameset_id"], name: "index_product_pnamesets_on_productnameset_id"
   end
 
   create_table "productnamesets", force: :cascade do |t|
@@ -114,11 +105,11 @@ ActiveRecord::Schema.define(version: 20180117041003) do
 
   create_table "products", id: :serial, force: :cascade do |t|
     t.string "pname"
-    t.integer "puchase_kg"
-    t.integer "release_kg"
-    t.integer "stock_kg"
-    t.integer "predict"
-    t.integer "month_avg"
+    t.decimal "puchase_kg", precision: 10, scale: 3
+    t.decimal "release_kg", precision: 10, scale: 3
+    t.decimal "stock_kg", precision: 10, scale: 3
+    t.decimal "predict", precision: 10, scale: 3
+    t.decimal "month_avg", precision: 10, scale: 3
     t.string "memo"
     t.integer "inventory_id"
     t.datetime "created_at", null: false
@@ -128,8 +119,6 @@ ActiveRecord::Schema.define(version: 20180117041003) do
 
   add_foreign_key "inventories", "categories"
   add_foreign_key "monthaverages", "inventories"
-  add_foreign_key "product_pnamesets", "productnamesets"
-  add_foreign_key "product_pnamesets", "products"
   add_foreign_key "productnamesets", "categories"
   add_foreign_key "products", "inventories"
 end

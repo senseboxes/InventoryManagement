@@ -25,8 +25,8 @@
 			<tbody>
 				<tr>
 					<td><%= f.text_field :pname, class: "p_pname" %></td>
-					<td><%= f.number_field :puchase_kg %></td>
-					<td><%= f.number_field :release_kg %></td>
+					<td><%= f.text_field :puchase_kg %></td>
+					<td><%= f.text_field :release_kg %></td>
 					<td><%= f.text_field :memo %></td>
 					<td><%= f.date_field :created_at, :include_seconds => true, start_year: 1999 %></td>
 				</tr>
