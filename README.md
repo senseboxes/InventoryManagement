@@ -68,6 +68,8 @@ Things you may want to cover:
   - views에서 f.number_field를 f.text_field로 변경
     반드시 변경을 해줘야 소수점이 입력된다.
 
+# 2018-02-08
+ - productsnameset에 수정기능 추가
 
- & 검색기능 추가 작업
+ & 검색기능 추가 작업(보류)
   - 검색기능으로 다음의 젬을 사용할까 생각중 sunspot_solr 2.2.7
