@@ -163,6 +163,7 @@ class MonthaverageController < ApplicationController
       if @monthaverages[:january_c] != 0 # ZeroDivisionError을 위한 예외처리
         @monthaverages[:m_avg] = @monthaverages[:january]/@monthaverages[:january_c]
       end
+
     when 2
       @monthaverages[:february] -= pro_info[:release_kg]
       @monthaverages[:february_c] -= 1
