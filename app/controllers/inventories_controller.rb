@@ -23,7 +23,6 @@ class InventoriesController < ApplicationController
     else
       flash[:notice] = "초기화면으로 돌아가 화이버 또는 연마사를 선택하시면 선택한 분류만 볼 수 있습니다."
       @inventories = Inventory.all
-      byebug
     end
     @categories = Category.all
     @inventories = Inventory.where(category_id: params[:category_id])
