@@ -6,27 +6,20 @@ class InventoriesController < ApplicationController
   # GET /inventories.json
   def index
     @categories = Category.all
-      if cookies[:cookie_name] != nil
-        @category_id = cookies[:cookie_name]
-        @inventories = Inventory.where(category_id: @category_id)
-      else
-        flash[:notice] = "초기화면으로 돌아가 화이버 또는 연마사를 선택하시면 선택한 분류만 볼 수 있습니다."
-        @inventories = Inventory.all
-      end
-      @inventories = @inventories.paginate(:page => params[:page]).order("id DESC")
+    @inventories = Inventory.where(category_id: @category_id)
+    @inventories = Inventory.all
+
+    @inventories = @inventories.paginate(:page => params[:page]).order("id DESC")
   end
 
   def index_category
-    if cookies[:cookie_name] != nil
-      @category_id = cookies[:cookie_name]
-      @inventories = Inventory.where(category_id: @category_id)
-    else
-      flash[:notice] = "초기화면으로 돌아가 화이버 또는 연마사를 선택하시면 선택한 분류만 볼 수 있습니다."
-      @inventories = Inventory.all
-    end
+    @inventories = Inventory.where(category_id: @category_id)
+    @inventories = Inventory.all
     @categories = Category.all
     @inventories = Inventory.where(category_id: params[:category_id])
+    # 화이버 / 연마사 기타 카테고리를 선택하면 선택한 카테고리의 이름을 맨 위에 표시
     @categories_title = @categories.find_by(id: params[:category_id]).name
+
     @inventories = @inventories.paginate(:page => params[:page]).order("id ASC")
   end
 

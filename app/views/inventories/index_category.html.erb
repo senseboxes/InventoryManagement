@@ -8,16 +8,22 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h4 class="panel-title">
-						<a data-toggle="collapse" href="#categories">분류 목록</a>
+						<a data-toggle="collapse" href="#pcategories">분류 목록</a>
 					</h4>
 				</div>
 
-				<div id="categories" class="panel-collapse collapse">
+				<div id="pcategories" class="panel-collapse collapse">
 					<ul class="list-group">
-							<li class="list-group-item"><a href="/inventories">ALL</a></li>
-						<% @categories.each do |c| %>
-							<li class="list-group-item"><a href="/index_category/<%= c.id %>"> <%= c.name %> </a></li>
-						<% end %>
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<td align="center"><a href="/inventories">ALL</a></td>
+									<% @categories.each do |c| %>
+									<td align="center"><a href="/index_category/<%= c.id %>"> <%= c.name %> </a></td>
+									<% end %>
+								</tr>
+							</tbody>
+						</table>
 					</ul>
 					<div class="panel-footer"></div>
 				</div>

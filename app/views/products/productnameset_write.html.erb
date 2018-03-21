@@ -4,20 +4,6 @@
 		<%= form_tag(action: :productnameset_write_complete) do %>
 		<div align="center" class="field">
 			<label>분류 명</label>
-<!--			<select name="category_id" id="category">
-				<option value="1">화이버</option>
-				<option value="2">연마사</option>
-				<option value="3">약품</option>
-				<option value="4">박스</option>
-				<option value="5">포장제</option>
-				<option value="6">보호구</option>
-				<option value="7">완제품(일반)</option>
-				<option value="8">완제품(2차가공)</option>
-				<option value="9">반제품(일반)</option>
-				<option value="10">반제품(2차가공)</option>
-				<option value="11">OEM(일반)</option>
-				<option value="12">거래처(매출)</option>
-				<option value="13">거래처(매입)</option>		-->
 				<%= collection_select :category, :category_id, Category.all , :id, :name %>
 				<div align="center" class="field">
 					<label>생산품명</label>

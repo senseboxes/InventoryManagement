@@ -98,14 +98,7 @@ class MonthaverageController < ApplicationController
 
   def years_category # 연도를 선택하면 해당 연도의 사용량 통계만 볼 수 있다.
     @years_categories = Monthaverage.select(:y_index).distinct.order("y_index DESC")
-
-    if cookies[:cookie_name] != nil
-      @category_id = cookies[:cookie_name]
-      @year_sort = Monthaverage.where(y_index: params[:y_index], cat_ID: @category_id)
-    else
-      flash[:notice] = "초기화면으로 돌아가 화이버 또는 연마사를 선택하시면 선택한 분류만 볼 수 있습니다."
-      @year_sort = Monthaverage.where(y_index: params[:y_index])
-    end
+    @year_sort = Monthaverage.where(y_index: params[:y_index])
     @year_title = params[:y_index]
   end
 
@@ -115,14 +108,7 @@ class MonthaverageController < ApplicationController
     @years_categories = Monthaverage.select(:y_index).distinct.order("y_index DESC")
     @year_title1 = now_year.year
     @years_avglist = Monthaverage.where(y_index: now_year.year)
-
-    if cookies[:cookie_name] != nil
-      @category_id = cookies[:cookie_name]
-      @yeardroplist = @years_avglist.where(cat_ID: @category_id)
-    else
-      flash[:notice] = "초기화면으로 돌아가 화이버 또는 연마사를 선택하시면 선택한 분류만 볼 수 있습니다."
-      @yeardroplist = @years_avglist
-    end
+    @yeardroplist = @years_avglist.where(cat_ID: @category_id)
   end
 
   def month_destroy(inventory_id, month)
