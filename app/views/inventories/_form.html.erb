@@ -16,12 +16,13 @@
     	<%= f.collection_select :category_id, Category.all , :id, :name %>
     </div>
 
+    <br>
     <div align="center" class="field">
-      <%= f.label :iname %>
+      <%= f.label :iname, "재고 명" %>
       <%= f.text_field :iname %>
-      <%= f.label :inputID %>
+      <%= f.label :inputID, "고유 번호" %>
       <%= f.text_field :inputID %>
-      <%= f.label :text %>
+      <%= f.label :text, "설명" %>
       <%= f.text_field :text %>
     </div>
 
